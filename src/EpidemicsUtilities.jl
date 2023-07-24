@@ -76,6 +76,9 @@ using EpidemicsCFTP
 # Included files
 # --------------
 include("01-EpidemicsUtilitiesFunctions.jl")
+include("02-EpidemicsUtilitiesFunctions.jl")
+include("03-EpidemicsUtilitiesFunctions.jl")
+include("04-EpidemicsUtilitiesFunctions.jl")
 
 # Conclusion of module.
 end
