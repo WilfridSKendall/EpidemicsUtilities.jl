@@ -1,5 +1,77 @@
+# ---
+# title:  "EpidemicsUtilities module"
+# author: "Wilfrid Kendall"
+# date:   today
+# ---
+# 
+# ---
+# date-format: "D MMMM YYYY"
+# papersize:  a4
+# 
+# execute:
+#   eval: false
+# format:
+#   html:
+#     toc: true
+#     toc-depth: 2
+#     code-fold: true
+#     self-contained: true
+#   pdf:
+#     link-citations: true
+#     numbersections: true
+#     mainfont: "Times New Roman"
+#     monofont: "JuliaMono"
+#     monofontoptions:
+#        - Scale=0.7
+# jupyter:    julia-1.9
+# ---
+#
 module EpidemicsUtilities
 
-# Write your package code here.
+# ## Producing various renditions of a drawing
 
+# Exports
+# =======
+
+# Compose drawing functions
+# -------------------------
+# A convenient drawing function to create `PNG` and `PDF` variants of a figure.
+export depict
+
+# A function to draw the time axis and time-lines. 
+export scaffolding
+
+# Functions to draw nodes and regions and connectors.
+export create_nodes_view, create_epidemic_view
+
+# (Used only in `experiment.qmd`.)
+export draw_incident, draw_elements, draw_realized_elements
+
+# `Gadfly` drawing Functions
+# --------------------------
+# Specific `Gadfly` drawing functions
+export trajectory_table, plot_trajectories
+
+# ## Further drawing functions using markers.
+# (Used only in `experiment.qmd`.)
+export compute_total_trajectory
+export region_plot
+
+# Imports
+# =======
+# This module requires import of a number of other modules as follows. 
+# Note that we introduce a prefix for `Gadfly`, to avoid excessive name-space pollution.
+using Colors, Compose, DataFrames, Measures
+import Cairo, Fontconfig, Gadfly
+gf = Gadfly ; 
+
+# The associated `EpidemicsCFTP` is a module currently under development.
+using EpidemicsCFTP 
+
+# Included files
+# ==============
+include("functions.jl")
+
+# Conclusion of module
+# ====================
 end
