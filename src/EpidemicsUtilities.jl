@@ -1,11 +1,10 @@
 # ---
 # title:  "EpidemicsUtilities module"
 # author: "Wilfrid Kendall"
-# date:   today
+# date: 24/07/2023
 # ---
 # 
 # ---
-# date-format: "D MMMM YYYY"
 # papersize:  a4
 # 
 # execute:
@@ -26,15 +25,18 @@
 # jupyter:    julia-1.9
 # ---
 #
+# \newcommand{\SIR}{\operatorname{S-I-R}}
+#
+# `EpidemicsUtilities` module
+# ===========================
 module EpidemicsUtilities
-
-# ## Producing various renditions of a drawing
+# This module holds functions to help illustrate simulation for
+# $\SIR$ epidemics conditioned on removals being observed.
 
 # Exports
-# =======
+# -------
 
-# Compose drawing functions
-# -------------------------
+# ### Compose drawing functions
 # A convenient drawing function to create `PNG` and `PDF` variants of a figure.
 export depict
 
@@ -47,8 +49,7 @@ export create_nodes_view, create_epidemic_view
 # (Used only in `experiment.qmd`.)
 export draw_incident, draw_elements, draw_realized_elements
 
-# `Gadfly` drawing Functions
-# --------------------------
+# ### `Gadfly` drawing Functions
 # Specific `Gadfly` drawing functions
 export trajectory_table, plot_trajectories
 
@@ -58,7 +59,7 @@ export compute_total_trajectory
 export region_plot
 
 # Imports
-# =======
+# -------
 # This module requires import of a number of other modules as follows. 
 # Note that we introduce a prefix for `Gadfly`, to avoid excessive name-space pollution.
 using Colors, Compose, DataFrames, Measures
@@ -73,9 +74,8 @@ using InteractiveUtils
 using EpidemicsCFTP 
 
 # Included files
-# ==============
-include("EpidemicsUtilitiesFunctions.jl")
+# --------------
+include("01-EpidemicsUtilitiesFunctions.jl")
 
-# Conclusion of module
-# ====================
+# Conclusion of module.
 end

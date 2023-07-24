@@ -1,33 +1,8 @@
-# ---
-# title:  "EpidemicsUtilitiesFunctions,jl"
-# author: "Wilfrid Kendall"
-# date:   today
-# ---
-# 
-# ---
-# date-format: "D MMMM YYYY"
-# papersize:  a4
-# 
-# execute:
-#   eval: false
-# format:
-#   html:
-#     toc: true
-#     toc-depth: 2
-#     code-fold: true
-#     self-contained: true
-#   pdf:
-#     link-citations: true
-#     numbersections: true
-#     mainfont: "Times New Roman"
-#     monofont: "JuliaMono"
-#     monofontoptions:
-#        - Scale=0.7
-# jupyter:    julia-1.9
-# ---
-#
-# # Constructions and definitions
-# ## Creation of union of composite `AbstractIIncident` types
+# Functions defined in `01-EpidemicsUtilitiesFunctions.jl`
+# ========================================================
+# Constructions and definitions
+# -----------------------------
+# ### Creation of union of composite `AbstractIncident` types
 # We will use a union type, `BasicIncident`, based on composite `AbstractIncident` types.
 # This is computed within the module.
 #
@@ -49,7 +24,7 @@ end
 
 BasicIncident = unionize_composites(AbstractIncident)
 
-# ## Colours related to various incidents, using function `csty`.
+# ### Colours related to various incidents, using function `csty`.
 # Various incidents and markers will be used sufficiently often to justify abbreviations.
 # These abbreviations (or an appropriate subset) are often repeated on scripts.
 A = AbstractInfection
@@ -79,7 +54,7 @@ function csty(xl::Vector{T}) where T<:AbstractIncident
   return [csty(x) for x in xl]
 end
 
-# ## Default drawing styles forming a structure `defaultstyle`.
+# ### Default drawing styles forming a structure `defaultstyle`.
 # The following default style structure is frequently used by
 # the `FigureUtilities` functions defined below,
 # _via_ a keyword argument `sty`.
@@ -102,7 +77,7 @@ defaultstyle = (
 )
 
 
-# ## Graphics utility
+# ### Graphics utility
 # The following short utility function is helpful.
 # It displays a figure produced using `Compose` or `Gadfly`,
 # and also creates corresponding `PNG` and `PDF` renderings in directory `image`.
@@ -113,7 +88,8 @@ function depict(title, image)
 end
 
     
-# ## Basic image template elements
+# Basic image template elements
+# -----------------------------
 # We need a function to draw the time axis, with tick marks at integer times.
 # Used in exported function `scaffolding`.
 # Note, both here and following, the careful use of graphics area units (`cx`, `cy`).
@@ -161,7 +137,8 @@ function scaffolding(duration, population; sty=defaultstyle)
               time_threads(duration, population, sty=sty))
 end
 
-# ## Drawing functions (`Compose`)
+# Drawing functions (`Compose`)
+# -----------------------------
 # Here are functions to draw nodes (optionally as realized or not) for 
 # vectors of incidents of `BasicIncident`.
 # This function is _exported_.
@@ -317,7 +294,8 @@ function create_epidemic_view(duration, innov, flow, initial, realized;
 end
 
 
-# ## Drawing functions (`Gadfly`)
+# Drawing functions (`Gadfly`)
+# ----------------------------
 # Define functions to construct and plot a dataframe
 # of trajectories as knots of piecewise constant functions, having used `evolution`
 # to deliver the \(\SIR\) trajectory `traj`
@@ -345,7 +323,8 @@ function plot_trajectories(flow; sty=defaultstyle)
     gf.Guide.ylabel("removals, infectives, susceptibles", orientation=:vertical))
 end
 
-# ## Drawing regions
+# Drawing regions
+# ---------------
 # First a function to draw a marker node. 
 # Note that marker labels omit time-line superscript as this is redundant!
 function draw_marker(xl::Vector{T}; sty=defaultstyle) where T<:AbstractMarker
