@@ -3,6 +3,17 @@ uuid = "d79373c3-2486-448b-9ea6-4dbd084dee00"
 authors = ["Wilfrid Stephen Kendall"]
 version = "0.1.0-DEV"
 
+[deps]
+Cairo = "159f3aea-2a34-519c-b102-8c37f9878175"
+Colors = "5ae59095-9a9b-59fe-a467-6f913c188581"
+Compose = "a81c6b42-2e10-5240-aca2-a61377ecd94b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+EpidemicsCFTP = "e9e582aa-fa14-4cd8-84f3-d59ae741ce27"
+Fontconfig = "186bb1d3-e1f7-5a2c-a377-96d770f13627"
+Gadfly = "c91e804a-d5a3-530f-b6f0-dfbca275c004"
+InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+Measures = "442fdcdd-2543-5da2-b0f3-8c86c306513e"
+
 [compat]
 julia = "1"
 

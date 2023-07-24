@@ -65,12 +65,16 @@ using Colors, Compose, DataFrames, Measures
 import Cairo, Fontconfig, Gadfly
 gf = Gadfly ; 
 
-# The associated `EpidemicsCFTP` is a module currently under development.
+# The next module is required in order to access the `subtypes` function.
+using InteractiveUtils 
+
+# The associated `EpidemicsCFTP` is a module currently under development,
+# so has to be added using `dev EpidemicsCFTP`.
 using EpidemicsCFTP 
 
 # Included files
 # ==============
-include("functions.jl")
+include("EpidemicsUtilitiesFunctions.jl")
 
 # Conclusion of module
 # ====================

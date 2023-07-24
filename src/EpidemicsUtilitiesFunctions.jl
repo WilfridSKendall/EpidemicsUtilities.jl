@@ -1,4 +1,31 @@
-
+# ---
+# title:  "EpidemicsUtilitiesFunctions,jl"
+# author: "Wilfrid Kendall"
+# date:   today
+# ---
+# 
+# ---
+# date-format: "D MMMM YYYY"
+# papersize:  a4
+# 
+# execute:
+#   eval: false
+# format:
+#   html:
+#     toc: true
+#     toc-depth: 2
+#     code-fold: true
+#     self-contained: true
+#   pdf:
+#     link-citations: true
+#     numbersections: true
+#     mainfont: "Times New Roman"
+#     monofont: "JuliaMono"
+#     monofontoptions:
+#        - Scale=0.7
+# jupyter:    julia-1.9
+# ---
+#
 # # Constructions and definitions
 # ## Creation of union of composite `AbstractIIncident` types
 # We will use a union type, `BasicIncident`, based on composite `AbstractIncident` types.
