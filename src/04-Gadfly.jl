@@ -1,13 +1,15 @@
 #
 #
-# Drawing functions using `Gadfly` [`05-Gadfly.jl`]
+# Drawing functions using `Gadfly` [`04-Gadfly.jl`]
 # =================================================
-# Define `Gadfly`-based functions to construct and plot a dataframe
+# Define `Gadfly`-based functions,
+# respectively `table_trajectories` and `plot_trajectories`,
+# to construct and plot a dataframe
 # of trajectories as knots of piecewise constant functions, having used `evolution`
 # to deliver the \(\SIR\) trajectory `traj`
 # and a sorted list of realized incidents in `realized`.
 # _These two functions are exported._
-function trajectory_table(duration, initial, traj)
+function table_trajectories(duration, initial, traj)
   states = [initial]
   t = [state.t for state in traj] ; push!(t, duration)
   t = repeat(t, inner=2)[2:(end-1)]

@@ -2,15 +2,14 @@
 #
 # Types and styles [`02-Styles.jl`]
 # =================================
-# Creation of union of composite `AbstractIncident` type
-# ------------------------------------------------------
+# A union of composite `AbstractIncident` sub-types
+# -------------------------------------------------
 # We will use a union type, `BasicIncident`, based on composite `AbstractIncident` types.
 # This is computed within the module.
 #
 # ::: {.callout-caution}
 # Computation of a new type within module counts as altering internal state!
-#
-# Try to avoid this.
+# Try to avoid this?
 # :::
 function unionize_composites(a::Type)::Type
   coll = subtypes(a)

@@ -28,8 +28,8 @@
 #
 # \newcommand{\SIR}{\operatorname{S-I-R}}
 #
-# `EpidemicsUtilities` module
-# ===========================
+# The controlling script for the `EpidemicsUtilities` package
+# ===========================================================
 module EpidemicsUtilities
 # This module holds functions to help illustrate simulation for
 # $\SIR$ epidemics conditioned on removals being observed.
@@ -37,27 +37,43 @@ module EpidemicsUtilities
 # Exports
 # -------
 
-# ### Compose drawing functions
-# A convenient drawing function to create `PNG` and `PDF` variants of a figure.
-export depict
+# ### [`EpidemicsUtilities`]
+# This section defines no functions or other entities. 
 
+# ### Template for plots [`03-Template.jl`]
 # A function to draw the time axis and time-lines. 
 export scaffolding
 
-# Functions to draw nodes and regions and connectors.
-export create_nodes_view, create_epidemic_view
+# ### `Gadfly` drawing Functions [`04-Gadfly.jl`]
+# Specific `Gadfly` drawing functions
+export table_trajectories, plot_trajectories
+
+# ### Drawing nodes [`05-Nodes.jl`]
+# A function which also uses functions defined in 
+# `06-Trajectories.jl` and `07-Zones.jl`
+# to draw an entire epidemic.
+export create_epidemic_view
+
+# Functions to draw nodes and connectors.
+export create_nodes_view
 
 # (Used only in `experiment.qmd`.)
 export draw_incident, draw_elements, draw_realized_elements
 
-# ### `Gadfly` drawing Functions
-# Specific `Gadfly` drawing functions
-export trajectory_table, plot_trajectories
+# ### Drawing trajectories [`06-Trajectories.jl`]
+# No exports from this section.
 
-# ## Further drawing functions using markers.
+# ### Drawing zones [`07-Zones.jl`]
+# No exports from this section.
+
+# ### Further drawing functions using markers.
 # (Used only in `experiment.qmd`.)
 export compute_total_trajectory
 export region_plot
+
+# ## Utility drawing function [`08-Utility.jl`]
+# A convenient drawing function to create `PNG` and `PDF` variants of a figure.
+export depict
 
 # Imports
 # -------
@@ -74,13 +90,15 @@ using InteractiveUtils
 # so has to be added using `dev EpidemicsCFTP`.
 using EpidemicsCFTP 
 
-# Included files
-# --------------
+# List of included scripts
+# ------------------------
 include("02-Styles.jl")
 include("03-Template.jl")
-include("04-Drawing.jl")
-include("05-Gadfly.jl")
-include("06-Utility.jl")
+include("04-Gadfly.jl")
+include("05-Nodes.jl")
+include("06-Trajectories.jl")
+include("07-Zones.jl")
+include("08-Utility.jl")
 
 # This concludes the module.
 end

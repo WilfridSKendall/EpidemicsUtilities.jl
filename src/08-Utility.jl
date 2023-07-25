@@ -1,6 +1,6 @@
 #
 #
-# A simple graphics utility [`05-Utility.jl`]
+# A simple graphics utility [`08-Utility.jl`]
 # ===========================================
 # The following short utility function is helpful.
 # It displays a figure produced using `Compose` or `Gadfly`,

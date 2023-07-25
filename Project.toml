@@ -1,7 +1,7 @@
 name = "EpidemicsUtilities"
 uuid = "d79373c3-2486-448b-9ea6-4dbd084dee00"
 authors = ["Wilfrid Stephen Kendall"]
-version = "0.1.0-DEV"
+version = "0.1.1-DEV"
 
 [deps]
 Cairo = "159f3aea-2a34-519c-b102-8c37f9878175"
