@@ -1,7 +1,7 @@
 #
 #
-# Functions defined in `01-EpidemicsUtilitiesFunctions.jl`
-# ========================================================
+# Types and styles [`02-Styles.jl`]
+# =================================
 # Creation of union of composite `AbstractIncident` type
 # ------------------------------------------------------
 # We will use a union type, `BasicIncident`, based on composite `AbstractIncident` types.
@@ -39,10 +39,6 @@ MIB = MarkerInfectionB ; MRB = MarkerRemovalB
 
 # A function `csty` associates these to colours, using the type hierarchy.
 # A useful list of colours is given in <https://juliagraphics.github.io/Colors.jl/stable/namedcolors/>.
-#
-# ::: {.callout-note}
-# Might be better to choose colour based on `T` rather than `Vector{T}`?
-# :::
 function csty(x::R) colorant"tan"       end 
 function csty(x::C) colorant"purple"    end 
 function csty(x::I) colorant"orange"    end 
@@ -63,7 +59,7 @@ end
 # _via_ a keyword argument `sty`.
 #
 # ::: {.callout-note}
-# See if this can be read-in from a data-file instead.
+# See if this can be read-in from a data-file instead: investigate `YAML.jl`.
 # :::
 defaultstyle = (
   radius   =  0.2cy,               smradius =  0.9 * 0.2cy,

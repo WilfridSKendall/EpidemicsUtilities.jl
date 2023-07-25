@@ -1,7 +1,7 @@
 #
 #
-# Drawing Functions defined in `03-EpidemicsUtilitiesFunctions.jl`
-# ================================================================
+# Drawing Functions [`04-Drawing.jl`]
+# ===================================
 # Node-drawing functions
 # ----------------------
 # Here are functions to draw nodes (optionally as realized or not) for 
@@ -329,18 +329,6 @@ function region_plot(duration, population, total_trajectory; sty=defaultstyle)
 
     scaffolding(duration, population),
   )
-end
-
-
-# A simple graphics utility
-# =========================
-# The following short utility function is helpful.
-# It displays a figure produced using `Compose` or `Gadfly`,
-# and also creates corresponding `PNG` and `PDF` renderings in directory `image`.
-function depict(title, image)
-  draw(PNG("image/$title.png"), image)
-  draw(PDF("image/$title.pdf"),  image)
-  image
 end
 
     

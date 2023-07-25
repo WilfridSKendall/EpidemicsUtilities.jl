@@ -1,7 +1,7 @@
 #
 #
-# Basic image template elements defined in `02-EpidemicsUtilitiesFunctions.jl`
-# ============================================================================
+# Basic image template elements [`03-Template.jl`]
+# ================================================
 # We need a function to draw the time axis, with tick marks at integer times.
 # Used in exported function `scaffolding`.
 # Note, both here and following, the careful use of graphics area units (`cx`, `cy`).

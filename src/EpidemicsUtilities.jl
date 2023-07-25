@@ -1,7 +1,8 @@
 # ---
 # title:  "EpidemicsUtilities module"
 # author: "Wilfrid Kendall"
-# date: 24/07/2023
+# date: today
+# date-format: D MMMM YYYY
 # ---
 # 
 # ---
@@ -75,10 +76,11 @@ using EpidemicsCFTP
 
 # Included files
 # --------------
-include("01-EpidemicsUtilitiesFunctions.jl")
-include("02-EpidemicsUtilitiesFunctions.jl")
-include("03-EpidemicsUtilitiesFunctions.jl")
-include("04-EpidemicsUtilitiesFunctions.jl")
+include("02-Styles.jl")
+include("03-Template.jl")
+include("04-Drawing.jl")
+include("05-Gadfly.jl")
+include("06-Utility.jl")
 
-# Conclusion of module.
+# This concludes the module.
 end

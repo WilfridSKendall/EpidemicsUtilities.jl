@@ -1,7 +1,7 @@
 #
 #
-# Drawing functions (`Gadfly`) defined in `04-EpidemicsUtilitiesFunctions.jl`
-# ===========================================================================
+# Drawing functions using `Gadfly` [`05-Gadfly.jl`]
+# =================================================
 # Define `Gadfly`-based functions to construct and plot a dataframe
 # of trajectories as knots of piecewise constant functions, having used `evolution`
 # to deliver the \(\SIR\) trajectory `traj`
