@@ -36,31 +36,32 @@ CR = ContinuingRemoved ; CI = ContinuingInfected ; CS = ContinuingSusceptible
 MIA = MarkerInfectionA ; MRA = MarkerRemovalA
 MIB = MarkerInfectionB ; MRB = MarkerRemovalB
 
-# A function `colour` associates these to colours, using the type hierarchy.
+# A function `default_colour` associates these to colours, using the type hierarchy.
 # A useful list of colours is given in <https://juliagraphics.github.io/Colors.jl/stable/namedcolors/>.
-function colour(x::R) colorant"tan"       end 
-function colour(x::C) colorant"purple"    end 
-function colour(x::I) colorant"orange"    end 
-function colour(x::P) colorant"darkgreen" end 
-function colour(x::T) where T<:AbstractInfectionMarker   colorant"orange"      end
-function colour(x::T) where T<:AbstractRemovalMarker     colorant"tan"         end
-function colour(x::T) where T<:AbstractSusceptibleMarker colorant"blue"        end
-function colour(x::T) where T<:AbstractIncident          colorant"white"       end
+function default_colour(x::R) colorant"tan"       end 
+function default_colour(x::C) colorant"purple"    end 
+function default_colour(x::I) colorant"orange"    end 
+function default_colour(x::P) colorant"darkgreen" end 
+function default_colour(x::T) where T<:AbstractInfectionMarker   colorant"orange" end
+function default_colour(x::T) where T<:AbstractRemovalMarker     colorant"tan"    end
+function default_colour(x::T) where T<:AbstractSusceptibleMarker colorant"blue"   end
+function default_colour(x::T) where T<:AbstractIncident          colorant"white"  end
 
-function colour(xl::Vector{T}) where T<:AbstractIncident 
-  return [colour(x) for x in xl]
+function default_colour(xl::Vector{T}) where T<:AbstractIncident 
+  return [default_colour(x) for x in xl]
 end
 
-# Default drawing styles forming a structure `defaultstyle`
+# Default drawing styles forming a structure `default_style`
 # --------------------------------------------------------
-# The following default style structure is frequently used by
+# The following named tuple is frequently used
+# as a default style specification by
 # the `FigureUtilities` functions defined below,
 # _via_ a keyword argument `sty`.
 #
 # ::: {.callout-note}
 # See if this can be read-in from a data-file instead: investigate `YAML.jl`.
 # :::
-defaultstyle = (
+default_style = (
   radius   =  0.2cy,               smradius =  0.9 * 0.2cy,
   bit      = -0.02h,               tic      = -0.2cy,
   xlab     =  0cx-0.4inch,         yloc     = 0.25inch,
@@ -71,6 +72,6 @@ defaultstyle = (
   blank    =  colorant"white",     scaffold =  colorant"grey",
   forbid1  =  colorant"steelblue", forbid2  =  colorant"lightsteelblue", 
   region   =  (context(), rectangle(), fill(colorant"bisque"), fillopacity(0.3)),
-  colour   =  colour,
+  colour   =  default_colour,
 )
 

@@ -10,7 +10,7 @@
 # ::: {.callout-note}
 # Colours (in `fill` and `stroke`) are vectorized!
 # :::
-function draw_incident(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:BasicIncident
+function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
   if length(xl) == 0
     return
   end
@@ -39,7 +39,7 @@ end
 # ::: {.callout-warning}
 # The function `draw_incident_test` is _experimental_ so not yet used, not yet exported!
 # :::
-function draw_incident_test(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:BasicIncident
+function draw_incident_test(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
   if length(xl) == 0
     return
   end
@@ -72,7 +72,7 @@ end
 # ::: {.callout-note}
 # Colours (in `fill` and `stroke`) are vectorized!
 # :::
-function draw_connect(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:BasicIncident
+function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
   if ! (eltype(xl)<:AbstractInfection)
     return
   end
@@ -86,15 +86,15 @@ end
 
 # The following definitions ensure that incidents are not to be drawn unless 
 # specifically arranged to do so.
-function draw_incident(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:AbstractIncident 
+function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
 end
-function draw_connect(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:AbstractIncident 
+function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
 end 
 
 # The next function 
 # `draw_elements`^[The function `draw_elements` is **exported**.]
 # draws the various incidents.
-function draw_elements(innov; I=I, P=P, R=R, C=C, sty=defaultstyle) 
+function draw_elements(innov; I=I, P=P, R=R, C=C, sty=default_style) 
 
   (context(),
     #draw_incident(innov.chronology, sty=sty), ## 19/07/23
@@ -111,7 +111,7 @@ end
 # `create_nodes_view`^[The function `create_nodes_view` is **exported**.]
 # combines depiction of the incidents with the axes supplied
 # by `scaffolding` as defined in a previous section.
-function create_nodes_view(duration, innov; I=I, P=P, R=R, C=C, sty=defaultstyle)
+function create_nodes_view(duration, innov; I=I, P=P, R=R, C=C, sty=default_style)
   (context(), 
     draw_elements(innov, I=I, P=P, R=R, C=C, sty=sty), 
     scaffolding(duration, innov.population))
@@ -120,7 +120,7 @@ end
 # The next function `draw_realized_elements`^[The function `draw_realized_elements` is **exported**.]
 # draws the realized elements together with connectors.
 function draw_realized_elements(initial, realized; 
-            I=I, P=P, R=R, C=C, sty=defaultstyle)
+            I=I, P=P, R=R, C=C, sty=default_style)
   realized_removals   = [inc for inc in realized if (isa(inc, R) || isa(inc, C))]
   enumerated_removals = collect(enumerate(realized_removals))
 

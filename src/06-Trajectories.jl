@@ -6,7 +6,7 @@
 # `draw_marker`^[The function `draw_marker` is used by subsequent exported functions defined in this section.]
 # to draw a marker node. 
 # Note that marker labels omit time-line superscript as this is redundant!
-function draw_marker(xl::Vector{T}; sty=defaultstyle) where T<:AbstractMarker
+function draw_marker(xl::Vector{T}; sty=default_style) where T<:AbstractMarker
   if length(xl) > 0
     (context(),
       (context(),

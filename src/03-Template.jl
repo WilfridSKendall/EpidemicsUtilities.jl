@@ -6,7 +6,7 @@
 # `time_axis`^[The function `time_axis` is used in the exported function `scaffolding` defined in this section.]
 # to draw the time axis, furnished with tick marks at integer times.
 # Note, both here and following, the careful use made of graphics area units (`cx`, `cy`).
-function time_axis(duration; sty=defaultstyle)
+function time_axis(duration; sty=default_style)
   labellocs = [(x)cx for x in 0:duration]
   step = 10^floor(Int, log10(duration))
   tic1  = [(((x)cx,sty.height), ((x)cx, sty.height+sty.tic))    for x in 0:1.0step:duration]
@@ -34,7 +34,7 @@ end
 # one of the many ideas in 
 # <https://tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers>.)
 # :::
-function time_threads(duration, population; sty=defaultstyle)
+function time_threads(duration, population; sty=default_style)
   circlabels   = [string(Char(0x00002460+i-1)) for i in 1:population]
 
   (context(), # Returned value of function!
@@ -47,7 +47,7 @@ end
 # These two functions are put together in a third function
 # `scaffolding`^[The function `scaffolding` is **exported**.],
 # which constructs scaffolding for graphs of epidemics (axes, time lines _etc_).
-function scaffolding(duration, population; sty=defaultstyle)
+function scaffolding(duration, population; sty=default_style)
   (context(), sty.region, time_axis(duration, sty=sty), 
               time_threads(duration, population, sty=sty))
 end

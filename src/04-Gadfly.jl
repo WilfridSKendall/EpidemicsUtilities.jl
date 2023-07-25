@@ -21,7 +21,7 @@ end
 
 # For the next function, 
 # the argument `flow` is a `DataFrame` of the form computed by `table_trajectories` above.
-function plot_trajectories(flow; sty=defaultstyle)
+function plot_trajectories(flow; sty=default_style)
   inf_layer = gf.layer(flow, x=:t, y=:Infectives, color=[sty.colour(I(0.0,1,2))], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:solid]))
   rem_layer = gf.layer(flow, x=:t, y=:Removals, color=[sty.colour(R(0.0, 1))], 

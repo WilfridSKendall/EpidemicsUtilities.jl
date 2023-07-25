@@ -1,0 +1,68 @@
+# Primitive usage:
+# using YAML
+# data = YAML.load_file("test.yml")
+# println(data)
+
+#function default_colour(x::R) colorant"tan"       end 
+#function default_colour(x::C) colorant"purple"    end 
+#function default_colour(x::I) colorant"orange"    end 
+#function default_colour(x::P) colorant"darkgreen" end 
+#function default_colour(x::T) where T<:AbstractInfectionMarker   colorant"orange" end
+#function default_colour(x::T) where T<:AbstractRemovalMarker     colorant"tan"    end
+#function default_colour(x::T) where T<:AbstractSusceptibleMarker colorant"blue"   end
+#function default_colour(x::T) where T<:AbstractIncident          colorant"white"  end
+
+# named colours
+blank:                     "white"    
+scaffold:                  "grey"
+forbid1:                   "steelblue" 
+forbid2:                   "lightsteelblue"
+background:                "bisque"
+
+Removal:                   "tan"
+CRemoval:                  "purple"
+Infection:                 "orange"
+PInfection:                "darkgreen"
+AbstractInfectionMarker:   "orange"
+AbstractRemovalMarker:     "tan"
+AbstractSusceptibleMarker: "tan"
+
+default:                   "white"
+
+#default_style = (
+#  radius   =  0.2cy,               smradius =  0.9 * 0.2cy,
+#  bit      = -0.02h,               tic      = -0.2cy,
+#  xlab     =  0cx-0.4inch,         yloc     = 0.25inch,
+#  height   =  0.0cy,              
+#  boundary =  linewidth(1.00mm),   trail    =  linewidth(0.75mm),
+#  broad    =  linewidth(2.00mm),
+#  realized =  linewidth(0.75mm),   dormant  =  linewidth(0.25mm),
+#  blank    =  colorant"white",     scaffold =  colorant"grey",
+#  forbid1  =  colorant"steelblue", forbid2  =  colorant"lightsteelblue", 
+#  region   =  (context(), rectangle(), fill(colorant"bisque"), fillopacity(0.3)),
+#  colour   =  default_colour,
+#)
+
+# node radius in `cy` units
+radius:                    0.2
+# shrinkage factor for small radius
+small_radius_factor:       0.9
+# 
+bit:                      -0.02
+# tic size in `cy` units
+tic:                      -0.02
+# label offsets in inches
+x_label_offset:           -0.4
+y_location:                0.25
+# vertical offset in `cy` units
+height_offset:             0.0
+
+#  line thicknesses in mm
+trail_thickness:           0.75
+dormant_thickness:         0.25
+broad_thickness:           2.00
+realized_thickness:        0.75
+dormant_thickness:         0.25
+
+# background opacity
+backopacity:               0.3

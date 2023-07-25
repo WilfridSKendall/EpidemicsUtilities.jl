@@ -8,7 +8,7 @@
 # connectors and regions on a single figure.
 # _This function is exported._
 function create_epidemic_view(duration, innov, flow, initial, realized; 
-                                  sty=defaultstyle)
+                                  sty=default_style)
   total_trajectory = compute_total_trajectory(duration, innov.population, initial, realized)
   
   (context(),
