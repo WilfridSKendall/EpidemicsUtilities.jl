@@ -2,9 +2,11 @@
 #
 # Drawing Zones [`07-Zones.jl`]
 # =============================
-
-# Representing infected area as collection of rectangles
-function infected_areas(population, total_trajectory)
+# In this section we implement a drawing function 
+# `infected_zones`^[The function `infected_zones` is used by `region_plot` defined later in this section.]
+# which 
+# represents the infected zone as collection of rectangles.
+function infected_zones(population, total_trajectory)
   xx= Float64[] ; yy = Integer[] ; rw = Float64[] ; rl = Integer[] ;
   for k in 1:population
     level = [bb for bb in total_trajectory if bb.target==k]
@@ -22,8 +24,10 @@ function infected_areas(population, total_trajectory)
   return xx, yy, rw, rl
 end
 
-# Representing removed area as collection of rectangles
-function removed_areas(population, total_trajectory)
+#  The drawing function 
+# `removed_zones`^[The function `removed_zones` is used by `region_plot` defined later in this section.]
+# represents the removed zone as collection of rectangles.
+function removed_zones(population, total_trajectory)
   xx= Float64[] ; yy = Integer[] ; rw = Float64[] ; rl = Integer[] ;
   for k in 1:population
     level = [bb for bb in total_trajectory if bb.target==k]
@@ -41,19 +45,19 @@ function removed_areas(population, total_trajectory)
   return xx, yy, rw, rl
 end
 
-# A function to plot infected and removed zones (together with epidemic
-# and removal trajectories using material from `06-Trajectories,jl`,
+# A function 
+# `region_plot`^[The function `region_plot` is **exported**.]
+# plots infected and removed zones (together with epidemic
+# and removal trajectories using `draw_marker` from `06-Trajectories,jl`,
 # and using `scaffolding` from `03-Templates,jl`).
-#
-# _This function is exported._
 #
 # :::{.callout-note}
 # Consider using "total_markers" and 
 # ensuring "total_trajectory" actually is a trajectory!
 # :::
 function region_plot(duration, population, total_trajectory; sty=defaultstyle)
-  xx1, yy1, rw1, rl1 = infected_areas(population, total_trajectory)
-  xx2, yy2, rw2, rl2 = removed_areas(population, total_trajectory)
+  xx1, yy1, rw1, rl1 = infected_zones(population, total_trajectory)
+  xx2, yy2, rw2, rl2 = removed_zones(population, total_trajectory)
  
   (context(),
     draw_marker([x for x in total_trajectory if isa(x, IS)], sty=sty),

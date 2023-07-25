@@ -1,8 +1,27 @@
 #
 #
-# A simple graphics utility [`08-Utility.jl`]
+# Graphics utilities [`08-Utility.jl`]
 # ===========================================
-# The following short utility function is helpful.
+# Finally, here is a function 
+# `create_epidemic_view`^[The function `create_epidemic_view` is **exported**.]
+# which presents incidents, realized incidents,
+# connectors and regions on a single figure.
+# _This function is exported._
+function create_epidemic_view(duration, innov, flow, initial, realized; 
+                                  sty=defaultstyle)
+  total_trajectory = compute_total_trajectory(duration, innov.population, initial, realized)
+  
+  (context(),
+          draw_realized_elements(initial, realized, sty=sty),
+          draw_elements(innov, sty=sty), 
+          region_plot(duration, innov.population, total_trajectory),
+          scaffolding(duration, innov.population))
+end
+
+
+# The following short utility function
+# `depict`^[The function `depict` is **exported**.]
+# is helpful.
 # It displays a figure produced using `Compose` or `Gadfly`,
 # and also creates corresponding `PNG` and `PDF` renderings in a sub-directory `image`.
 function depict(title, image)

@@ -2,9 +2,10 @@
 #
 # Basic image template elements [`03-Template.jl`]
 # ================================================
-# We need a function to draw the time axis, with tick marks at integer times.
-# Used in exported function `scaffolding`.
-# Note, both here and following, the careful use of graphics area units (`cx`, `cy`).
+# We need a function 
+# `time_axis`^[The function `time_axis` is used in the exported function `scaffolding` defined in this section.]
+# to draw the time axis, furnished with tick marks at integer times.
+# Note, both here and following, the careful use made of graphics area units (`cx`, `cy`).
 function time_axis(duration; sty=defaultstyle)
   labellocs = [(x)cx for x in 0:duration]
   step = 10^floor(Int, log10(duration))
@@ -22,8 +23,9 @@ function time_axis(duration; sty=defaultstyle)
     (context(), line(tic3), stroke(sty.scaffold), linewidth(0.1mm)), )
 end
 
-# Now we define a function to draw all time-lines as threads labelled by circled integers.
-# Used in exported function `scaffolding`.
+# Now we define a function 
+# `time_threads`^[The function `time_threads` is used in the exported function `scaffolding` defined in this section.]
+# drawing time-lines as threads labelled by circled integers.
 #
 # ::: {.callout-caution}
 # The definition of `circlabels` below needs to be changed if `population > MAXPOP=20`,
@@ -42,8 +44,9 @@ function time_threads(duration, population; sty=defaultstyle)
       stroke(sty.scaffold), linewidth(0.5mm), ), )
 end
 
-# These two functions are put together in a third, which constructs scaffolding (axes, time lines _etc_).
-# This function is _exported_.
+# These two functions are put together in a third function
+# `scaffolding`^[The function `scaffolding` is **exported**.],
+# which constructs scaffolding for graphs of epidemics (axes, time lines _etc_).
 function scaffolding(duration, population; sty=defaultstyle)
   (context(), sty.region, time_axis(duration, sty=sty), 
               time_threads(duration, population, sty=sty))

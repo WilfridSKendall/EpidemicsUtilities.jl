@@ -1,12 +1,11 @@
 #
 #
-# Drawing Functions [`05-Drawing.jl`]
+# Node-drawing Functions [`05-Drawing.jl`]
 # ===================================
-# Node-drawing functions
-# ----------------------
 # Here are functions to draw nodes (optionally as realized or not) for 
 # vectors of incidents of `BasicIncident`.
-# This function is _exported_.
+# The function `draw_incident`^[The function `draw_incident` is **exported**.]
+# draws plain incidents.
 #
 # ::: {.callout-note}
 # Colours (in `fill` and `stroke`) are vectorized!
@@ -38,7 +37,7 @@ function draw_incident(xl::Vector{T}; realized=false, sty=defaultstyle) where T<
 end
 
 # ::: {.callout-warning}
-# _Experimental_ so not yet used, not yet exported!
+# The function `draw_incident_test` is _experimental_ so not yet used, not yet exported!
 # :::
 function draw_incident_test(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:BasicIncident
   if length(xl) == 0
@@ -67,8 +66,8 @@ function draw_incident_test(xl::Vector{T}; realized=false, sty=defaultstyle) whe
   end
 end
 
-# Draw incidents with connections.
-# Used in exported function `draw_elements`.
+# Draw incidents with connections using
+# `draw_connect`^[The function `draw_connect` is used in the exported function `draw_elements` defined in this section.].
 #
 # ::: {.callout-note}
 # Colours (in `fill` and `stroke`) are vectorized!
@@ -85,14 +84,16 @@ function draw_connect(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:
     stroke(sty.colour(xl)), (realized ? sty.realized : sty.dormant) )
 end
 
-# This arranges for incidents not to be drawn unless it is specifically arranged to do so.
+# The following definitions ensure that incidents are not to be drawn unless 
+# specifically arranged to do so.
 function draw_incident(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:AbstractIncident 
 end
 function draw_connect(xl::Vector{T}; realized=false, sty=defaultstyle) where T<:AbstractIncident 
 end 
 
-# The next function draws the various incidents.
-# _This function is exported._
+# The next function 
+# `draw_elements`^[The function `draw_elements` is **exported**.]
+# draws the various incidents.
 function draw_elements(innov; I=I, P=P, R=R, C=C, sty=defaultstyle) 
 
   (context(),
@@ -106,16 +107,18 @@ function draw_elements(innov; I=I, P=P, R=R, C=C, sty=defaultstyle)
   )
 end
 
-# The next function combines depiction of the incidents with the axes.
-# _This function is exported._
+# The next function 
+# `create_nodes_view`^[The function `create_nodes_view` is **exported**.]
+# combines depiction of the incidents with the axes supplied
+# by `scaffolding` as defined in a previous section.
 function create_nodes_view(duration, innov; I=I, P=P, R=R, C=C, sty=defaultstyle)
   (context(), 
     draw_elements(innov, I=I, P=P, R=R, C=C, sty=sty), 
     scaffolding(duration, innov.population))
 end 
 
-# The next function draws the realized elements together with connectors.
-# _This function is exported._
+# The next function `draw_realized_elements`^[The function `draw_realized_elements` is **exported**.]
+# draws the realized elements together with connectors.
 function draw_realized_elements(initial, realized; 
             I=I, P=P, R=R, C=C, sty=defaultstyle)
   realized_removals   = [inc for inc in realized if (isa(inc, R) || isa(inc, C))]
@@ -142,18 +145,4 @@ function draw_realized_elements(initial, realized;
       ), 
     ) 
   )
-end
-
-# Finally, here is a function which presents incidents, realized incidents,
-# connectors and regions on a single figure.
-# _This function is exported._
-function create_epidemic_view(duration, innov, flow, initial, realized; 
-                                  sty=defaultstyle)
-  total_trajectory = compute_total_trajectory(duration, innov.population, initial, realized)
-  
-  (context(),
-          draw_realized_elements(initial, realized, sty=sty),
-          draw_elements(innov, sty=sty), 
-          region_plot(duration, innov.population, total_trajectory),
-          scaffolding(duration, innov.population))
 end

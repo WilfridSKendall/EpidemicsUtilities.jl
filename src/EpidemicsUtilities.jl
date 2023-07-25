@@ -49,30 +49,27 @@ export scaffolding
 export table_trajectories, plot_trajectories
 
 # ### Drawing nodes [`05-Nodes.jl`]
-# A function which also uses functions defined in 
-# `06-Trajectories.jl` and `07-Zones.jl`
-# to draw an entire epidemic.
-export create_epidemic_view
-
-# Functions to draw nodes and connectors.
+# Functions to draw nodes and connectors:
 export create_nodes_view
-
-# (Used only in `experiment.qmd`.)
+# and (used only in `experiment.qmd`)
 export draw_incident, draw_elements, draw_realized_elements
 
 # ### Drawing trajectories [`06-Trajectories.jl`]
 # No exports from this section.
 
 # ### Drawing zones [`07-Zones.jl`]
-# No exports from this section.
-
-# ### Further drawing functions using markers.
-# (Used only in `experiment.qmd`.)
+# These functions are used only in `experiment.qmd`.
 export compute_total_trajectory
 export region_plot
 
-# ## Utility drawing function [`08-Utility.jl`]
-# A convenient drawing function to create `PNG` and `PDF` variants of a figure.
+# ### Graphics utilities [`08-Utility.jl`]
+# This section defines 
+# an exported function `create_epidemic_view` which uses functions defined in 
+# `06-Trajectories.jl` and `07-Zones.jl`
+# to draw an entire epidemic;
+export create_epidemic_view
+# and also defines `depict`,
+# a convenient exported drawing function which creates `PNG` and `PDF` variants of a figure.
 export depict
 
 # Imports

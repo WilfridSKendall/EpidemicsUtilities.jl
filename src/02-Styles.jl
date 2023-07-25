@@ -24,8 +24,8 @@ end
 
 BasicIncident = unionize_composites(AbstractIncident)
 
-# Colours related to various incidents, using function `csty`
-# -----------------------------------------------------------
+# Colours related to various incidents, using function `colour`
+# -------------------------------------------------------------
 # Various incidents and markers will be used sufficiently often to justify abbreviations.
 # These abbreviations (or an appropriate subset) are often repeated on scripts.
 A = AbstractInfection
@@ -36,19 +36,19 @@ CR = ContinuingRemoved ; CI = ContinuingInfected ; CS = ContinuingSusceptible
 MIA = MarkerInfectionA ; MRA = MarkerRemovalA
 MIB = MarkerInfectionB ; MRB = MarkerRemovalB
 
-# A function `csty` associates these to colours, using the type hierarchy.
+# A function `colour` associates these to colours, using the type hierarchy.
 # A useful list of colours is given in <https://juliagraphics.github.io/Colors.jl/stable/namedcolors/>.
-function csty(x::R) colorant"tan"       end 
-function csty(x::C) colorant"purple"    end 
-function csty(x::I) colorant"orange"    end 
-function csty(x::P) colorant"darkgreen" end 
-function csty(x::T) where T<:AbstractInfectionMarker   colorant"orange"      end
-function csty(x::T) where T<:AbstractRemovalMarker     colorant"tan"         end
-function csty(x::T) where T<:AbstractSusceptibleMarker colorant"blue"        end
-function csty(x::T) where T<:AbstractIncident          colorant"white"       end
+function colour(x::R) colorant"tan"       end 
+function colour(x::C) colorant"purple"    end 
+function colour(x::I) colorant"orange"    end 
+function colour(x::P) colorant"darkgreen" end 
+function colour(x::T) where T<:AbstractInfectionMarker   colorant"orange"      end
+function colour(x::T) where T<:AbstractRemovalMarker     colorant"tan"         end
+function colour(x::T) where T<:AbstractSusceptibleMarker colorant"blue"        end
+function colour(x::T) where T<:AbstractIncident          colorant"white"       end
 
-function csty(xl::Vector{T}) where T<:AbstractIncident 
-  return [csty(x) for x in xl]
+function colour(xl::Vector{T}) where T<:AbstractIncident 
+  return [colour(x) for x in xl]
 end
 
 # Default drawing styles forming a structure `defaultstyle`
@@ -71,6 +71,6 @@ defaultstyle = (
   blank    =  colorant"white",     scaffold =  colorant"grey",
   forbid1  =  colorant"steelblue", forbid2  =  colorant"lightsteelblue", 
   region   =  (context(), rectangle(), fill(colorant"bisque"), fillopacity(0.3)),
-  colour   =  csty,
+  colour   =  colour,
 )
 

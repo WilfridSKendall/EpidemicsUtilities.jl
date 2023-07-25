@@ -2,7 +2,9 @@
 #
 # Drawing Trajectories [`06-Trajectories.jl`]
 # ===========================================
-# First a function to draw a marker node. 
+# First a function 
+# `draw_marker`^[The function `draw_marker` is used by subsequent exported functions defined in this section.]
+# to draw a marker node. 
 # Note that marker labels omit time-line superscript as this is redundant!
 function draw_marker(xl::Vector{T}; sty=defaultstyle) where T<:AbstractMarker
   if length(xl) > 0
@@ -25,7 +27,8 @@ function draw_marker(xl::Vector{T}; sty=defaultstyle) where T<:AbstractMarker
 end
 
 # Compute total trajectory
-# _This function is exported._
+# `compute_total_trajectory`,^[The function `compute_total_trajectory` is **exported**.]
+# employing markers computed using the above function.
 function compute_total_trajectory(duration, population, initial_state, realized)
   initial_markers = Iterators.flatten([
     [IR(0, k) for k in 1:initial_state.r],
@@ -52,9 +55,10 @@ function compute_total_trajectory(duration, population, initial_state, realized)
 end
 
 
-# Compute epidemic trajectory, adding a final segment 
+# Compute epidemic trajectory
+# `epidemic_trajectory`,^[The function `epidemic_trajectory` is used in the  exported function `region_plot`.]
+# adding a final segment 
 # by appending highest `MRB` if proposed trajectory doesn't extend to full duration.
-# Used in exported function `region_plot`.
 function epidemic_trajectory(duration, total_trajectory)
   e_trajectory = [(x.t, x.target) for x in total_trajectory 
   if (isa(x, MIA) || isa(x, MIB)  || 
@@ -69,9 +73,10 @@ function epidemic_trajectory(duration, total_trajectory)
   e_trajectory
 end
 
-# Compute removal trajectory, adding a final segment 
+# Compute removal trajectory
+# `removal_trajectory`,^[The function `removal_trajectory` is used in the  exported function `region_plot`.]
+# adding a final segment 
 # by appending highest `MRB` if proposed trajectory doesn't extend to full duration.
-# Used in exported function `region_plot`.
 function removal_trajectory(duration, total_trajectory)
   r_trajectory = [(x.t, x.target) for x in total_trajectory 
       if (isa(x, IR) || isa(x, MRA) || isa(x, MRB))]

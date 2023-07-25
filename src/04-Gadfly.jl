@@ -3,12 +3,12 @@
 # Drawing functions using `Gadfly` [`04-Gadfly.jl`]
 # =================================================
 # Define `Gadfly`-based functions,
-# respectively `table_trajectories` and `plot_trajectories`,
+# respectively `table_trajectories`
+# and `plot_trajectories`^[The functions `table_trajectories` and `plot_trajectories` are **exported**.],
 # to construct and plot a dataframe
 # of trajectories as knots of piecewise constant functions, having used `evolution`
 # to deliver the \(\SIR\) trajectory `traj`
-# and a sorted list of realized incidents in `realized`.
-# _These two functions are exported._
+# as well as a sorted list of realized incidents in `realized`.
 function table_trajectories(duration, initial, traj)
   states = [initial]
   t = [state.t for state in traj] ; push!(t, duration)
@@ -19,6 +19,8 @@ function table_trajectories(duration, initial, traj)
   DataFrame(t=t, Susceptibles=s, Infectives=i, Removals=r)
 end
 
+# For the next function, 
+# the argument `flow` is a `DataFrame` of the form computed by `table_trajectories` above.
 function plot_trajectories(flow; sty=defaultstyle)
   inf_layer = gf.layer(flow, x=:t, y=:Infectives, color=[sty.colour(I(0.0,1,2))], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:solid]))
