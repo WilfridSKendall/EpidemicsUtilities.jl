@@ -75,3 +75,32 @@ default_style = (
   colour   =  default_colour,
 )
 
+# Reading in a new set of styles
+# ------------------------------
+# A possible location for the `YAML` file 
+# (relative to `EpidemicsUtilities/src`) is
+# `../data/default_style.yml`
+function load_style(fpath)
+  return YAML.load_file(fpath)
+  #println(data["colour"])
+  #println(data["length_cy"])
+  #println(data["length_h"])
+  #println(data["length_inches"])
+  #println(data["length_factor"])
+  #println(data["thickness_mm"])
+  #println(data["opacity"])
+end
+# Try
+#
+# EpidemicsUtilities.load_style("EpidemicsUtilities/data/default_style.yml")
+#
+# julia> keys=(:a,:b)
+# 
+# julia> values=(1, "white")
+# 
+# julia> (; zip(keys, values)...)
+# (a = 1, b = "white")
+#
+# julia> Using Colors
+# 
+# julia> @colorant_str("red")==colorant"red"

@@ -39,6 +39,8 @@ module EpidemicsUtilities
 
 # ### [`EpidemicsUtilities`]
 # This section defines no functions or other entities. 
+# Except for `load_style`, which is temporary!
+export load_style
 
 # ### Template for plots [`03-Template.jl`]
 # A function to draw the time axis and time-lines. 
@@ -80,8 +82,11 @@ using Colors, Compose, DataFrames, Measures
 import Cairo, Fontconfig, Gadfly
 gf = Gadfly ; 
 
-# The next module is required in order to access the `subtypes` function.
+# We need access to the `subtypes` function in order to construct the `BasicIncident` type (see `02-Styles.jl`).
 using InteractiveUtils 
+
+# We need the ability to read `YAML` files in order to configure styles more easily (see `02-Styles.jl`).
+import YAML
 
 # The associated `EpidemicsCFTP` is a module currently under development,
 # so has to be added using `dev EpidemicsCFTP`.

@@ -1,6 +1,6 @@
 # Primitive usage:
-# using YAML
-# data = YAML.load_file("test.yml")
+# import YAML
+# data = YAML.load_file("default_style.yml")
 # println(data)
 
 #function default_colour(x::R) colorant"tan"       end 
@@ -13,21 +13,22 @@
 #function default_colour(x::T) where T<:AbstractIncident          colorant"white"  end
 
 # named colours
-blank:                     "white"    
-scaffold:                  "grey"
-forbid1:                   "steelblue" 
-forbid2:                   "lightsteelblue"
-background:                "bisque"
+colour:
+    blank:                     "white"    
+    scaffold:                  "grey"
+    forbid1:                   "steelblue" 
+    forbid2:                   "lightsteelblue"
+    background:                "bisque"
 
-Removal:                   "tan"
-CRemoval:                  "purple"
-Infection:                 "orange"
-PInfection:                "darkgreen"
-AbstractInfectionMarker:   "orange"
-AbstractRemovalMarker:     "tan"
-AbstractSusceptibleMarker: "tan"
+    Removal:                   "tan"
+    CRemoval:                  "purple"
+    Infection:                 "orange"
+    PInfection:                "darkgreen"
+    AbstractInfectionMarker:   "orange"
+    AbstractRemovalMarker:     "tan"
+    AbstractSusceptibleMarker: "tan"
 
-default:                   "white"
+    default:                   "white"
 
 #default_style = (
 #  radius   =  0.2cy,               smradius =  0.9 * 0.2cy,
@@ -43,26 +44,31 @@ default:                   "white"
 #  colour   =  default_colour,
 #)
 
-# node radius in `cy` units
-radius:                    0.2
-# shrinkage factor for small radius
-small_radius_factor:       0.9
-# 
-bit:                      -0.02
-# tic size in `cy` units
-tic:                      -0.02
+length_cy:
+    # node radius in `cy` units
+    radius:                0.20
+    yloc:                  0.25
+    # vertical offset in `cy` units
+    height:                0.00
+    # tic size in `cy` units
+    tic:                  -0.02
+length_h:
+    bit:                  -0.02
 # label offsets in inches
-x_label_offset:           -0.4
-y_location:                0.25
-# vertical offset in `cy` units
-height_offset:             0.0
+length_inches:
+    xlab:                 -0.40
+# shrinkage factor for small radius
+length_factor:
+    smradius:              0.90
 
 #  line thicknesses in mm
-trail_thickness:           0.75
-dormant_thickness:         0.25
-broad_thickness:           2.00
-realized_thickness:        0.75
-dormant_thickness:         0.25
+thickness_mm:
+    boundary:              1.00
+    trail:                 0.75
+    dormant:               0.25
+    broad:                 2.00
+    realized:              0.75
 
 # background opacity
-backopacity:               0.3
+opacity:
+    background:            0.30
