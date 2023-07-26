@@ -81,14 +81,14 @@ default_style = (
 # (relative to `EpidemicsUtilities/src`) is
 # `../data/default_style.yml`
 function load_style(fpath)
-  return YAML.load_file(fpath)
-  #println(data["colour"])
-  #println(data["length_cy"])
-  #println(data["length_h"])
-  #println(data["length_inches"])
-  #println(data["length_factor"])
-  #println(data["thickness_mm"])
-  #println(data["opacity"])
+  data = YAML.load_file(fpath)
+  colour = Dict{Symbol, RGB}()
+  for item in data["colour"]
+    key = Symbol(item[1])
+    value = parse(Colorant, item[2])
+    colour[key] = value
+  end
+  return colour
 end
 # Try
 #
