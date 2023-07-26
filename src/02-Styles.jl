@@ -68,11 +68,12 @@ default_style = (
   height   =  0.0cy,              
   boundary =  linewidth(1.00mm),   trail    =  linewidth(0.75mm),
   broad    =  linewidth(2.00mm),
-  realized =  linewidth(0.75mm),   dormant  =  linewidth(0.25mm),
-  blank    =  colorant"white",     scaffold =  colorant"grey",
-  forbid1  =  colorant"steelblue", forbid2  =  colorant"lightsteelblue", 
-  region   =  (context(), rectangle(), fill(colorant"bisque"), fillopacity(0.3)),
+  realized =  linewidth(0.75mm),   dormant   =  linewidth(0.25mm),
+  blank    =  colorant"white",     scaffold  =  colorant"grey",
+  forbid1  =  colorant"steelblue", forbid2   =  colorant"lightsteelblue", 
+  default  =  colorant"white",     background = colorant"bisque",
   colour   =  default_colour,
+  region   =  (context(), rectangle(), fill(colorant"bisque"), fillopacity(0.3)),
 )
 
 # Reading in a new set of styles
@@ -81,26 +82,25 @@ default_style = (
 # (relative to `EpidemicsUtilities/src`) is
 # `../data/default_style.yml`
 function load_style(fpath)
-  data = YAML.load_file(fpath)
-  colour = Dict{Symbol, RGB}()
-  for item in data["colour"]
-    key = Symbol(item[1])
-    value = parse(Colorant, item[2])
-    colour[key] = value
-  end
-  return colour
+  YAML.load_file(fpath)
 end
-# Try
-#
-# EpidemicsUtilities.load_style("EpidemicsUtilities/data/default_style.yml")
-#
+
+# function load_style(fpath)
+#   data = YAML.load_file(fpath)
+#   colour = Dict{Symbol, RGB}()
+#   for item in data["colour_x"]
+#     key = Symbol(item[1])
+#     #key = item[1]
+#     value = parse(Colorant, item[2])
+#     colour[key] = value
+#   end
+#   return colour
+# end
+
+# note
 # julia> keys=(:a,:b)
 # 
 # julia> values=(1, "white")
 # 
 # julia> (; zip(keys, values)...)
 # (a = 1, b = "white")
-#
-# julia> Using Colors
-# 
-# julia> @colorant_str("red")==colorant"red"

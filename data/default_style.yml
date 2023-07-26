@@ -12,14 +12,8 @@
 #function default_colour(x::T) where T<:AbstractSusceptibleMarker colorant"blue"   end
 #function default_colour(x::T) where T<:AbstractIncident          colorant"white"  end
 
-# named colours
+# named colours for incidents and markers
 colour:
-    blank:                     "white"    
-    scaffold:                  "grey"
-    forbid1:                   "steelblue" 
-    forbid2:                   "lightsteelblue"
-    background:                "bisque"
-
     Removal:                   "tan"
     CRemoval:                  "purple"
     Infection:                 "orange"
@@ -28,6 +22,13 @@ colour:
     AbstractRemovalMarker:     "tan"
     AbstractSusceptibleMarker: "tan"
 
+# named colour for other purposes
+colour_x:
+    blank:                     "white"    
+    scaffold:                  "grey"
+    forbid1:                   "steelblue" 
+    forbid2:                   "lightsteelblue"
+    background:                "bisque"
     default:                   "white"
 
 #default_style = (
@@ -47,16 +48,16 @@ colour:
 length_cy:
     # node radius in `cy` units
     radius:                0.20
-    yloc:                  0.25
     # vertical offset in `cy` units
     height:                0.00
     # tic size in `cy` units
-    tic:                  -0.02
+    tic:                  -0.20
 length_h:
     bit:                  -0.02
 # label offsets in inches
-length_inches:
+length_inch:
     xlab:                 -0.40
+    yloc:                  0.25
 # shrinkage factor for small radius
 length_factor:
     smradius:              0.90
