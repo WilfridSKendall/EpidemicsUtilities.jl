@@ -31,15 +31,16 @@
 # The controlling script for the `EpidemicsUtilities` package
 # ===========================================================
 module EpidemicsUtilities
-# This module holds functions to help illustrate simulation for
+# This module defines functions enabling illustration of simulations for
 # $\SIR$ epidemics conditioned on removals being observed.
 
 # Exports
 # -------
 
-# ### [Styles and colours `02-Styles.jl`]
-# This section defines `load_style`, which loads data for the `default_style` structure.
-export load_style
+# ### Styles and colours [`02-Styles.jl`]
+# This section defines `load_style`, which loads data for the `default_style` structure,
+# and `create_style`, which uses this information to create (and return) a style.
+export load_style, create_style
 
 # ### Template for plots [`03-Template.jl`]
 # A function to draw the time axis and time-lines. 

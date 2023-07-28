@@ -14,8 +14,8 @@ function create_epidemic_view(duration, innov, flow, initial, realized;
   (context(),
           draw_realized_elements(initial, realized, sty=sty),
           draw_elements(innov, sty=sty), 
-          region_plot(duration, innov.population, total_trajectory),
-          scaffolding(duration, innov.population))
+          region_plot(duration, innov.population, total_trajectory, sty=sty),
+          scaffolding(duration, innov.population, sty=sty))
 end
 
 
