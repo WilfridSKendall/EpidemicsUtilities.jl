@@ -4,7 +4,8 @@
 # =================================
 # A union of composite `AbstractIncident` sub-types
 # -------------------------------------------------
-# We will use a union type, `BasicIncident`, based on composite `AbstractIncident` types.
+# We will use a union type, `BasicIncident`^[The tyoe `BasicIncident` is not exported, and may be redundant.], 
+# based on composite `AbstractIncident` types.
 # This is computed within the module.
 function unionize_composites(a::Type)::Type
   coll = subtypes(a)
@@ -38,16 +39,18 @@ CR = ContinuingRemoved ; CI = ContinuingInfected ; CS = ContinuingSusceptible
 MIA = MarkerInfectionA ; MRA = MarkerRemovalA
 MIB = MarkerInfectionB ; MRB = MarkerRemovalB
   
-# Reading in information to define default style
-# ----------------------------------------------
-# Load information for a style using
+# Reading in information to define default plotting style
+# -------------------------------------------------------
+# Load information for a plotting style 
+# using `load_style`^[The function `load_style` is **exported**.]
 function load_style(fpath) YAML.load_file(fpath) end
 # Default_style information can be loaded using
 # ```
 # load_style(pkgdir(EpidemicsUtilities, "data", "default_style.yml"))
 # ```
 
-# This function creates an alternative style using the loaded information.
+# The function `create_style`^[The function `create_style` is **exported**.]
+# generates a plotting style using the loaded information.
 
 function create_style(data)
   d_cy = data["length_cy"]
