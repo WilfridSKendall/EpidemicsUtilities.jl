@@ -24,6 +24,42 @@ end
 
 BasicIncident = unionize_composites(AbstractIncident)
 
+
+# Reading in a new set of styles
+# ------------------------------
+# A possible location for the `YAML` file 
+# (relative to `EpidemicsUtilities/src`) is
+# `../data/default_style.yml`
+function load_style(fpath)
+  YAML.load_file(fpath)
+end
+# We use this to load data for the `default style`.
+data = load_style("data/default_style.yml")
+
+
+# #### Sundries ...
+# function load_style(fpath)
+#   data = YAML.load_file(fpath)
+#   colour = Dict{Symbol, RGB}()
+#   for item in data["colour_x"]
+#     key = Symbol(item[1])
+#     #key = item[1]
+#     value = parse(Colorant, item[2])
+#     colour[key] = value
+#   end
+#   return colour
+# end
+
+# note
+# julia> keys=(:a,:b)
+# 
+# julia> values=(1, "white")
+# 
+# julia> (; zip(keys, values)...)
+# (a = 1, b = "white")
+
+
+
 # Colours related to various incidents, using function `colour`
 # -------------------------------------------------------------
 # Various incidents and markers will be used sufficiently often to justify abbreviations.
@@ -61,8 +97,10 @@ end
 # ::: {.callout-note}
 # See if this can be read-in from a data-file instead: investigate `YAML.jl`.
 # :::
+
+d_cy = data["length_cy"]
 default_style = (
-  radius   =  0.2cy,               smradius =  0.9 * 0.2cy,
+  radius   =  d_cy["radius"]cy,               smradius =  0.9 * 0.2cy,
   bit      = -0.02h,               tic      = -0.2cy,
   xlab     =  0cx-0.4inch,         yloc     = 0.25inch,
   height   =  0.0cy,              
@@ -76,31 +114,3 @@ default_style = (
   region   =  (context(), rectangle(), fill(colorant"bisque"), fillopacity(0.3)),
 )
 
-# Reading in a new set of styles
-# ------------------------------
-# A possible location for the `YAML` file 
-# (relative to `EpidemicsUtilities/src`) is
-# `../data/default_style.yml`
-function load_style(fpath)
-  YAML.load_file(fpath)
-end
-
-# function load_style(fpath)
-#   data = YAML.load_file(fpath)
-#   colour = Dict{Symbol, RGB}()
-#   for item in data["colour_x"]
-#     key = Symbol(item[1])
-#     #key = item[1]
-#     value = parse(Colorant, item[2])
-#     colour[key] = value
-#   end
-#   return colour
-# end
-
-# note
-# julia> keys=(:a,:b)
-# 
-# julia> values=(1, "white")
-# 
-# julia> (; zip(keys, values)...)
-# (a = 1, b = "white")

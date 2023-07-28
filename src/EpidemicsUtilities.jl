@@ -37,9 +37,8 @@ module EpidemicsUtilities
 # Exports
 # -------
 
-# ### [`EpidemicsUtilities`]
-# This section defines no functions or other entities. 
-# Except for `load_style`, which is temporary!
+# ### [Styles and colours `02-Styles.jl`]
+# This section defines `load_style`, which loads data for the `default_style` structure.
 export load_style
 
 # ### Template for plots [`03-Template.jl`]
