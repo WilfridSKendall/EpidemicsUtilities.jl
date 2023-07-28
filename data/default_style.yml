@@ -20,7 +20,7 @@ colour:
     PInfection:                "darkgreen"
     AbstractInfectionMarker:   "orange"
     AbstractRemovalMarker:     "tan"
-    AbstractSusceptibleMarker: "tan"
+    AbstractSusceptibleMarker: "blue"
 
 # named colour for other purposes
 colour_x:

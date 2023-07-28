@@ -1,6 +1,6 @@
+using EpidemicsCFTP
 using EpidemicsUtilities
 using Test
+using Compose, Colors
 
-@testset "EpidemicsUtilities.jl" begin
-    # Write your tests here.
-end
+include("styles.jl")

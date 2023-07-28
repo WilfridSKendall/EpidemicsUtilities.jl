@@ -3,3 +3,5 @@ docs/
 /Manifest.toml
 
 /VERSION.txt
+
+.*.stamp
