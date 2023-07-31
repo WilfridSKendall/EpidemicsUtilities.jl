@@ -1,8 +1,8 @@
 #
 #
-# Drawing Zones [`07-Zones.jl`]
+# [`07-Zones.jl`] Drawing Zones
 # =============================
-# In this section we implement a drawing function 
+# This section implements a drawing function 
 # `infected_zones`^[The function `infected_zones` is used by `region_plot` defined later in this section.]
 # which 
 # represents the infected zone as collection of rectangles.
@@ -52,13 +52,12 @@ end
 # and using `scaffolding` from `03-Templates,jl`).
 #
 # :::{.callout-note}
-# Consider using "total_markers" and 
-# ensuring "total_trajectory" actually is a trajectory!
+# Consider using `total_markers` and 
+# ensuring that `total_trajectory` actually is a trajectory!
 # :::
 function region_plot(duration, population, total_trajectory; sty=default_style)
   xx1, yy1, rw1, rl1 = infected_zones(population, total_trajectory)
   xx2, yy2, rw2, rl2 = removed_zones(population, total_trajectory)
- 
   (context(),
     draw_marker([x for x in total_trajectory if isa(x, IS)], sty=sty),
     draw_marker([x for x in total_trajectory if isa(x, II)], sty=sty),
@@ -73,27 +72,22 @@ function region_plot(duration, population, total_trajectory; sty=default_style)
     draw_marker([x for x in total_trajectory if isa(x, CS)], sty=sty),
     draw_marker([x for x in total_trajectory if isa(x, CI)], sty=sty),
     draw_marker([x for x in total_trajectory if isa(x, CR)], sty=sty),
-
     (context(),
       rectangle(xx1, yy1, rw1, rl1),
       fill(sty.colour(I(0.0, 1,2))), fillopacity(0.3),
     ),
-
     (context(),
       rectangle(xx2, yy2, rw2, rl2),
       fill(sty.colour(C(0.0, 1))), fillopacity(0.3),
     ),
-
     (context(),
     line(epidemic_trajectory(duration, total_trajectory)),
       stroke(sty.colour(I(0.0, 1,2))), sty.trail
     ),
-
     (context(),
       line(removal_trajectory(duration, total_trajectory)),
       stroke(sty.colour(C(0.0, 1))), sty.trail
     ),
-
     scaffolding(duration, population),
   )
 end

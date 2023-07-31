@@ -1,10 +1,10 @@
 #
 #
-# Basic image template elements [`03-Template.jl`]
+# [`03-Template.jl`] Basic image template elements
 # ================================================
-# We need a function 
+# Simulation plots are based on a function 
 # `time_axis`^[The function `time_axis` is used in the exported function `scaffolding` defined in this section.]
-# to draw the time axis, furnished with tick marks at integer times.
+# which draws the process time axis, furnished with tick marks at integer times.
 # Note, both here and following, the careful use made of graphics area units (`cx`, `cy`).
 function time_axis(duration; sty=default_style)
   labellocs = [(x)cx for x in 0:duration]
@@ -23,17 +23,9 @@ function time_axis(duration; sty=default_style)
     (context(), line(tic3), stroke(sty.scaffold), linewidth(0.1mm)), )
 end
 
-# Now we define a function 
+# A function 
 # `time_threads`^[The function `time_threads` is used in the exported function `scaffolding` defined in this section.]
-# drawing time-lines as threads labelled by circled integers.
-#
-# ::: {.callout-caution}
-# The definition of `circlabels` below needs to be changed if `population > MAXPOP=20`,
-# as unicode then runs out of circled integers!
-# (Figure out how to use 
-# one of the many ideas in 
-# <https://tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers>.)
-# :::
+# draws time-lines as threads labelled by circled integers.
 function time_threads(duration, population; sty=default_style)
   circlabels   = [string(Char(0x00002460+i-1)) for i in 1:population]
 
@@ -43,10 +35,19 @@ function time_threads(duration, population; sty=default_style)
     (context(), line([[(0cx, (k)cy), ((duration)cx, (k)cy)] for k in 1:population]), 
       stroke(sty.scaffold), linewidth(0.5mm), ), )
 end
+#
+# ::: {.callout-caution}
+# Here the definition of `circlabels` below needs to be changed if `population > MAXPOP=20`,
+# as unicode then runs out of circled integers!
+# (Figure out how to use 
+# one of the many ideas in 
+# <https://tex.stackexchange.com/questions/7032/good-way-to-make-textcircled-numbers>.)
+# :::
+
 
 # These two functions are put together in a third function
 # `scaffolding`^[The function `scaffolding` is **exported**.],
-# which constructs scaffolding for graphs of epidemics (axes, time lines _etc_).
+# which constructs the fundamental scaffolding for graphs of epidemics (axes, time lines _etc_).
 function scaffolding(duration, population; sty=default_style)
   (context(), sty.region, time_axis(duration, sty=sty), 
               time_threads(duration, population, sty=sty))
