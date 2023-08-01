@@ -27,7 +27,7 @@ function draw_marker(xl::Vector{T}; sty=default_style) where T<:AbstractMarker
 end
 
 # A total trajectory is computed by
-# `compute_total_trajectory`^[The function `compute_total_trajectory` is **exported**.];
+# `compute_total_trajectory`;^[The function `compute_total_trajectory` is **exported**.]
 # the trajectory is delineated by markers (not incidents).
 function compute_total_trajectory(duration, population, initial_state, realized)
   initial_markers = Iterators.flatten([
@@ -74,7 +74,7 @@ function epidemic_trajectory(duration, total_trajectory)
 end
 
 # A removal trajectory is computed by the function
-# `removal_trajectory`^[The function `removal_trajectory` is used in the  exported function `region_plot`.],
+# `removal_trajectory`,^[The function `removal_trajectory` is used in the  exported function `region_plot`.]
 # adding a final segment 
 # by appending highest `MRB` if the proposed trajectory doesn't extend to full duration.
 function removal_trajectory(duration, total_trajectory)

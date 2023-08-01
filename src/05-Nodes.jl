@@ -3,21 +3,21 @@
 # [`05-Nodes.jl`] Node-drawing Functions
 # ======================================
 # Here are functions to draw nodes (optionally as realized or not) for 
-# vectors of incidents of `BasicIncident`.
+# vectors of `AbstractIncident`s.
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
 # draws plain undecorated incidents.
-function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
+function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident
   if length(xl) > 0
     if realized
+      xli = [x for x in xl if typeof(x)<:AbstractInfection]
       (context(),
         (context(),
-        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.radius]), 
-        sty.realized, fill(sty.colour(xl)), fillopacity(0.0), stroke(sty.colour(xl)) ),
-        if eltype(xl)<:AbstractInfection
-          (context(),
-          circle(map(x->(x.t)cx, xl), map(x -> x.infectee, xl), [sty.smradius]),
-            sty.realized, fill(sty.colour(xl)), fillopacity(0.0), stroke(sty.colour(xl)))
-        end, )  
+          circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.radius]), 
+            sty.realized, fill(sty.colour(xl)), fillopacity(0.0), stroke(sty.colour(xl)) ),
+        (context(), 
+          circle(map(x->(x.t)cx, xli), map(x -> x.infectee, xli), [sty.smradius]),
+            sty.realized, fill(sty.colour(xli)), fillopacity(0.0), stroke(sty.colour(xli))),
+      )  
     else
       (context(),
         (context(),
@@ -37,8 +37,8 @@ end
 # :::
 
 # Incidents decorated with connections are drawn using
-# `draw_connect`^[The function `draw_connect` is used 
-# in the exported function `draw_elements` defined in this section.].
+# `draw_connect`.^[The function `draw_connect` is used 
+# in the exported function `draw_elements` defined in this section.]
 function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
   if (eltype(xl)<:AbstractInfection)
     (context(), 

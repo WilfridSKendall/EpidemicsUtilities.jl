@@ -42,10 +42,16 @@ module EpidemicsUtilities
 # This section lists the various exports of the module `EpidemicsUtilities`,
 # in sub-sections corresponding to the sub-scripts in which the exports are defined.
 #
+# ### Controlling script
+# The controlling script `EpidemicsUtilities.jl` exports objects but does not directly define them.
+#
 # ### Styles and colours
-# The sub-script `02-Styles.jl` defines `load_style`, loading `YAML` data for the `default_style` structure,
-# and `create_style`, using these data to create (and return) a style.
+# The sub-script `02-Styles.jl` defines the function `load_style`, 
+# which loads `YAML` data for a `style` structure,
+# and the function `create_style`, which uses these data to create (and return) a `style`.
 export load_style, create_style
+# It also defines the type `BasicIncident`, used in `05-Nodes.jl` but not exported
+# (and possibly to become redundant).
 
 # ### Template for plots
 # The sub-script `03-Template.jl` defines a function `scaffolding`
@@ -54,8 +60,8 @@ export load_style, create_style
 export scaffolding
 
 # ### `Gadfly` drawing Functions
-# The sub-script `04-Gadfly.jl` defines specific drawing functions which use `Gadfly`
-# rather than the template produced by `scaffolding` from `03-Template.jl`.
+# The sub-script `04-Gadfly.jl` defines specific drawing functions which use the `Gadfly` plot package.
+# These functions do _not_ use the template produced by `scaffolding` from `03-Template.jl`.
 export table_trajectories, plot_trajectories
 
 # ### Drawing nodes
@@ -75,17 +81,17 @@ export region_plot
 
 # ### Graphics utilities
 # The sub-script `08-Utility.jl` defines  
-# an exported function `create_epidemic_view`, using functions defined in 
+# a function `create_epidemic_view`, using functions defined in 
 # `06-Trajectories.jl` and `07-Zones.jl`
 # to draw an entire epidemic.
 export create_epidemic_view
 # It also defines
-# a convenient exported drawing function  `depict`, creating `PNG` and `PDF` variants of a figure.
+# a convenient drawing function  `depict`, creating `PNG` and `PDF` variants of a figure.
 export depict
 
 # Imports
 # -------
-# The module `EpidemicsUtilities` requires import of a number of other modules as follows. 
+# The module `EpidemicsUtilities` imports of the following modules. 
 using Colors, Compose, DataFrames, Measures
 import Cairo, Fontconfig, Gadfly
 
@@ -93,12 +99,11 @@ import Cairo, Fontconfig, Gadfly
 # in order to construct the `BasicIncident` type (see `02-Styles.jl`).
 using InteractiveUtils 
 
-# The ability to read `YAML` files allows easier configuration of styles 
-# more easily (see `02-Styles.jl`).
+# The ability to read `YAML` files facilitates configuration of styles (see `02-Styles.jl`).
 import YAML
 
-# The associated `EpidemicsCFTP` is a module currently under development
-# (therefore added using `dev EpidemicsCFTP` .
+# The associated module `EpidemicsCFTP` is currently under development
+# (therefore is added using `dev EpidemicsCFTP`).
 using EpidemicsCFTP 
 
 # List of included scripts
