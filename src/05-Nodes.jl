@@ -6,7 +6,37 @@
 # vectors of incidents of `BasicIncident`.
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
 # draws plain undecorated incidents.
-function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
+
+# Here we seek better code.
+function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident
+  if length(xl) > 0
+    xli = [x for x in xl if typeof(x) <: AbstractInfection]
+    if realized
+      (context(),
+        (context(),
+          circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.radius]), 
+            sty.realized, fill(sty.colour(xl)), fillopacity(0.0), stroke(sty.colour(xl)) ),
+        (context(),
+          circle(map(x->(x.t)cx, xli), map(x -> x.infectee, xli), [sty.smradius]),
+            sty.realized, fill(sty.colour(xli)), fillopacity(0.0), stroke(sty.colour(xli))),
+      )  
+    else
+      (context(),
+        (context(),
+          text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), 
+               map(x -> string(x), xl), [hcenter], [vcenter]), 
+          fontsize(5pt), font("Helvetica")),
+        (context(),
+          circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.radius]), 
+          fill(sty.blank), stroke(sty.colour(xl))), )
+    end
+  end
+end
+    
+clue = "Using new 05-Nodes.jl"
+
+# Here is the anchor version which works!
+function draw_incident_0p1p2p7(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
   if length(xl) > 0
     if realized
       (context(),
@@ -36,10 +66,23 @@ end
 # use of this, as we want to isolate `AbstractInfection` sub-types and draw them a little differently.
 # :::
 
+# Here we seek better code.
+
 # Incidents decorated with connections are drawn using
 # `draw_connect`.^[The function `draw_connect` is used 
 # in the exported function `draw_elements` defined in this section.]
-function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
+function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident
+  xli = [x for x in xl if typeof(x) <: AbstractInfection]
+  (context(), 
+    line(map(x -> [((x.t)cx, (x.target)cy+sty.radius), ((x.t)cx, (x.infectee)cy)], xli)),
+    line(map(x -> [((x.t)cx - 0.3sty.bit, (x.infectee)cy-sty.bit), 
+                   ((x.t)cx,          (x.infectee)cy), 
+                   ((x.t)cx + 0.3sty.bit, (x.infectee)cy-sty.bit)], xli)), 
+    stroke(sty.colour(xli)), (realized ? sty.realized : sty.dormant) )
+end
+
+# Here is the anchor version which works!
+function draw_connect_0p1p2p7(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
   if (eltype(xl)<:AbstractInfection)
     (context(), 
       line(map(x -> [((x.t)cx, (x.target)cy+sty.radius), ((x.t)cx, (x.infectee)cy)], xl)),
@@ -55,10 +98,10 @@ end
 # :::
 
 # The following definitions ensure that general incidents are not drawn at all.
-function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
-end
-function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
-end 
+# function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
+# end
+# function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
+# end 
 
 # The next function 
 # `draw_elements`^[The function `draw_elements` is **exported**.]
