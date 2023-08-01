@@ -3,21 +3,21 @@
 # [`05-Nodes.jl`] Node-drawing Functions
 # ======================================
 # Here are functions to draw nodes (optionally as realized or not) for 
-# vectors of `AbstractIncident`s.
+# vectors of incidents of `BasicIncident`.
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
 # draws plain undecorated incidents.
 function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
   if length(xl) > 0
     if realized
-      xli = [x for x in xl if typeof(x)<:AbstractInfection]
       (context(),
         (context(),
-          circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.radius]), 
-            sty.realized, fill(sty.colour(xl)), fillopacity(0.0), stroke(sty.colour(xl)) ),
-        (context(), 
-          circle(map(x->(x.t)cx, xli), map(x -> x.infectee, xli), [sty.smradius]),
-            sty.realized, fill(sty.colour(xli)), fillopacity(0.0), stroke(sty.colour(xli))),
-      )  
+        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.radius]), 
+        sty.realized, fill(sty.colour(xl)), fillopacity(0.0), stroke(sty.colour(xl)) ),
+        if eltype(xl)<:AbstractInfection
+          (context(),
+          circle(map(x->(x.t)cx, xl), map(x -> x.infectee, xl), [sty.smradius]),
+            sty.realized, fill(sty.colour(xl)), fillopacity(0.0), stroke(sty.colour(xl)))
+        end, )  
     else
       (context(),
         (context(),
@@ -30,25 +30,35 @@ function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T
     end
   end
 end
+#
+# ::: {.callout-note}
+# Colours (in `fill` and `stroke`) are vectorized! However we can't yet make full
+# use of this, as we want to isolate `AbstractInfection` sub-types and draw them a little differently.
+# :::
 
 # Incidents decorated with connections are drawn using
-# `draw_connect`.^[The function `draw_connect` is used 
-# in the exported function `draw_elements` defined in this section.]
+# `draw_connect`^[The function `draw_connect` is used 
+# in the exported function `draw_elements` defined in this section.].
 function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:BasicIncident
-  xli = [x for x in xl if typeof(x)<:AbstractInfection]
+  if (eltype(xl)<:AbstractInfection)
     (context(), 
-      line(map(x -> [((x.t)cx, (x.target)cy+sty.radius), ((x.t)cx, (x.infectee)cy)], xli)),
+      line(map(x -> [((x.t)cx, (x.target)cy+sty.radius), ((x.t)cx, (x.infectee)cy)], xl)),
       line(map(x -> [((x.t)cx - 0.3sty.bit, (x.infectee)cy-sty.bit), 
-                     ((x.t)cx,              (x.infectee)cy), 
-                     ((x.t)cx + 0.3sty.bit, (x.infectee)cy-sty.bit)], xli)), 
-      stroke(sty.colour(xli)), (realized ? sty.realized : sty.dormant) )
+                     ((x.t)cx,          (x.infectee)cy), 
+                     ((x.t)cx + 0.3sty.bit, (x.infectee)cy-sty.bit)], xl)), 
+      stroke(sty.colour(xl)), (realized ? sty.realized : sty.dormant) )
+  end
 end
+#
+# ::: {.callout-note}
+# Colours (in `fill` and `stroke`) are vectorized!
+# :::
 
 # The following definitions ensure that general incidents are not drawn at all.
-# function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
-# end
-# function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
-# end 
+function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
+end
+function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
+end 
 
 # The next function 
 # `draw_elements`^[The function `draw_elements` is **exported**.]
@@ -57,8 +67,6 @@ end
 # does not work well.]
 function draw_elements(innov; I=I, P=P, R=R, C=C, sty=default_style) 
   (context(),
-#     draw_incident(innov.chronology, sty=sty),
-#     draw_connect(innov.chronology, sty=sty),
     draw_incident([inc for inc in innov.infections if isa(inc, I)], sty=sty),
     draw_incident([inc for inc in innov.infections if isa(inc, P)], sty=sty),
     draw_incident([inc for inc in innov.removals   if isa(inc, R)], sty=sty),
