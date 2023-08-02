@@ -98,10 +98,12 @@ end
 # :::
 
 # The following definitions ensure that general incidents are not drawn at all.
-# function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
-# end
-# function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
-# end 
+# ```{julia}
+# # function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
+# # end
+# # function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident 
+# # end 
+# ```
 
 # The next function 
 # `draw_elements`^[The function `draw_elements` is **exported**.]
