@@ -6,9 +6,9 @@
 # `create_nodes_view`^[The function `create_nodes_view` is **exported**.]
 # combines depiction of the incidents with the axes supplied
 # by `scaffolding` as defined in a previous section.
-function create_nodes_view(duration, innov; I=I, P=P, R=R, C=C, sty=default_style)
+function create_nodes_view(duration, innov; sty=default_style)
   (context(), 
-    draw_elements(innov, I=I, P=P, R=R, C=C, sty=sty), 
+    draw_elements(innov, sty=sty), 
     scaffolding(duration, innov.population))
 end 
 # The function 

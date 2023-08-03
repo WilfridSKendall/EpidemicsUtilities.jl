@@ -51,7 +51,7 @@ end
 # draws the various incidents.^[Replacing the `draw_incident` lines by a single 
 # `draw_incident(innov.chronology, sty=sty)`
 # works, but there is an issue with order of over-writing.]
-function draw_elements(innov; I=I, P=P, R=R, C=C, sty=default_style) 
+function draw_elements(innov; sty=default_style) 
   (context(),
     draw_incident(innov.chronology, sty=sty),
     draw_connect(innov.chronology, sty=sty),
@@ -60,9 +60,8 @@ end
 
 # The next function `draw_realized_elements`^[The function `draw_realized_elements` is **exported**.]
 # draws the realized elements together with connectors.
-function draw_realized_elements(initial, realized; 
-            I=I, P=P, R=R, C=C, sty=default_style)
-  realized_removals   = [inc for inc in realized if (isa(inc, R) || isa(inc, C))]
+function draw_realized_elements(initial, realized; sty=default_style)
+  realized_removals   = [inc for inc in realized if (isa(inc, Removal) || isa(inc, CRemoval))]
   enumerated_removals = collect(enumerate(realized_removals))
   (context(),
     draw_incident(realized, realized=true, sty=sty),
@@ -71,14 +70,14 @@ function draw_realized_elements(initial, realized;
       (context(),          # Connecting removal nodes
         circle([(inc.t)cx for (k, inc) in enumerated_removals], 
              [(k + initial.r)cy for (k, inc) in enumerated_removals],
-             [sty.smradius]), stroke(sty.colour(C(0.0, 1))), 
-             sty.realized, fill(sty.colour(C(0.0, 1))), fillopacity(0.5) 
+             [sty.smradius]), stroke(sty.colour(CRemoval(0.0, 1))), 
+             sty.realized, fill(sty.colour(CRemoval(0.0, 1))), fillopacity(0.5) 
       ),
-      (context(),          # Connecting removal lines
+      (context(),          # Connecting removal lines if not of negative length
         line([[((inc.t)cx, (inc.target)cy - sty.radius), 
                 ((inc.t)cx, (k + initial.r)cy + sty.radius)]
-                      for (k, inc) in enumerated_removals]), 
-        stroke(sty.colour(R(0.0,1))), sty.trail, strokedash([0.5mm, 0.5mm]) 
+                      for (k, inc) in enumerated_removals if inc.target > k + initial.r]), 
+        stroke(sty.colour(Removal(0.0,1))), sty.trail, strokedash([0.25mm, 0.25mm]) 
       ), 
     ) 
   )
