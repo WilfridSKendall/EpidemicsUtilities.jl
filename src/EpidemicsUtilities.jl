@@ -37,6 +37,10 @@ module EpidemicsUtilities
 # which enable construction of illustration of simulations for
 # $\SIR$ epidemics conditioned on removals being observed.
 
+# Version and branch information.
+version = "$(read(`git describe --tags`, String)[1:end-1])"
+branch  = "$(read(`git branch --show-current`, String)[1:end-1])"
+
 # Exports
 # -------
 # This section lists the various exports of the module `EpidemicsUtilities`,
@@ -65,10 +69,7 @@ export scaffolding
 export table_trajectories, plot_trajectories
 
 # ### Drawing nodes
-# The sub-script `05-Nodes.jl` defines the function `create_nodes_view` to draw nodes and connectors 
-# relating to the simulations.
-export create_nodes_view
-# Three further functions are used only in `experiment.qmd`.
+# The sub-script `05-Nodes.jl` defines three functions to draw sets of incidents.
 export draw_incident, draw_elements, draw_realized_elements
 
 # ### Drawing trajectories
@@ -79,9 +80,12 @@ export draw_incident, draw_elements, draw_realized_elements
 export compute_total_trajectory
 export region_plot
 
-# ### Graphics utilities
-# The sub-script `08-Utility.jl` defines  
-# a function `create_epidemic_view`, using functions defined in 
+# ### Graphics outputs
+# The sub-script `08-Outputs.jl` defines  
+# a function `create_nodes_view` to draw nodes and connectors 
+# relating to a simulation, using functions defined in `05-Nodes.jl`,
+export create_nodes_view
+# and a function `create_epidemic_view`, additionally using functions defined in 
 # `06-Trajectories.jl` and `07-Zones.jl`
 # to draw an entire epidemic.
 export create_epidemic_view
@@ -114,7 +118,7 @@ include("04-Gadfly.jl")
 include("05-Nodes.jl")
 include("06-Trajectories.jl")
 include("07-Zones.jl")
-include("08-Utility.jl")
+include("08-Outputs.jl")
 
 # This concludes the module.
 end

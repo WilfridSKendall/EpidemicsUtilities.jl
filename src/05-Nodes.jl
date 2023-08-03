@@ -50,27 +50,13 @@ end
 # `draw_elements`^[The function `draw_elements` is **exported**.]
 # draws the various incidents.^[Replacing the `draw_incident` lines by a single 
 # `draw_incident(innov.chronology, sty=sty)`
-# does not work well.]
+# works, but there is an issue with order of over-writing.]
 function draw_elements(innov; I=I, P=P, R=R, C=C, sty=default_style) 
   (context(),
-    draw_incident([inc for inc in innov.infections if isa(inc, I)], sty=sty),
-    draw_incident([inc for inc in innov.infections if isa(inc, P)], sty=sty),
-    draw_incident([inc for inc in innov.removals   if isa(inc, R)], sty=sty),
-    draw_incident([inc for inc in innov.cremovals  if isa(inc, C)], sty=sty),
-    draw_connect([inc for inc in  innov.infections if isa(inc, I)], sty=sty),
-    draw_connect([inc for inc in  innov.infections if isa(inc, P)], sty=sty),
+    draw_incident(innov.chronology, sty=sty),
+    draw_connect(innov.chronology, sty=sty),
   )
 end
-
-# The next function 
-# `create_nodes_view`^[The function `create_nodes_view` is **exported**.]
-# combines depiction of the incidents with the axes supplied
-# by `scaffolding` as defined in a previous section.
-function create_nodes_view(duration, innov; I=I, P=P, R=R, C=C, sty=default_style)
-  (context(), 
-    draw_elements(innov, I=I, P=P, R=R, C=C, sty=sty), 
-    scaffolding(duration, innov.population))
-end 
 
 # The next function `draw_realized_elements`^[The function `draw_realized_elements` is **exported**.]
 # draws the realized elements together with connectors.
@@ -79,11 +65,8 @@ function draw_realized_elements(initial, realized;
   realized_removals   = [inc for inc in realized if (isa(inc, R) || isa(inc, C))]
   enumerated_removals = collect(enumerate(realized_removals))
   (context(),
-    draw_incident([inc for inc in realized if isa(inc, I)], realized=true, sty=sty),
-    draw_incident([inc for inc in realized if isa(inc, P)], realized=true, sty=sty),
-    draw_incident([inc for inc in realized if isa(inc, C)], realized=true, sty=sty),
-    draw_connect( [inc for inc in realized if isa(inc, I)], realized=true, sty=sty),
-    draw_connect( [inc for inc in realized if isa(inc, P)], realized=true, sty=sty),
+    draw_incident(realized, realized=true, sty=sty),
+    draw_connect(realized, realized=true, sty=sty),
     (context(), # Could this be cleaned up?
       (context(),          # Connecting removal nodes
         circle([(inc.t)cx for (k, inc) in enumerated_removals], 
@@ -100,5 +83,3 @@ function draw_realized_elements(initial, realized;
     ) 
   )
 end
-
-clue = "Branch `nodes-as-lists`"
