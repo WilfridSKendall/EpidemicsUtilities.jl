@@ -2,8 +2,7 @@
 #
 # [`04-Gadfly.jl`] Plotting functions using the plot package `Gadfly`
 # ===================================================================
-# `Gadfly`-based functions,
-# respectively `table_trajectories`
+# `Gadfly`-based functions, respectively `table_trajectories`
 # and `plot_trajectories`^[The functions `table_trajectories` and `plot_trajectories` are **exported**.],
 # are defined to construct and plot a dataframe
 # of trajectories as knots of piecewise constant functions, having used `evolution`
@@ -24,9 +23,9 @@ end
 # Note that `plot_trajectories` uses the `julia` plotting package `Gadfly`.
 function plot_trajectories(flow; sty=default_style)
   gf = Gadfly
-  infection_layer   = gf.layer(flow, x=:t, y=:Infectives, color=[sty.colour(I(0.0,1,2))], 
+  infection_layer   = gf.layer(flow, x=:t, y=:Infectives, color=[sty.colour(Infection(0.0,1,2))], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:solid]))
-  removal_layer     = gf.layer(flow, x=:t, y=:Removals, color=[sty.colour(R(0.0, 1))], 
+  removal_layer     = gf.layer(flow, x=:t, y=:Removals, color=[sty.colour(Removal(0.0, 1))], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:dash]))
   susceptible_layer = gf.layer(flow, x=:t, y=:Susceptibles, color=[sty.scaffold], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:dot]))

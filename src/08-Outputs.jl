@@ -15,8 +15,7 @@ end
 # `create_epidemic_view`^[The function `create_epidemic_view` is **exported**.]
 # presents incidents, realized incidents,
 # connectors and regions on a single figure.
-function create_epidemic_view(duration, innov, flow, initial, realized; 
-                                  sty=default_style)
+function create_epidemic_view(duration, innov, flow, initial, realized; sty=default_style)
   total_trajectory = compute_total_trajectory(duration, innov.population, initial, realized)
   
   (context(),

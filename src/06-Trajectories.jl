@@ -26,19 +26,22 @@ function draw_marker(xl::Vector{T}; sty=default_style) where T<:AbstractMarker
   end
 end
 
-# A total trajectory is computed by
-# `compute_total_trajectory`;^[The function `compute_total_trajectory` is **exported**.]
+# A total trajectory is computed by `compute_total_trajectory`;^[The function `compute_total_trajectory` is **exported**.]
 # the trajectory is delineated by markers (not incidents).
 function compute_total_trajectory(duration, population, initial_state, realized)
+  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
+  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
+  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
+  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   initial_markers = Iterators.flatten([
     [IR(0, k) for k in 1:initial_state.r],
     [II(0, k) for k in (initial_state.r+1):(initial_state.r+initial_state.i)],
     [IS(0, k) for k in (initial_state.r+initial_state.i+1):population]
   ])
   
-  infect1 = [x for x in realized if isa(x, I) || isa(x, P)]
+  infect1 = [x for x in realized if isa(x, Infection) || isa(x, PInfection)]
   infect2 = [(MIA(x.t, x.infectee-1), MIB(x.t, x.infectee)) for x in infect1]
-  remove1 = [x for x in realized if isa(x, C) || isa(x, R)]
+  remove1 = [x for x in realized if isa(x, CRemoval) || isa(x, Removal)]
   remove2 = [(MRA(x.t, k-1), MRB(x.t, k)) for (k, x) in enumerate(remove1)]
   realized2 = sort(vcat(infect2, remove2), lt=(x,y) -> isearlier(x[1], y[1]))
   realized_trajectory = collect(Iterators.flatten(realized2));
@@ -60,6 +63,10 @@ end
 # adding a final segment 
 # by appending highest `MRB` if the proposed trajectory doesn't extend to full duration.
 function epidemic_trajectory(duration, total_trajectory)
+  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
+  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
+  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
+  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   e_trajectory = [(x.t, x.target) for x in total_trajectory 
   if (isa(x, MIA) || isa(x, MIB)  || 
       isa(x, II) || isa(x, CI))]
@@ -78,6 +85,10 @@ end
 # adding a final segment 
 # by appending highest `MRB` if the proposed trajectory doesn't extend to full duration.
 function removal_trajectory(duration, total_trajectory)
+  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
+  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
+  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
+  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   r_trajectory = [(x.t, x.target) for x in total_trajectory 
       if (isa(x, IR) || isa(x, MRA) || isa(x, MRB))]
 

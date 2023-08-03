@@ -7,6 +7,10 @@
 # which 
 # represents the infected zone as collection of rectangles.
 function infected_zones(population, total_trajectory)
+  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
+  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
+  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
+  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   xx= Float64[] ; yy = Integer[] ; rw = Float64[] ; rl = Integer[] ;
   for k in 1:population
     level = [bb for bb in total_trajectory if bb.target==k]
@@ -28,6 +32,10 @@ end
 # `removed_zones`^[The function `removed_zones` is used by `region_plot` defined later in this section.]
 # represents the removed zone as collection of rectangles.
 function removed_zones(population, total_trajectory)
+  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
+  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
+  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
+  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   xx= Float64[] ; yy = Integer[] ; rw = Float64[] ; rl = Integer[] ;
   for k in 1:population
     level = [bb for bb in total_trajectory if bb.target==k]
@@ -56,6 +64,10 @@ end
 # ensuring that `total_trajectory` actually is a trajectory!
 # :::
 function region_plot(duration, population, total_trajectory; sty=default_style)
+  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
+  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
+  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
+  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   xx1, yy1, rw1, rl1 = infected_zones(population, total_trajectory)
   xx2, yy2, rw2, rl2 = removed_zones(population, total_trajectory)
   (context(),
@@ -74,19 +86,19 @@ function region_plot(duration, population, total_trajectory; sty=default_style)
     draw_marker([x for x in total_trajectory if isa(x, CR)], sty=sty),
     (context(),
       rectangle(xx1, yy1, rw1, rl1),
-      fill(sty.colour(I(0.0, 1,2))), fillopacity(0.3),
+      fill(sty.colour(Infection(0.0, 1,2))), fillopacity(0.3),
     ),
     (context(),
       rectangle(xx2, yy2, rw2, rl2),
-      fill(sty.colour(C(0.0, 1))), fillopacity(0.3),
+      fill(sty.colour(CRemoval(0.0, 1))), fillopacity(0.3),
     ),
     (context(),
     line(epidemic_trajectory(duration, total_trajectory)),
-      stroke(sty.colour(I(0.0, 1,2))), sty.trail
+      stroke(sty.colour(Infection(0.0, 1,2))), sty.trail
     ),
     (context(),
       line(removal_trajectory(duration, total_trajectory)),
-      stroke(sty.colour(C(0.0, 1))), sty.trail
+      stroke(sty.colour(CRemoval(0.0, 1))), sty.trail
     ),
     scaffolding(duration, population),
   )
