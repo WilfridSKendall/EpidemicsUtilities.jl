@@ -73,11 +73,12 @@ function draw_realized_elements(initial, realized; sty=default_style)
              [sty.smradius]), stroke(sty.colour(CRemoval(0.0, 1))), 
              sty.realized, fill(sty.colour(CRemoval(0.0, 1))), fillopacity(0.5) 
       ),
-      (context(),          # Connecting removal lines if not of negative length
+      # Connecting removal lines if not of negative length
+      (context(),
         line([[((inc.t)cx, (inc.target)cy - sty.radius), 
                 ((inc.t)cx, (k + initial.r)cy + sty.radius)]
                       for (k, inc) in enumerated_removals if inc.target > k + initial.r]), 
-        stroke(sty.colour(Removal(0.0,1))), sty.trail, strokedash([0.25mm, 0.25mm]) 
+        stroke(sty.colour(Removal(0.0,1))), sty.trail, strokedash([1mm, 1mm]) 
       ), 
     ) 
   )
