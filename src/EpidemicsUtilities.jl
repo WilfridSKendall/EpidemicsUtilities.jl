@@ -38,7 +38,7 @@ module EpidemicsUtilities
 # $\SIR$ epidemics conditioned on removals being observed.
 
 # Version and branch information.
-version = "$(read(`git describe --tags`, String)[1:end-1])qua"
+version = "$(read(`git describe --tags`, String)[1:end-1])"
 branch  = "$(read(`git branch --show-current`, String)[1:end-1])"
 
 # Exports

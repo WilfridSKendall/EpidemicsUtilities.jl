@@ -2,18 +2,6 @@
 #
 # [`02-Styles.jl`] Styles for plotting
 # ====================================
-
-# Useful abbreviations for incidents and markers
-# ----------------------------------------------
-# Various incidents and markers are used sufficiently often to justify abbreviations.
-# The following abbreviations (or an appropriate subset) permit concise code within this module.
-A = AbstractInfection
-R = Removal            ; C = CRemoval   
-I = Infection          ; P = PInfection
-IR = InitialRemoved    ; II = InitialInfected    ; IS = InitialSusceptible
-CR = ContinuingRemoved ; CI = ContinuingInfected ; CS = ContinuingSusceptible
-MIA = MarkerInfectionA ; MRA = MarkerRemovalA
-MIB = MarkerInfectionB ; MRB = MarkerRemovalB
   
 # Reading in information to define default plotting style
 # -------------------------------------------------------
