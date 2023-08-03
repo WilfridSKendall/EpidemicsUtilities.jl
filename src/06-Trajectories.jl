@@ -2,6 +2,13 @@
 #
 # [`06-Trajectories.jl`] Drawing Trajectories
 # ===========================================
+# It is convenient to set out a number of abbreviations,
+# for the sake of conciseness. These will also be used in `07-Zones.jl`.
+  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
+  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
+  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
+  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
+
 # The first task is to define a function 
 # `draw_marker`^[The function `draw_marker` is used by subsequent exported functions defined in this section.]
 # to draw a marker node. 
@@ -29,10 +36,6 @@ end
 # A total trajectory is computed by `compute_total_trajectory`;^[The function `compute_total_trajectory` is **exported**.]
 # the trajectory is delineated by markers (not incidents).
 function compute_total_trajectory(duration, population, initial_state, realized)
-  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
-  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
-  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
-  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   initial_markers = Iterators.flatten([
     [IR(0, k) for k in 1:initial_state.r],
     [II(0, k) for k in (initial_state.r+1):(initial_state.r+initial_state.i)],
@@ -63,10 +66,6 @@ end
 # adding a final segment 
 # by appending highest `MRB` if the proposed trajectory doesn't extend to full duration.
 function epidemic_trajectory(duration, total_trajectory)
-  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
-  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
-  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
-  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   e_trajectory = [(x.t, x.target) for x in total_trajectory 
   if (isa(x, MIA) || isa(x, MIB)  || 
       isa(x, II) || isa(x, CI))]
@@ -85,10 +84,6 @@ end
 # adding a final segment 
 # by appending highest `MRB` if the proposed trajectory doesn't extend to full duration.
 function removal_trajectory(duration, total_trajectory)
-  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
-  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
-  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
-  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   r_trajectory = [(x.t, x.target) for x in total_trajectory 
       if (isa(x, IR) || isa(x, MRA) || isa(x, MRB))]
 

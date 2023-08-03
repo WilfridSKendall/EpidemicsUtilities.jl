@@ -37,8 +37,8 @@ module EpidemicsUtilities
 # which enable construction of illustration of simulations for
 # $\SIR$ epidemics conditioned on removals being observed.
 
-# Version and branch information.
-version = "$(read(`git describe --tags`, String)[1:end-1])"
+# The current version is `0.1.2.8.9` on branch `nodes-as-lists`.
+version = "$(read(`git describe --tags`, String)[1:end-1])bis"
 branch  = "$(read(`git branch --show-current`, String)[1:end-1])"
 
 # Exports

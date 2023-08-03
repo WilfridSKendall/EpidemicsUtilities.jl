@@ -2,15 +2,11 @@
 #
 # [`07-Zones.jl`] Drawing Zones
 # =============================
-# This section implements a drawing function 
+# The drawing function 
 # `infected_zones`^[The function `infected_zones` is used by `region_plot` defined later in this section.]
 # which 
 # represents the infected zone as collection of rectangles.
 function infected_zones(population, total_trajectory)
-  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
-  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
-  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
-  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   xx= Float64[] ; yy = Integer[] ; rw = Float64[] ; rl = Integer[] ;
   for k in 1:population
     level = [bb for bb in total_trajectory if bb.target==k]
@@ -32,10 +28,6 @@ end
 # `removed_zones`^[The function `removed_zones` is used by `region_plot` defined later in this section.]
 # represents the removed zone as collection of rectangles.
 function removed_zones(population, total_trajectory)
-  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
-  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
-  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
-  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   xx= Float64[] ; yy = Integer[] ; rw = Float64[] ; rl = Integer[] ;
   for k in 1:population
     level = [bb for bb in total_trajectory if bb.target==k]
@@ -64,10 +56,6 @@ end
 # ensuring that `total_trajectory` actually is a trajectory!
 # :::
 function region_plot(duration, population, total_trajectory; sty=default_style)
-  IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
-  CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
-  MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
-  MRA = MarkerRemovalA        ; MRB = MarkerRemovalB
   xx1, yy1, rw1, rl1 = infected_zones(population, total_trajectory)
   xx2, yy2, rw2, rl2 = removed_zones(population, total_trajectory)
   (context(),
