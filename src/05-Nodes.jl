@@ -3,7 +3,7 @@
 # [`05-Nodes.jl`] Node-drawing Functions
 # ======================================
 # Here are functions to draw nodes (optionally as realized or not) for 
-# vectors of incidents of `BasicIncident`.
+# vectors of incidents.
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
 # draws plain undecorated incidents.
 
@@ -73,7 +73,7 @@ function draw_realized_elements(initial, realized; sty=default_style)
              [sty.smradius]), stroke(sty.colour(CRemoval(0.0, 1))), 
              sty.realized, fill(sty.colour(CRemoval(0.0, 1))), fillopacity(0.5) 
       ),
-      # Connecting removal lines if not of negative length
+      # Connecting removal lines when they are not of negative length
       (context(),
         line([[((inc.t)cx, (inc.target)cy - sty.radius), 
                 ((inc.t)cx, (k + initial.r)cy + sty.radius)]

@@ -38,7 +38,7 @@ module EpidemicsUtilities
 # $\SIR$ epidemics conditioned on removals being observed.
 
 # Version and branch information.
-version = "$(read(`git describe --tags`, String)[1:end-1])"
+version = "$(read(`git describe --tags`, String)[1:end-1])qua"
 branch  = "$(read(`git branch --show-current`, String)[1:end-1])"
 
 # Exports
@@ -54,8 +54,6 @@ branch  = "$(read(`git branch --show-current`, String)[1:end-1])"
 # which loads `YAML` data for a `style` structure,
 # and the function `create_style`, which uses these data to create (and return) a `style`.
 export load_style, create_style
-# It also defines the type `BasicIncident`, used in `05-Nodes.jl` but not exported
-# (and possibly to become redundant).
 
 # ### Template for plots
 # The sub-script `03-Template.jl` defines a function `scaffolding`
@@ -98,10 +96,6 @@ export depict
 # The module `EpidemicsUtilities` imports of the following modules. 
 using Colors, Compose, DataFrames, Measures
 import Cairo, Fontconfig, Gadfly
-
-# The `subtypes` function from `InteractiveUtils` is required
-# in order to construct the `BasicIncident` type (see `02-Styles.jl`).
-using InteractiveUtils 
 
 # The ability to read `YAML` files facilitates configuration of styles (see `02-Styles.jl`).
 import YAML

@@ -1,38 +1,12 @@
 #
 #
-# [`02-Styles.jl`] Types and styles
-# =================================
-# A union of composite `AbstractIncident` sub-types
-# -------------------------------------------------
-# The union type, `BasicIncident`^[The tyoe `BasicIncident` is not exported, and may be redundant.]
-# is the union of all composite sub-types of `AbstractIncident`.
-# This union type is computed within the module.
-# It finds use in `05-Nodes.jl`, where it is used to enable despatch of drawing functions
-# based only on nodes corresponding to composite types.
-function unionize_composites(a::Type)::Type
-  coll = subtypes(a)
-  xl = Type[x for x in coll]
-  if length(xl) == 0
-    return a # return a composite type
-  else
-    xl = Type[unionize_composites(y) for y in xl]
-    return reduce((t1, t2) -> Union{t1, t2}, xl) # return a union type
-  end
-end 
-
-BasicIncident = unionize_composites(AbstractIncident)
-
-# ::: {.callout-caution}
-# I am not sure it is strictly necessary to use `BasicIncident`.
-# Try to avoid this, since it complicates the type hierarchy?
-# :::
-
-
+# [`02-Styles.jl`] Styles for plotting
+# ====================================
 
 # Useful abbreviations for incidents and markers
 # ----------------------------------------------
 # Various incidents and markers are used sufficiently often to justify abbreviations.
-# The following abbreviations (or an appropriate subset) permit concise code.
+# The following abbreviations (or an appropriate subset) permit concise code within this module.
 A = AbstractInfection
 R = Removal            ; C = CRemoval   
 I = Infection          ; P = PInfection
@@ -67,10 +41,10 @@ function create_style(data)
     return [other_colour(x) for x in xl]
   end
   
-  other_colour(x::R) = parse(Colorant, d_c["Removal"])
-  other_colour(x::C) = parse(Colorant, d_c["CRemoval"])
-  other_colour(x::I) = parse(Colorant, d_c["Infection"])
-  other_colour(x::P) = parse(Colorant, d_c["PInfection"])
+  other_colour(x::Removal)    = parse(Colorant, d_c["Removal"])
+  other_colour(x::CRemoval)   = parse(Colorant, d_c["CRemoval"])
+  other_colour(x::Infection)  = parse(Colorant, d_c["Infection"])
+  other_colour(x::PInfection) = parse(Colorant, d_c["PInfection"])
 
   function other_colour(x::T) where T<:AbstractInfectionMarker   
     parse(Colorant, d_c["AbstractInfectionMarker"]) 
