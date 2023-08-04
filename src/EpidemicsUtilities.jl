@@ -31,13 +31,13 @@
 # The `EpidemicsUtilities` package
 # ================================
 # The controlling script for this package is  `EpidemicsUtilities.jl`, 
-# which defines the module `EpidemicsUtilities` which implements the package.
+# which defines the module `EpidemicsUtilities`.
 module EpidemicsUtilities
 # This module `EpidemicsUtilities` defines functions 
 # which enable construction of illustration of simulations for
 # $\SIR$ epidemics conditioned on removals being observed.
 
-# The current version is `0.1.2.10` on branch `main`.
+# The current version is `0.1.2.11` on branch `main`.
 version = "$(read(`git describe --tags`, String)[1:end-1])"
 branch  = "$(read(`git branch --show-current`, String)[1:end-1])"
 
