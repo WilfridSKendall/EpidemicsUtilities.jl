@@ -13,7 +13,7 @@ SECTIONS       := $(wildcard src/0*.jl)
 # ====================
 # Principal targets
 main: docs
-runtests: .test.stamp
+test: .test.stamp
 
 # ====================
 # Creation of documentation
@@ -40,11 +40,15 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 
 # ====================
 # Automatic conversion of qmd to pdf
-%.pdf: %.qmd $(UTILITIES) ; $(QUARTO) render $< --to pdf $(QUARTO_OPTIONS) --cache-refresh
+%.pdf: %.qmd $(UTILITIES) ; $(QUARTO) render $< --to pdf $(QUARTO_OPTIONS) --no-cache
 
 # ====================
 # Intermediate files
 .INTERMEDIATE: docs/build/INTERMEDIATE.jl
 
-
+# ====================
+# Clean-up
+clean:
+	-rm -f $(wildcard *.ipynb)
+	$(HOME)/.local/bin/julia -e 'Base.compilecache(Base.identify_package("EpidemicsUtilities"))'
 

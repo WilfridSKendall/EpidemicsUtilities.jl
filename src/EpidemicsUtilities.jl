@@ -32,7 +32,8 @@
 # ```{julia}
 # #| echo: false
 # #| eval: true
-# using Markdown, EpidemicsCFTP, EpidemicsUtilities
+# #| cache: false
+# import Markdown, EpidemicsCFTP, EpidemicsUtilities
 # Markdown.parse("""
 # | Module                | Version                         | Branch                         |
 # |:----------------------|:--------------------------------|-------------------------------:|
@@ -47,11 +48,12 @@
 # ================================
 # The controlling script for this package is  `EpidemicsUtilities.jl`.
 module EpidemicsUtilities
-version = "$(read(`git describe --tags`, String)[1:end-1])"
-branch  = "$(read(`git branch --show-current`, String)[1:end-1])"
+loc     = dirname(dirname(pathof(EpidemicsUtilities)))
+version = "$(read(Cmd(`git describe --tags`, dir=loc), String)[1:end-1])"
+branch  = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
 #
-# This module defines functions 
-# enabling construction of illustration of simulations for
+# The functions defined in this module are aimed at
+# construction of illustration of simulations for
 # $\SIR$ epidemics when conditioned on removals being observed.
 
 # Exports
