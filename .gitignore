@@ -5,3 +5,4 @@ docs/
 /VERSION.txt
 
 .*.stamp
+*.pdf

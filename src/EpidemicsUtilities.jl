@@ -1,5 +1,5 @@
 # ---
-# title:  "EpidemicsUtilities module"
+# title:  "EpidemicsUtilities module documentation"
 # author: "Wilfrid Kendall"
 # date: today
 # date-format: D MMMM YYYY
@@ -27,14 +27,22 @@
 # ---
 #
 # \newcommand{\SIR}{\operatorname{S-I-R}}
-#
 # ::: {.callout-note}
+# # This documentation was produced using the following versions:
 # ```{julia}
 # #| echo: false
 # #| eval: true
-# println("This version of `EpidemicsUtilities` is $(read(`git describe --tags`, String)[1:end-1]) on branch $(read(`git branch --show-current`, String)[1:end-1]).")
+# using Markdown, EpidemicsCFTP, EpidemicsUtilities
+# Markdown.parse("""
+# | Module                | Version                         | Branch                         |
+# |:----------------------|:--------------------------------|-------------------------------:|
+# | `julia`               | `$VERSION`                      |                                |
+# | `EpidemicsUtilities`  | `$(EpidemicsUtilities.version)` | `$(EpidemicsUtilities.branch)` |
+# | `EpidemicsCFTP`       | `$(EpidemicsCFTP.version)`      | `$(EpidemicsCFTP.branch)`      |
+# """)
 # ```
 # :::
+#
 # The `EpidemicsUtilities` package
 # ================================
 # The controlling script for this package is  `EpidemicsUtilities.jl`.

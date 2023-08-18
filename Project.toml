@@ -12,6 +12,7 @@ EpidemicsCFTP = "e9e582aa-fa14-4cd8-84f3-d59ae741ce27"
 Fontconfig = "186bb1d3-e1f7-5a2c-a377-96d770f13627"
 Gadfly = "c91e804a-d5a3-530f-b6f0-dfbca275c004"
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
 Measures = "442fdcdd-2543-5da2-b0f3-8c86c306513e"
 YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 
