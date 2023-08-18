@@ -1,7 +1,5 @@
-#
-#
-# [`08-Outputs.jl`] Graphics outputs
-# ====================================
+# Graphics outputs (`08-Outputs.jl`)
+# ==================================
 # The function 
 # `create_nodes_view`^[The function `create_nodes_view` is **exported**.]
 # combines depiction of the incidents with the axes supplied

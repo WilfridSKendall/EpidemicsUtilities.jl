@@ -1,7 +1,8 @@
-#
-#
-# [`03-Template.jl`] Basic image template elements
+# Basic image template elements (`03-Template.jl`)
 # ================================================
+# ::: {.callout-tip}
+# As noted above, consider using `Gadfly` for axes and coordinates.
+# :::
 # Simulation plots are based on a function 
 # `time_axis`^[The function `time_axis` is used in the exported function `scaffolding` defined in this section.]
 # which draws the process time axis, furnished with tick marks at integer times.
@@ -13,7 +14,7 @@ function time_axis(duration; sty=default_style)
   tic2  = [(((x)cx,sty.height), ((x)cx, sty.height+sty.tic))    for x in 0:0.5step:duration]
   tic3  = [(((x)cx,sty.height), ((x)cx, sty.height+0.5sty.tic)) for x in 0:0.1step:duration]
 
-  (context(), # Returned value of function!
+  return (context(),
     (context(), text(labellocs, [sty.height + sty.yloc], ["$i" for i in 0:duration], 
       [hcenter], [vcenter]), fontsize(5pt), font("TimesRoman"), ),
     (context(), line([(0cx, sty.height), ((duration)cx, sty.height)]),

@@ -1,18 +1,18 @@
-#
-#
-# [`05-Nodes.jl`] Node-drawing Functions
+# Node-drawing Functions (`05-Nodes.jl`)
 # ======================================
 # Here are functions to draw nodes (optionally as realized or not) for 
 # vectors of incidents.
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
 # draws plain undecorated incidents.
-
-# Here we seek better code.
+#
+# ::: {.callout-warning}
+# Seek better code!
+# :::
 function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident
   if length(xl) > 0
     if realized
       xli = [x for x in xl if typeof(x) <: AbstractInfection]
-      (context(),
+      return (context(),
         (context(),
           circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.radius]), 
             sty.realized, fill(sty.colour(xl)), fillopacity(0.0), stroke(sty.colour(xl)) ),
@@ -21,7 +21,7 @@ function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T
             sty.realized, fill(sty.colour(xli)), fillopacity(0.0), stroke(sty.colour(xli))),
       )  
     else
-      (context(),
+      return (context(),
         (context(),
           text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), 
                map(x -> string(x), xl), [hcenter], [vcenter]), 
@@ -38,7 +38,7 @@ end
 # in the exported function `draw_elements` defined in this section.]
 function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident
   xli = [x for x in xl if typeof(x) <: AbstractInfection]
-  (context(), 
+  return (context(), 
     line(map(x -> [((x.t)cx, (x.target)cy+sty.radius), ((x.t)cx, (x.infectee)cy)], xli)),
     line(map(x -> [((x.t)cx - 0.3sty.bit, (x.infectee)cy-sty.bit), 
                    ((x.t)cx,          (x.infectee)cy), 
@@ -58,12 +58,12 @@ function draw_elements(innov; sty=default_style)
   )
 end
 
-# The next function `draw_realized_elements`^[The function `draw_realized_elements` is **exported**.]
+# The function `draw_realized_elements`^[The function `draw_realized_elements` is **exported**.]
 # draws the realized elements together with connectors.
 function draw_realized_elements(initial, realized; sty=default_style)
   realized_removals   = [inc for inc in realized if (isa(inc, Removal) || isa(inc, CRemoval))]
   enumerated_removals = collect(enumerate(realized_removals))
-  (context(),
+  return (context(),
     draw_incident(realized, realized=true, sty=sty),
     draw_connect(realized, realized=true, sty=sty),
     (context(), # Could this be cleaned up?
@@ -73,7 +73,7 @@ function draw_realized_elements(initial, realized; sty=default_style)
              [sty.smradius]), stroke(sty.colour(CRemoval(0.0, 1))), 
              sty.realized, fill(sty.colour(CRemoval(0.0, 1))), fillopacity(0.5) 
       ),
-      # Connecting removal lines when they are not of negative length
+# (and connect removal lines when they are not of negative length)
       (context(),
         line([[((inc.t)cx, (inc.target)cy - sty.radius), 
                 ((inc.t)cx, (k + initial.r)cy + sty.radius)]

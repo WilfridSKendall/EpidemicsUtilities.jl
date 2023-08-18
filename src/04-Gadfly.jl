@@ -1,13 +1,12 @@
-#
-#
-# [`04-Gadfly.jl`] Plotting functions using the plot package `Gadfly`
+# Plotting functions using the plot package `Gadfly` (`04-Gadfly.jl`)
 # ===================================================================
 # `Gadfly`-based functions, respectively `table_trajectories`
 # and `plot_trajectories`^[The functions `table_trajectories` and `plot_trajectories` are **exported**.],
-# are defined to construct and plot a dataframe
-# of trajectories as knots of piecewise constant functions, having used `evolution`
+# construct and plot a dataframe
+# of trajectories as knots of piecewise constant functions, having used
+# `EpidemicsCFTP.evolution`
 # to deliver the \(\SIR\) trajectory `trajectory`
-# as well as a sorted list of realized incidents in `realized`.
+# and a sorted list of realized incidents in `realized`.
 function table_trajectories(duration, initial, trajectory)
   states = [initial]
   t = [state.t for state in trajectory] ; push!(t, duration)

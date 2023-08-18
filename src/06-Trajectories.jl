@@ -1,9 +1,6 @@
-#
-#
-# [`06-Trajectories.jl`] Drawing Trajectories
+# Drawing Trajectories (`06-Trajectories.jl`)
 # ===========================================
-# It is convenient to set out a number of abbreviations,
-# for the sake of conciseness. These will also be used in `07-Zones.jl`.
+# It is convenient to set out a number of abbreviations. These will also be used in `07-Zones.jl`.
   IS  = InitialSusceptible    ; II  = InitialInfected    ; IR  = InitialRemoved
   CS  = ContinuingSusceptible ; CI  = ContinuingInfected ; CR = ContinuingRemoved
   MIA = MarkerInfectionA      ; MIB = MarkerInfectionB
@@ -34,7 +31,7 @@ function draw_marker(xl::Vector{T}; sty=default_style) where T<:AbstractMarker
 end
 
 # A total trajectory is computed by `compute_total_trajectory`;^[The function `compute_total_trajectory` is **exported**.]
-# the trajectory is delineated by markers (not incidents).
+# delineating the trajectory by markers (not incidents).
 function compute_total_trajectory(duration, population, initial_state, realized)
   initial_markers = Iterators.flatten([
     [IR(0, k) for k in 1:initial_state.r],

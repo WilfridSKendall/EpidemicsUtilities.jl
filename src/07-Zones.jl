@@ -1,6 +1,4 @@
-#
-#
-# [`07-Zones.jl`] Drawing Zones
+# Drawing Zones (`07-Zones.jl`)
 # =============================
 # The drawing function 
 # `infected_zones`^[The function `infected_zones` is used by `region_plot` defined later in this section.]
@@ -45,11 +43,11 @@ function removed_zones(population, total_trajectory)
   return xx, yy, rw, rl
 end
 
-# A function 
+# The function 
 # `region_plot`^[The function `region_plot` is **exported**.]
 # plots infected and removed zones (together with epidemic
 # and removal trajectories using `draw_marker` from `06-Trajectories,jl`,
-# and using `scaffolding` from `03-Templates,jl`).
+# and `scaffolding` from `03-Templates,jl`).
 #
 # :::{.callout-note}
 # Consider using `total_markers` and 

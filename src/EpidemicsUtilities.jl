@@ -28,72 +28,81 @@
 #
 # \newcommand{\SIR}{\operatorname{S-I-R}}
 #
+# ::: {.callout-note}
+# ```{julia}
+# #| echo: false
+# #| eval: true
+# println("This version of `EpidemicsUtilities` is $(read(`git describe --tags`, String)[1:end-1]) on branch $(read(`git branch --show-current`, String)[1:end-1]).")
+# ```
+# :::
 # The `EpidemicsUtilities` package
 # ================================
-# The controlling script for this package is  `EpidemicsUtilities.jl`, 
-# which defines the module `EpidemicsUtilities`.
+# The controlling script for this package is  `EpidemicsUtilities.jl`.
 module EpidemicsUtilities
-# This module `EpidemicsUtilities` defines functions 
-# which enable construction of illustration of simulations for
-# $\SIR$ epidemics conditioned on removals being observed.
-
-# The current version is `0.1.2.11` on branch `main`.
 version = "$(read(`git describe --tags`, String)[1:end-1])"
 branch  = "$(read(`git branch --show-current`, String)[1:end-1])"
+#
+# This module defines functions 
+# enabling construction of illustration of simulations for
+# $\SIR$ epidemics when conditioned on removals being observed.
 
 # Exports
 # -------
-# This section lists the various exports of the module `EpidemicsUtilities`,
-# in sub-sections corresponding to the sub-scripts in which the exports are defined.
+# Here are the various module exports:
+# sub-sections correspond to relevant sub-scripts.
 #
 # ### Controlling script
 # The controlling script `EpidemicsUtilities.jl` exports objects but does not directly define them.
 #
 # ### Styles and colours
-# The sub-script `02-Styles.jl` defines the function `load_style`, 
-# which loads `YAML` data for a `style` structure,
-# and the function `create_style`, which uses these data to create (and return) a `style`.
+# Sub-script `02-Styles.jl` defines the function `load_style`, 
+# loading `YAML` data to specify a `style` structure,
+# and the function `create_style`, using these data to create (and return) a `style`.
 export load_style, create_style
-
+#
 # ### Template for plots
-# The sub-script `03-Template.jl` defines a function `scaffolding`
+# Sub-script `03-Template.jl` defines a function `scaffolding`
 # to draw the time axis and time-lines.
 # thus providing a basic template for most of the simulation plots. 
 export scaffolding
-
+# ::: {.callout-tip}
+# Note that much of this might be better provided by `Gadfly` functions.
+# :::
+#
 # ### `Gadfly` drawing Functions
-# The sub-script `04-Gadfly.jl` defines specific drawing functions which use the `Gadfly` plot package.
+# Sub-script `04-Gadfly.jl` defines specific drawing functions using the `Gadfly` plot package.
 # These functions do _not_ use the template produced by `scaffolding` from `03-Template.jl`.
 export table_trajectories, plot_trajectories
-
+# ::: {.callout-tip}
+# See previous tip concerning possibility of using `Gadfly` for axes and coordinates.
+# :::
+#
 # ### Drawing nodes
-# The sub-script `05-Nodes.jl` defines three functions to draw sets of incidents.
+# Sub-script `05-Nodes.jl` defines three functions to draw sets of incidents.
 export draw_incident, draw_elements, draw_realized_elements
-
+#
 # ### Drawing trajectories
-# The sub-script `06-Trajectories.jl` defines no exported functions.
-
+# Sub-script `06-Trajectories.jl` currently defines no exported functions.
+#
 # ### Drawing zones
-# The sub-script `07-Zones.jl` defines functions which (for now) are used only in `experiment.qmd`.
-export compute_total_trajectory
-export region_plot
+# Sub-script `07-Zones.jl` defines functions which (for now) are used only in `experiment.qmd`.
+export compute_total_trajectory, region_plot
 
 # ### Graphics outputs
-# The sub-script `08-Outputs.jl` defines  
+# Sub-script `08-Outputs.jl` defines  
 # a function `create_nodes_view` to draw nodes and connectors 
 # relating to a simulation, using functions defined in `05-Nodes.jl`,
-export create_nodes_view
 # and a function `create_epidemic_view`, additionally using functions defined in 
 # `06-Trajectories.jl` and `07-Zones.jl`
 # to draw an entire epidemic.
-export create_epidemic_view
+export create_nodes_view, create_epidemic_view
 # It also defines
 # a convenient drawing function  `depict`, creating `PNG` and `PDF` variants of a figure.
 export depict
 
 # Imports
 # -------
-# The module `EpidemicsUtilities` imports of the following modules. 
+# The module also imports the following `julia` modules. 
 using Colors, Compose, DataFrames, Measures
 import Cairo, Fontconfig, Gadfly
 
@@ -101,7 +110,7 @@ import Cairo, Fontconfig, Gadfly
 import YAML
 
 # The associated module `EpidemicsCFTP` is currently under development
-# (therefore is added using `dev EpidemicsCFTP`).
+# (therefore should be added using `dev EpidemicsCFTP`).
 using EpidemicsCFTP 
 
 # List of included scripts
