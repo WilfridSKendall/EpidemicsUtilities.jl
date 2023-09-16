@@ -22,11 +22,11 @@ end
 # Note that `plot_trajectories` uses the `julia` plotting package `Gadfly`.
 function plot_trajectories(flow; deco=default_deco)
   gf = Gadfly
-  infection_layer   = gf.layer(flow, x=:t, y=:Infectives, color=[sty.colour(Infection(0.0,1,2))], 
+  infection_layer   = gf.layer(flow, x=:t, y=:Infectives, color=[deco.colour(Infection(0.0,1,2))], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:solid]))
-  removal_layer     = gf.layer(flow, x=:t, y=:Removals, color=[sty.colour(Removal(0.0, 1))], 
+  removal_layer     = gf.layer(flow, x=:t, y=:Removals, color=[deco.colour(Removal(0.0, 1))], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:dash]))
-  susceptible_layer = gf.layer(flow, x=:t, y=:Susceptibles, color=[sty.scaffold], 
+  susceptible_layer = gf.layer(flow, x=:t, y=:Susceptibles, color=[deco.scaffold], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:dot]))
   gf.plot(susceptible_layer, removal_layer, infection_layer,
     gf.style(panel_fill=colorant"bisque"), gf.Guide.xlabel("process time"), 

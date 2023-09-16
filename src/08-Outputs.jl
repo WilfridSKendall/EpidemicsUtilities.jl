@@ -6,7 +6,7 @@
 # by `scaffolding` as defined in a previous section.
 function create_nodes_view(duration, innov; deco=default_deco)
   (context(), 
-    draw_elements(innov, sty=sty), 
+    draw_elements(innov, deco=deco),
     scaffolding(duration, innov.population))
 end 
 # The function 
@@ -17,10 +17,10 @@ function create_epidemic_view(duration, innov, flow, initial, realized; deco=def
   total_trajectory = compute_total_trajectory(duration, innov.population, initial, realized)
   
   (context(),
-          draw_realized_elements(initial, realized, sty=sty),
-          draw_elements(innov, sty=sty), 
-          region_plot(duration, innov.population, total_trajectory, sty=sty),
-          scaffolding(duration, innov.population, sty=sty))
+          draw_realized_elements(initial, realized, deco=deco),
+          draw_elements(innov, deco=deco),
+          region_plot(duration, innov.population, total_trajectory, deco=deco),
+          scaffolding(duration, innov.population, deco=deco))
 end
 # Finally the following short utility function
 # `depict`^[The function `depict` is **exported**.]

@@ -19,12 +19,12 @@ function draw_marker(xl::Vector{T}; deco=default_deco) where T<:AbstractMarker
         fontsize(5pt), font("Helvetica")
       ),
       (context(),
-        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.smradius]), 
-        fillopacity(0.2), fill(sty.colour(xl)), stroke(sty.colour(xl))
+        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [deco.smradius]), 
+        fillopacity(0.2), fill(deco.colour(xl)), stroke(deco.colour(xl))
       ), 
       (context(),
-        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [sty.smradius]), 
-        fill(sty.blank),
+        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [deco.smradius]), 
+        fill(deco.blank),
       ),
     )
   end

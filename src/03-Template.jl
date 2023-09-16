@@ -10,18 +10,18 @@
 function time_axis(duration; deco=default_deco)
   labellocs = [(x)cx for x in 0:duration]
   step = 10^floor(Int, log10(duration))
-  tic1  = [(((x)cx,sty.height), ((x)cx, sty.height+sty.tic))    for x in 0:1.0step:duration]
-  tic2  = [(((x)cx,sty.height), ((x)cx, sty.height+sty.tic))    for x in 0:0.5step:duration]
-  tic3  = [(((x)cx,sty.height), ((x)cx, sty.height+0.5sty.tic)) for x in 0:0.1step:duration]
+  tic1  = [(((x)cx,deco.height), ((x)cx, deco.height+deco.tic))    for x in 0:1.0step:duration]
+  tic2  = [(((x)cx,deco.height), ((x)cx, deco.height+deco.tic))    for x in 0:0.5step:duration]
+  tic3  = [(((x)cx,deco.height), ((x)cx, deco.height+0.5deco.tic)) for x in 0:0.1step:duration]
 
   return (context(),
-    (context(), text(labellocs, [sty.height + sty.yloc], ["$i" for i in 0:duration], 
+    (context(), text(labellocs, [deco.height + deco.yloc], ["$i" for i in 0:duration], 
       [hcenter], [vcenter]), fontsize(5pt), font("TimesRoman"), ),
-    (context(), line([(0cx, sty.height), ((duration)cx, sty.height)]),
-      stroke(sty.scaffold), linewidth(0.5mm) ),
-    (context(), line(tic1), stroke(sty.scaffold), linewidth(0.2mm)),
-    (context(), line(tic2), stroke(sty.scaffold), linewidth(0.1mm)),
-    (context(), line(tic3), stroke(sty.scaffold), linewidth(0.1mm)), )
+    (context(), line([(0cx, deco.height), ((duration)cx, deco.height)]),
+      stroke(deco.scaffold), linewidth(0.5mm) ),
+    (context(), line(tic1), stroke(deco.scaffold), linewidth(0.2mm)),
+    (context(), line(tic2), stroke(deco.scaffold), linewidth(0.1mm)),
+    (context(), line(tic3), stroke(deco.scaffold), linewidth(0.1mm)), )
 end
 
 # A function 
@@ -31,10 +31,10 @@ function time_threads(duration, population; deco=default_deco)
   circlabels   = [string(Char(0x00002460+i-1)) for i in 1:population]
 
   (context(), # Returned value of function!
-    (context(), text([sty.xlab], [(k)cy for k in 1:population], circlabels,
+    (context(), text([deco.xlab], [(k)cy for k in 1:population], circlabels,
       [hleft], [vcenter]), fontsize(10pt), font("TimesRoman"), ),
     (context(), line([[(0cx, (k)cy), ((duration)cx, (k)cy)] for k in 1:population]), 
-      stroke(sty.scaffold), linewidth(0.5mm), ), )
+      stroke(deco.scaffold), linewidth(0.5mm), ), )
 end
 #
 # ::: {.callout-caution}
@@ -50,8 +50,8 @@ end
 # `scaffolding`^[The function `scaffolding` is **exported**.],
 # which constructs the fundamental scaffolding for graphs of epidemics (axes, time lines _etc_).
 function scaffolding(duration, population; deco=default_deco)
-  (context(), sty.region, time_axis(duration, sty=sty), 
-              time_threads(duration, population, sty=sty))
+  (context(), deco.region, time_axis(duration, deco=deco), 
+              time_threads(duration, population, deco=deco))
 end
 
 
