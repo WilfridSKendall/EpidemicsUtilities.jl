@@ -20,7 +20,7 @@ end
 # For the next function `plot_trajectories`, 
 # the argument `flow` is a `DataFrame` of the form computed by `table_trajectories` above.
 # Note that `plot_trajectories` uses the `julia` plotting package `Gadfly`.
-function plot_trajectories(flow; sty=default_style)
+function plot_trajectories(flow; deco=default_deco)
   gf = Gadfly
   infection_layer   = gf.layer(flow, x=:t, y=:Infectives, color=[sty.colour(Infection(0.0,1,2))], 
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:solid]))

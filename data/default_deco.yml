@@ -1,6 +1,6 @@
 # Primitive usage:
 # import YAML
-# data = YAML.load_file("default_style.yml")
+# data = YAML.load_file("default_deco.yml")
 # println(data)
 
 #function default_colour(x::R) colorant"tan"       end 
@@ -31,7 +31,7 @@ colour_x:
     background:                "bisque"
     default:                   "white"
 
-#default_style = (
+#default_deco = (
 #  radius   =  0.2cy,               smradius =  0.9 * 0.2cy,
 #  bit      = -0.02h,               tic      = -0.2cy,
 #  xlab     =  0cx-0.4inch,         yloc     = 0.25inch,

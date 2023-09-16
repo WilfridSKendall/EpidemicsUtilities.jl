@@ -53,7 +53,7 @@ end
 # Consider using `total_markers` and 
 # ensuring that `total_trajectory` actually is a trajectory!
 # :::
-function region_plot(duration, population, total_trajectory; sty=default_style)
+function region_plot(duration, population, total_trajectory; deco=default_deco)
   xx1, yy1, rw1, rl1 = infected_zones(population, total_trajectory)
   xx2, yy2, rw2, rl2 = removed_zones(population, total_trajectory)
   (context(),

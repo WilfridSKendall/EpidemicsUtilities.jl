@@ -1,4 +1,4 @@
-default_style = EpidemicsUtilities.default_style
+default_deco = EpidemicsUtilities.default_deco
 
 # Useful abbreviations for incidents and markers
 # ----------------------------------------------
@@ -12,11 +12,11 @@ CR = ContinuingRemoved ; CI = ContinuingInfected ; CS = ContinuingSusceptible
 MIA = MarkerInfectionA ; MRA = MarkerRemovalA
 MIB = MarkerInfectionB ; MRB = MarkerRemovalB
 
-data = load_style(pkgdir(EpidemicsUtilities, "data", "default_style.yml"))
-style = create_style(data)
+data = load_deco(pkgdir(EpidemicsUtilities, "data", "default_deco.yml"))
+deco = create_deco(data)
 
 
-@testset "Check style (including colours)" begin
+@testset "Check deco (including colours)" begin
 
   for tag in ["radius",  "smradius",
               "bit",     "tic",
@@ -24,8 +24,8 @@ style = create_style(data)
               "height",
             ]
     #cue = tag * ":" * (" "^(19-length(tag)))
-    #println(cue, default_style[Symbol(tag)] == style[Symbol(tag)])
-    @test default_style[Symbol(tag)] == style[Symbol(tag)]
+    #println(cue, default_deco[Symbol(tag)] == deco[Symbol(tag)])
+    @test default_deco[Symbol(tag)] == deco[Symbol(tag)]
   end
 
   for tag in ["boundary", "trail",
@@ -34,8 +34,8 @@ style = create_style(data)
               "region",
               ]
     #cue = tag * ":" * (" "^(19-length(tag)))
-    #println(cue, string(default_style[Symbol(tag)]) == string(style[Symbol(tag)]))
-    @test string(default_style[Symbol(tag)]) == string(style[Symbol(tag)])
+    #println(cue, string(default_deco[Symbol(tag)]) == string(deco[Symbol(tag)]))
+    @test string(default_deco[Symbol(tag)]) == string(deco[Symbol(tag)])
   end
   for tag in [Removal(0.0,1),     CRemoval(0.0,1),
               Infection(0.0,1,2), PInfection(0.0,1,2),
@@ -44,8 +44,8 @@ style = create_style(data)
               InitialSusceptible(0.0,1),
               ]
     #cue = string(tag) * ":" * (" "^(19-length(string(tag))))
-    #println(cue, default_style.colour(tag) == style.colour(tag))
-    @test default_style.colour(tag) == style.colour(tag)
+    #println(cue, default_deco.colour(tag) == deco.colour(tag))
+    @test default_deco.colour(tag) == deco.colour(tag)
   end
 
 end

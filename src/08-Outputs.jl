@@ -4,7 +4,7 @@
 # `create_nodes_view`^[The function `create_nodes_view` is **exported**.]
 # combines depiction of the incidents with the axes supplied
 # by `scaffolding` as defined in a previous section.
-function create_nodes_view(duration, innov; sty=default_style)
+function create_nodes_view(duration, innov; deco=default_deco)
   (context(), 
     draw_elements(innov, sty=sty), 
     scaffolding(duration, innov.population))
@@ -13,7 +13,7 @@ end
 # `create_epidemic_view`^[The function `create_epidemic_view` is **exported**.]
 # presents incidents, realized incidents,
 # connectors and regions on a single figure.
-function create_epidemic_view(duration, innov, flow, initial, realized; sty=default_style)
+function create_epidemic_view(duration, innov, flow, initial, realized; deco=default_deco)
   total_trajectory = compute_total_trajectory(duration, innov.population, initial, realized)
   
   (context(),

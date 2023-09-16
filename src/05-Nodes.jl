@@ -8,7 +8,7 @@
 # ::: {.callout-warning}
 # Seek better code!
 # :::
-function draw_incident(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident
+function draw_incident(xl::Vector{T}; realized=false, deco=default_deco) where T<:AbstractIncident
   if length(xl) > 0
     if realized
       xli = [x for x in xl if typeof(x) <: AbstractInfection]
@@ -36,7 +36,7 @@ end
 # Incidents decorated with connections are drawn using
 # `draw_connect`.^[The function `draw_connect` is used 
 # in the exported function `draw_elements` defined in this section.]
-function draw_connect(xl::Vector{T}; realized=false, sty=default_style) where T<:AbstractIncident
+function draw_connect(xl::Vector{T}; realized=false, deco=default_deco) where T<:AbstractIncident
   xli = [x for x in xl if typeof(x) <: AbstractInfection]
   return (context(), 
     line(map(x -> [((x.t)cx, (x.target)cy+sty.radius), ((x.t)cx, (x.infectee)cy)], xli)),
@@ -51,7 +51,7 @@ end
 # draws the various incidents.^[Replacing the `draw_incident` lines by a single 
 # `draw_incident(innov.chronology, sty=sty)`
 # works, but there is an issue with order of over-writing.]
-function draw_elements(innov; sty=default_style) 
+function draw_elements(innov; deco=default_deco) 
   (context(),
     draw_incident(innov.chronology, sty=sty),
     draw_connect(innov.chronology, sty=sty),
@@ -60,7 +60,7 @@ end
 
 # The function `draw_realized_elements`^[The function `draw_realized_elements` is **exported**.]
 # draws the realized elements together with connectors.
-function draw_realized_elements(initial, realized; sty=default_style)
+function draw_realized_elements(initial, realized; deco=default_deco)
   realized_removals   = [inc for inc in realized if (isa(inc, Removal) || isa(inc, CRemoval))]
   enumerated_removals = collect(enumerate(realized_removals))
   return (context(),
