@@ -64,11 +64,11 @@ branch  = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
 # ### Controlling script
 # The controlling script `EpidemicsUtilities.jl` exports objects but does not directly define them.
 #
-# ### Deco[rations] and colours
-# Sub-script `02-Deco.jl` defines the function `load_deco`, 
-# loading `YAML` data to specify a `deco` structure,
-# and the function `create_deco`, using these data to create (and return) a `deco`[ration].
-export load_deco, create_deco
+# ### Themes and colours
+# Sub-script `02-Theme.jl` defines the function `load_theme`, 
+# loading `YAML` data to specify a `theme` structure,
+# and the function `create_theme`, using these data to create (and return) a `theme`[ration].
+export load_theme, create_theme
 #
 # ### Template for plots
 # Sub-script `03-Template.jl` defines a function `scaffolding`
@@ -116,7 +116,7 @@ export depict
 using Colors, Compose, DataFrames, Measures
 import Cairo, Fontconfig, Gadfly
 
-# The ability to read `YAML` files facilitates configuration of deco[rations] (see `02-Deco.jl`).
+# The ability to read `YAML` files facilitates configuration of theme[rations] (see `02-Theme.jl`).
 import YAML
 
 # The associated module `EpidemicsCFTP` is currently under development
@@ -125,7 +125,7 @@ using EpidemicsCFTP
 
 # List of included scripts
 # ------------------------
-include("02-Deco.jl")
+include("02-Theme.jl")
 include("03-Template.jl")
 include("04-Gadfly.jl")
 include("05-Nodes.jl")

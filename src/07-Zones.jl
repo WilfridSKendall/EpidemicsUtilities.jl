@@ -53,38 +53,38 @@ end
 # Consider using `total_markers` and 
 # ensuring that `total_trajectory` actually is a trajectory!
 # :::
-function region_plot(duration, population, total_trajectory; deco=default_deco)
+function region_plot(duration, population, total_trajectory; theme=default_theme)
   xx1, yy1, rw1, rl1 = infected_zones(population, total_trajectory)
   xx2, yy2, rw2, rl2 = removed_zones(population, total_trajectory)
   (context(),
-    draw_marker([x for x in total_trajectory if isa(x, IS)], deco=deco),
-    draw_marker([x for x in total_trajectory if isa(x, II)], deco=deco),
-    draw_marker([x for x in total_trajectory if isa(x, IR)], deco=deco),
+    draw_marker([x for x in total_trajectory if isa(x, IS)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, II)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, IR)], theme=theme),
 
-    draw_marker([x for x in total_trajectory if isa(x, MIA)], deco=deco),
-    draw_marker([x for x in total_trajectory if isa(x, MIB)], deco=deco),
+    draw_marker([x for x in total_trajectory if isa(x, MIA)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, MIB)], theme=theme),
 
-    draw_marker([x for x in total_trajectory if isa(x, MRA)], deco=deco),
-    draw_marker([x for x in total_trajectory if isa(x, MRB)], deco=deco),
+    draw_marker([x for x in total_trajectory if isa(x, MRA)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, MRB)], theme=theme),
   
-    draw_marker([x for x in total_trajectory if isa(x, CS)], deco=deco),
-    draw_marker([x for x in total_trajectory if isa(x, CI)], deco=deco),
-    draw_marker([x for x in total_trajectory if isa(x, CR)], deco=deco),
+    draw_marker([x for x in total_trajectory if isa(x, CS)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, CI)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, CR)], theme=theme),
     (context(),
       rectangle(xx1, yy1, rw1, rl1),
-      fill(deco.colour(Infection(0.0, 1,2))), fillopacity(0.3),
+      fill(theme.colour(Infection(0.0, 1,2))), fillopacity(0.3),
     ),
     (context(),
       rectangle(xx2, yy2, rw2, rl2),
-      fill(deco.colour(CRemoval(0.0, 1))), fillopacity(0.3),
+      fill(theme.colour(CRemoval(0.0, 1))), fillopacity(0.3),
     ),
     (context(),
     line(epidemic_trajectory(duration, total_trajectory)),
-      stroke(deco.colour(Infection(0.0, 1,2))), deco.trail
+      stroke(theme.colour(Infection(0.0, 1,2))), theme.trail
     ),
     (context(),
       line(removal_trajectory(duration, total_trajectory)),
-      stroke(deco.colour(CRemoval(0.0, 1))), deco.trail
+      stroke(theme.colour(CRemoval(0.0, 1))), theme.trail
     ),
     scaffolding(duration, population),
   )

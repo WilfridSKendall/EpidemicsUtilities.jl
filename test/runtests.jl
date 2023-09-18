@@ -3,4 +3,4 @@ using EpidemicsUtilities
 using Test
 using Compose, Colors
 
-include("test_deco.jl")
+include("test_theme.jl")

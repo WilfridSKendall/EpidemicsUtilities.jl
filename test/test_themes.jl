@@ -12,20 +12,18 @@ CR = ContinuingRemoved ; CI = ContinuingInfected ; CS = ContinuingSusceptible
 MIA = MarkerInfectionA ; MRA = MarkerRemovalA
 MIB = MarkerInfectionB ; MRB = MarkerRemovalB
 
-data = load_deco(pkgdir(EpidemicsUtilities, "data", "default_deco.yml"))
-deco = create_deco(data)
+data = load_theme(pkgdir(EpidemicsUtilities, "data", "default_theme.yml"))
+theme = create_theme(data)
 
 
-@testset "Check deco (including colours)" begin
+@testset "Check theme (including colours)" begin
 
   for tag in ["radius",  "smradius",
               "bit",     "tic",
               "xlab",    "yloc",
               "height",
             ]
-    #cue = tag * ":" * (" "^(19-length(tag)))
-    #println(cue, default_deco[Symbol(tag)] == deco[Symbol(tag)])
-    @test default_deco[Symbol(tag)] == deco[Symbol(tag)]
+    @test default_theme[Symbol(tag)] == theme[Symbol(tag)]
   end
 
   for tag in ["boundary", "trail",
@@ -33,9 +31,7 @@ deco = create_deco(data)
               "realized", "dormant",
               "region",
               ]
-    #cue = tag * ":" * (" "^(19-length(tag)))
-    #println(cue, string(default_deco[Symbol(tag)]) == string(deco[Symbol(tag)]))
-    @test string(default_deco[Symbol(tag)]) == string(deco[Symbol(tag)])
+    @test string(default_theme[Symbol(tag)]) == string(theme[Symbol(tag)])
   end
   for tag in [Removal(0.0,1),     CRemoval(0.0,1),
               Infection(0.0,1,2), PInfection(0.0,1,2),
@@ -44,8 +40,8 @@ deco = create_deco(data)
               InitialSusceptible(0.0,1),
               ]
     #cue = string(tag) * ":" * (" "^(19-length(string(tag))))
-    #println(cue, default_deco.colour(tag) == deco.colour(tag))
-    @test default_deco.colour(tag) == deco.colour(tag)
+    #println(cue, default_theme.colour(tag) == theme.colour(tag))
+    @test default_theme.colour(tag) == theme.colour(tag)
   end
 
 end

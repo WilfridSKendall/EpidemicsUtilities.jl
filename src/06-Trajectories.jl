@@ -10,7 +10,7 @@
 # `draw_marker`^[The function `draw_marker` is used by subsequenst exported functions defined in this section.]
 # to draw a marker node. 
 # Note that marker labels omit time-line superscript as this is redundant!
-function draw_marker(xl::Vector{T}; deco=default_deco) where T<:AbstractMarker
+function draw_marker(xl::Vector{T}; theme=default_theme) where T<:AbstractMarker
   if length(xl) > 0
     (context(),
       (context(),
@@ -19,12 +19,12 @@ function draw_marker(xl::Vector{T}; deco=default_deco) where T<:AbstractMarker
         fontsize(5pt), font("Helvetica")
       ),
       (context(),
-        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [deco.smradius]), 
-        fillopacity(0.2), fill(deco.colour(xl)), stroke(deco.colour(xl))
+        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.smradius]), 
+        fillopacity(0.2), fill(theme.colour(xl)), stroke(theme.colour(xl))
       ), 
       (context(),
-        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [deco.smradius]), 
-        fill(deco.blank),
+        circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.smradius]), 
+        fill(theme.blank),
       ),
     )
   end
