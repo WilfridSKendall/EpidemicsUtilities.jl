@@ -9,7 +9,8 @@
 # and a sorted list of realized incidents in `realized`.
 function table_trajectories(duration, initial, trajectory)
   states = [initial]
-  t = [state.t for state in trajectory] ; push!(t, duration)
+  t = [state.t for state in trajectory]
+  push!(t, duration)
   t = repeat(t, inner=2)[2:(end-1)]
   s = repeat([state.s for state in trajectory], inner=2)
   i = repeat([state.i for state in trajectory], inner=2)
@@ -22,13 +23,13 @@ end
 # Note that `plot_trajectories` uses the `julia` plotting package `Gadfly`.
 function plot_trajectories(flow; theme=default_theme)
   gf = Gadfly
-  infection_layer   = gf.layer(flow, x=:t, y=:Infectives, color=[theme.colour(Infection(0.0,1,2))], 
+  infection_layer = gf.layer(flow, x=:t, y=:Infectives, color=[theme.colour(Infection(0.0, 1, 2))],
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:solid]))
-  removal_layer     = gf.layer(flow, x=:t, y=:Removals, color=[theme.colour(Removal(0.0, 1))], 
+  removal_layer = gf.layer(flow, x=:t, y=:Removals, color=[theme.colour(Removal(0.0, 1))],
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:dash]))
-  susceptible_layer = gf.layer(flow, x=:t, y=:Susceptibles, color=[theme.scaffold], 
+  susceptible_layer = gf.layer(flow, x=:t, y=:Susceptibles, color=[theme.scaffold],
     gf.Geom.line, gf.style(line_width=1mm, line_style=[:dot]))
   gf.plot(susceptible_layer, removal_layer, infection_layer,
-    gf.style(panel_fill=colorant"bisque"), gf.Guide.xlabel("process time"), 
+    gf.style(panel_fill=colorant"bisque"), gf.Guide.xlabel("process time"),
     gf.Guide.ylabel("removals, infectives, susceptibles", orientation=:vertical))
 end

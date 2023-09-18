@@ -48,9 +48,9 @@
 # ================================
 # The controlling script for this package is  `EpidemicsUtilities.jl`.
 module EpidemicsUtilities
-loc     = dirname(dirname(pathof(EpidemicsUtilities)))
+loc = dirname(dirname(pathof(EpidemicsUtilities)))
 version = "$(read(Cmd(`git describe --tags`, dir=loc), String)[1:end-1])"
-branch  = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
+branch = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
 #
 # The functions defined in this module are aimed at
 # construction of illustration of simulations for
@@ -121,7 +121,7 @@ import YAML
 
 # The associated module `EpidemicsCFTP` is currently under development
 # (therefore should be added using `dev EpidemicsCFTP`).
-using EpidemicsCFTP 
+using EpidemicsCFTP
 
 # List of included scripts
 # ------------------------
