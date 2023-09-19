@@ -15,10 +15,10 @@ function draw_incident(xl::Vector{T}; realized=false, theme=default_theme) where
       return (context(),
         (context(),
           circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
-          theme.realized, fill(theme.colour(xl)), fillopacity(0.0), stroke(theme.colour(xl))),
+          linewidth(theme.realized), fill(theme.colour(xl)), fillopacity(0.0), stroke(theme.colour(xl))),
         (context(),
           circle(map(x -> (x.t)cx, xli), map(x -> x.infectee, xli), [theme.smradius]),
-          theme.realized, fill(theme.colour(xli)), fillopacity(0.0), stroke(theme.colour(xli))),
+          linewidth(theme.realized), fill(theme.colour(xli)), fillopacity(0.0), stroke(theme.colour(xli))),
       )
     else
       return (context(),
@@ -43,7 +43,7 @@ function draw_connect(xl::Vector{T}; realized=false, theme=default_theme) where 
     line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
         ((x.t)cx, (x.infectee)cy),
         ((x.t)cx + 0.3theme.bit, (x.infectee)cy - theme.bit)], xli)),
-    stroke(theme.colour(xli)), (realized ? theme.realized : theme.dormant))
+    stroke(theme.colour(xli)), linewidth(realized ? theme.realized : theme.dormant))
 end
 
 # The next function 
@@ -71,14 +71,14 @@ function draw_realized_elements(initial, realized; theme=default_theme)
         circle([(inc.t)cx for (k, inc) in enumerated_removals],
           [(k + initial.r)cy for (k, inc) in enumerated_removals],
           [theme.smradius]), stroke(theme.colour(CRemoval(0.0, 1))),
-        theme.realized, fill(theme.colour(CRemoval(0.0, 1))), fillopacity(0.5)
+        linewidth(theme.realized), fill(theme.colour(CRemoval(0.0, 1))), fillopacity(0.5)
       ),
       # (and connect removal lines when they are not of negative length)
       (context(),
         line([[((inc.t)cx, (inc.target)cy - theme.radius),
           ((inc.t)cx, (k + initial.r)cy + theme.radius)]
               for (k, inc) in enumerated_removals if inc.target > k + initial.r]),
-        stroke(theme.colour(Removal(0.0, 1))), theme.trail, strokedash([1mm, 1mm])
+        stroke(theme.colour(Removal(0.0, 1))), linewidth(theme.trail), strokedash([1mm, 1mm])
       ),
     )
   )

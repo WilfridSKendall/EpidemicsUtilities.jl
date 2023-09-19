@@ -65,9 +65,12 @@ function region_plot(duration, population, total_trajectory; theme=default_theme
   (context(),
     draw_marker([x for x in total_trajectory if isa(x, IS)], theme=theme),
     draw_marker([x for x in total_trajectory if isa(x, II)], theme=theme),
-    draw_marker([x for x in total_trajectory if isa(x, IR)], theme=theme), draw_marker([x for x in total_trajectory if isa(x, MIA)], theme=theme),
-    draw_marker([x for x in total_trajectory if isa(x, MIB)], theme=theme), draw_marker([x for x in total_trajectory if isa(x, MRA)], theme=theme),
-    draw_marker([x for x in total_trajectory if isa(x, MRB)], theme=theme), draw_marker([x for x in total_trajectory if isa(x, CS)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, IR)], theme=theme), 
+    draw_marker([x for x in total_trajectory if isa(x, MIA)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, MIB)], theme=theme), 
+    draw_marker([x for x in total_trajectory if isa(x, MRA)], theme=theme),
+    draw_marker([x for x in total_trajectory if isa(x, MRB)], theme=theme), 
+    draw_marker([x for x in total_trajectory if isa(x, CS)], theme=theme),
     draw_marker([x for x in total_trajectory if isa(x, CI)], theme=theme),
     draw_marker([x for x in total_trajectory if isa(x, CR)], theme=theme),
     (context(),
@@ -80,11 +83,11 @@ function region_plot(duration, population, total_trajectory; theme=default_theme
     ),
     (context(),
       line(epidemic_trajectory(duration, total_trajectory)),
-      stroke(theme.colour(Infection(0.0, 1, 2))), theme.trail
+      stroke(theme.colour(Infection(0.0, 1, 2))), linewidth(theme.trail)
     ),
     (context(),
       line(removal_trajectory(duration, total_trajectory)),
-      stroke(theme.colour(CRemoval(0.0, 1))), theme.trail
+      stroke(theme.colour(CRemoval(0.0, 1))), linewidth(theme.trail)
     ),
     scaffolding(duration, population),
   )

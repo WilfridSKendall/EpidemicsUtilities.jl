@@ -16,22 +16,26 @@ load_theme(fpath) = YAML.load_file(fpath)
 # generates a plotting theme using the chosen `theme` information.
 
 function create_theme(data)
-  d_cy = data["length_cy"]
-  d_h = data["length_h"]
-  d_lf = data["length_factor"]
-  d_in = data["length_inch"]
-  d_mm = data["thickness_mm"]
-  d_cx = data["colour_x"]
-  d_op = data["opacity"]
-  d_c = data["colour"]
+  # Building length dictionaries
+  d_cy = Dict((a[1] => a[2]cy) for a in pairs(data["length_cy"]))
+  d_h = Dict((a[1] => a[2]h) for a in pairs(data["length_h"]))
+  d_in = Dict((a[1] => a[2]inch) for a in pairs(data["length_inch"]))
+  d_mm = Dict((a[1] => a[2]mm) for a in pairs(data["thickness_mm"]))
 
-  theme_colour(x::Removal) = parse(Colorant, d_c["Removal"])
-  theme_colour(x::CRemoval) = parse(Colorant, d_c["CRemoval"])
-  theme_colour(x::Infection) = parse(Colorant, d_c["Infection"])
-  theme_colour(x::PInfection) = parse(Colorant, d_c["PInfection"])
-  function theme_colour(xl::Vector{T}) where {T<:AbstractIncident}
-    return [theme_colour(x) for x in xl]
-  end
+   # Building sundry other data dictionaries 
+  d_lf = data["length_factor"]
+  d_op = data["opacity"]
+
+  # Building colour dictionary
+  d_cx = Dict((a[1] => parse(Colorant, a[2])) for a in pairs(data["colour_x"]))
+
+# Building colour function
+d_c = data["colour"]
+
+function theme_colour(x::T) where {T <: Union{Removal, CRemoval, Infection, PInfection}} 
+    return parse(Colorant, d_c[string(T)]) 
+  end 
+
   function theme_colour(x::T) where {T<:AbstractInfectionMarker}
     parse(Colorant, d_c["AbstractInfectionMarker"])
   end
@@ -41,23 +45,42 @@ function create_theme(data)
   function theme_colour(x::T) where {T<:AbstractSusceptibleMarker}
     parse(Colorant, d_c["AbstractSusceptibleMarker"])
   end
+  
   function theme_colour(x::T) where {T<:AbstractIncident}
     parse(Colorant, d_cx["default"])
   end
-
-  # The resulting `theme` structure is returned as a `NamedTuple`.
-  returned_theme = (
-    radius=d_cy["radius"]cy, smradius=d_lf["smradius"] * d_cy["radius"]cy,
-    bit=d_h["bit"]h, tic=d_cy["tic"]cy,
-    xlab=0cx + d_in["xlab"]inch, yloc=d_in["yloc"]inch,
+  function theme_colour(xl::Vector{T}) where {T<:AbstractIncident}
+    return [theme_colour(x) for x in xl]
+  end
+  
+  # Returning resulting `theme` structure as a `NamedTuple`.
+  return (
+    radius = d_cy["radius"],
+    tic=d_cy["tic"]cy,
     height=d_cy["height"]cy,
-    boundary=linewidth(d_mm["boundary"]mm), trail=linewidth(d_mm["trail"]mm),
-    broad=linewidth(d_mm["broad"]mm),
-    realized=linewidth(d_mm["realized"]mm), dormant=linewidth(d_mm["dormant"]mm),
-    blank=parse(Colorant, d_cx["blank"]), scaffold=parse(Colorant, d_cx["scaffold"]),
-    forbid1=parse(Colorant, d_cx["forbid1"]), forbid2=parse(Colorant, d_cx["forbid2"]),
-    default=parse(Colorant, d_cx["default"]), background=parse(Colorant, d_cx["background"]),
+  
+    smradius=d_lf["smradius"] * d_cy["radius"],
+  
+    bit=d_h["bit"],
+
+    xlab=0cx + d_in["xlab"], 
+    yloc=d_in["yloc"],
+
+    boundary=d_mm["boundary"],
+    trail=d_mm["trail"],
+    broad=d_mm["broad"],
+    realized=d_mm["realized"], 
+    dormant=d_mm["dormant"],
+
+    blank=d_cx["blank"], 
+    scaffold=d_cx["scaffold"],
+    forbid1=d_cx["forbid1"], 
+    forbid2=d_cx["forbid2"],
+    default=d_cx["default"], 
+    background=d_cx["background"],
+
     colour=theme_colour,
+    
     region=(context(), rectangle(), fill(parse(Colorant, d_cx["background"])),
       fillopacity(d_op["background"])),
   )
