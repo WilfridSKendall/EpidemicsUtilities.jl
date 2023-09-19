@@ -28,6 +28,7 @@ colour_x:
     scaffold:                  "grey"
     forbid1:                   "steelblue" 
     forbid2:                   "lightsteelblue"
+    legend:                    "black"
     background:                "bisque"
     default:                   "white"
 
@@ -52,12 +53,17 @@ length_cy:
     height:                0.00
     # tic size in `cy` units
     tic:                  -0.20
+    
 length_h:
     bit:                  -0.02
+
 # label offsets in inches
 length_inch:
     xlab:                 -0.40
     yloc:                  0.25
+    figwidth:              6
+    figheight:             3.25
+
 # shrinkage factor for small radius
 length_factor:
     smradius:              0.90
@@ -73,3 +79,7 @@ thickness_mm:
 # background opacity
 opacity:
     background:            0.30
+
+# jitter
+jitter:
+    ϵ:                     1e-7

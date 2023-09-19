@@ -32,7 +32,7 @@ function create_theme(data)
   ## Building colour function
   d_c = data["colour"]
 
-  function theme_colour(x::T) where {T<:Union{Removal,CRemoval,Infection,PInfection}}
+  function theme_colour(x::T) where {T<:Union{Removal, CRemoval, Infection, PInfection}}
     return parse(Colorant, d_c[string(T)])
   end
 
@@ -49,12 +49,23 @@ function create_theme(data)
   function theme_colour(x::T) where {T<:AbstractIncident}
     parse(Colorant, d_cx["default"])
   end
+
   function theme_colour(xl::Vector{T}) where {T<:AbstractIncident}
     return [theme_colour(x) for x in xl]
+  end
+    
+  function theme_colour(T::DataType)
+    if T <: Union{Removal, CRemoval, Infection, PInfection}
+      col = parse(Colorant, d_c[string(T)])
+    else
+      col = parse(Colorant, d_cx["default"])
+    end
+  return col
   end
 
   ## Returning resulting `theme` structure as a `NamedTuple`.
   return (
+    ϵ=data["jitter"]["ϵ"],
     radius=d_cy["radius"],      tic=d_cy["tic"]cy,        height=d_cy["height"]cy, 
     smradius=d_lf["smradius"] * d_cy["radius"], 
     bit=d_h["bit"],         
@@ -63,9 +74,12 @@ function create_theme(data)
     realized=d_mm["realized"],  dormant=d_mm["dormant"],     
     blank=d_cx["blank"],        scaffold=d_cx["scaffold"],
     forbid1=d_cx["forbid1"],    forbid2=d_cx["forbid2"],  
-    default=d_cx["default"],    background=d_cx["background"], 
-    colour=theme_colour, 
+    default=d_cx["default"],    background=d_cx["background"],
+    legend=d_cx["legend"],
+    colour=theme_colour,
+    opacity=d_op["background"],
     region=(context(), rectangle(), fill(d_cx["background"]), fillopacity(d_op["background"])),
+    figwidth=d_in["figwidth"],  figheight=d_in["figheight"]
   )
 end
 
