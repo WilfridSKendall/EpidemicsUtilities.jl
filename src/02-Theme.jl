@@ -38,16 +38,19 @@ function default_colour(x::T) where T<:AbstractRemovalMarker     colorant"tan"  
 function default_colour(x::T) where T<:AbstractSusceptibleMarker colorant"blue"   end
 function default_colour(x::T) where T<:AbstractIncident          colorant"white"  end
 default_theme = (
- radius   =  0.2cy,               smradius =  0.9 * 0.2cy,
- bit      = -0.02h,               tic      = -0.2cy,
- xlab     =  0cx-0.4inch,         yloc     = 0.25inch,
- height   =  0.0cy,              
- boundary =  1.00mm,              trail    =  0.75mm,
- broad    =  2.00mm,
- realized =  0.75mm,              dormant  =  0.25mm,
- blank    =  colorant"white",     scaffold =  colorant"grey",
- forbid1  =  colorant"steelblue", forbid2  =  colorant"lightsteelblue", 
- colour   =  default_colour,
+ radius     =  0.2cy,               smradius  =  0.9 * 0.2cy,
+ bit        = -0.02h,               tic       = -0.2cy,
+ xlab       =  0cx-0.4inch,         yloc      = 0.25inch,
+ figwidth   =  6inch,               figheight = 3.25inch,
+ height     =  0.0cy,              
+ boundary   =  1.00mm,              trail     =  0.75mm,
+ broad      =  2.00mm,
+ realized   =  0.75mm,              dormant   =  0.25mm,
+ blank      =  colorant"white",     scaffold  =  colorant"grey",
+ forbid1    =  colorant"steelblue", forbid2   =  colorant"lightsteelblue", 
+ background =  colorant"bisque",    legend    =  colorant"black",
+ colour     =  default_colour,
+ opacity    =  0.3,
 )
 
 # Loading a theme
@@ -58,7 +61,7 @@ default_theme = (
 function create_theme(data)
   ## Building length dictionaries
   d_cy = Dict((a[1] => a[2]cy) for a in pairs(data["length_cy"]))
-  d_h = Dict((a[1] => a[2]h) for a in pairs(data["length_h"]))
+  d_h  = Dict((a[1] => a[2]h) for a in pairs(data["length_h"]))
   d_in = Dict((a[1] => a[2]inch) for a in pairs(data["length_inch"]))
   d_mm = Dict((a[1] => a[2]mm) for a in pairs(data["thickness_mm"]))
 
@@ -105,20 +108,21 @@ function create_theme(data)
 
   ## Returning resulting `theme` structure as a `NamedTuple`.
   return (
-    ϵ=data["jitter"]["ϵ"],
-    radius=d_cy["radius"],      tic=d_cy["tic"]cy,        height=d_cy["height"]cy, 
-    smradius=d_lf["smradius"] * d_cy["radius"], 
-    bit=d_h["bit"],         
-    xlab=0cx + d_in["xlab"],    yloc=d_in["yloc"], 
-    boundary=d_mm["boundary"],  trail=d_mm["trail"],      broad=d_mm["broad"],
-    realized=d_mm["realized"],  dormant=d_mm["dormant"],     
-    blank=d_cx["blank"],        scaffold=d_cx["scaffold"],
-    forbid1=d_cx["forbid1"],    forbid2=d_cx["forbid2"],  
-    default=d_cx["default"],    background=d_cx["background"],
-    legend=d_cx["legend"],
-    colour=theme_colour,
-    opacity=d_op["background"],
-    figwidth=d_in["figwidth"],  figheight=d_in["figheight"]
+    ϵ        = data["jitter"]["ϵ"],
+    figwidth = d_in["figwidth"],   figheight=d_in["figheight"],
+    radius   = d_cy["radius"],     tic=d_cy["tic"]cy,        
+    height   = d_cy["height"]cy, 
+    bit      = d_h["bit"],         
+    boundary = d_mm["boundary"],   trail=d_mm["trail"],
+    broad=d_mm["broad"],
+    realized = d_mm["realized"],   dormant=d_mm["dormant"],     
+    blank    = d_cx["blank"],      scaffold=d_cx["scaffold"],
+    forbid1  = d_cx["forbid1"],    forbid2=d_cx["forbid2"],  
+    default  = d_cx["default"],    background=d_cx["background"],
+    legend   = d_cx["legend"],
+    colour   = theme_colour,       opacity  = d_op["background"],
+    xlab     = 0cx + d_in["xlab"], yloc=d_in["yloc"], 
+    smradius = d_lf["smradius"] * d_cy["radius"], 
   )
 end
 
