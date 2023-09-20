@@ -50,7 +50,8 @@ end
 # `scaffolding`^[The function `scaffolding` is **exported**.],
 # which constructs the fundamental scaffolding for graphs of epidemics (axes, time lines _etc_).
 function scaffolding(duration, population; theme=default_theme)
-  (context(), theme.region, time_axis(duration, theme=theme),
+  region = (context(), rectangle(), fill(theme.background), fillopacity(theme.opacity))
+  return (context(), region, time_axis(duration, theme=theme),
     time_threads(duration, population, theme=theme))
 end
 

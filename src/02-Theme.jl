@@ -12,6 +12,46 @@ load_theme(fpath) = YAML.load_file(fpath)
 # ```julia
 # load_theme(pkgdir(EpidemicsUtilities, "data", "default_theme.yml"))
 # ```
+
+
+# Default drawing themes forming a structure `default_theme`
+# ----------------------------------------------------------------
+# The following `default_theme` can be loaded as follows
+# (this is used in `test/test_theme.jl`).
+# ```julia
+# default_theme_structure = load_theme(pkgdir(EpidemicsUtilities, "data", "default_theme.yml"))
+# default_theme = create_theme(default_theme_structure)
+# ```
+# This is
+# used as a default in what follows, _via_ a keyword argument
+# for given `EpidemicsUtilities` functions `fname`.
+# ```julia
+# fname(..., theme=default_theme)
+# ```
+# Here is a realization of the `default_theme` together with a default colour definition.
+function default_colour(x::Removal) colorant"tan"       end 
+function default_colour(x::CRemoval) colorant"purple"    end 
+function default_colour(x::Infection) colorant"orange"    end 
+function default_colour(x::PInfection) colorant"darkgreen" end 
+function default_colour(x::T) where T<:AbstractInfectionMarker   colorant"orange" end
+function default_colour(x::T) where T<:AbstractRemovalMarker     colorant"tan"    end
+function default_colour(x::T) where T<:AbstractSusceptibleMarker colorant"blue"   end
+function default_colour(x::T) where T<:AbstractIncident          colorant"white"  end
+default_theme = (
+ radius   =  0.2cy,               smradius =  0.9 * 0.2cy,
+ bit      = -0.02h,               tic      = -0.2cy,
+ xlab     =  0cx-0.4inch,         yloc     = 0.25inch,
+ height   =  0.0cy,              
+ boundary =  1.00mm,              trail    =  0.75mm,
+ broad    =  2.00mm,
+ realized =  0.75mm,              dormant  =  0.25mm,
+ blank    =  colorant"white",     scaffold =  colorant"grey",
+ forbid1  =  colorant"steelblue", forbid2  =  colorant"lightsteelblue", 
+ colour   =  default_colour,
+)
+
+# Loading a theme
+# ---------------
 # The function `create_theme`^[The function `create_theme` is **exported**.]
 # generates a plotting theme using the chosen `theme` information.
 
@@ -29,7 +69,7 @@ function create_theme(data)
   ## Building colour dictionary
   d_cx = Dict((a[1] => parse(Colorant, a[2])) for a in pairs(data["colour_x"]))
 
-  ## Building colour function
+  ## Building colour dictionary
   d_c = data["colour"]
 
   function theme_colour(x::T) where {T<:Union{Removal, CRemoval, Infection, PInfection}}
@@ -78,22 +118,8 @@ function create_theme(data)
     legend=d_cx["legend"],
     colour=theme_colour,
     opacity=d_op["background"],
-    region=(context(), rectangle(), fill(d_cx["background"]), fillopacity(d_op["background"])),
     figwidth=d_in["figwidth"],  figheight=d_in["figheight"]
   )
 end
 
-
-
-# Default drawing themes forming a structure `default_theme`
-# ----------------------------------------------------------------
-# We define the `default_theme` using these functions.
-default_theme_structure = load_theme(pkgdir(EpidemicsUtilities, "data", "default_theme.yml"))
-default_theme = create_theme(default_theme_structure)
-# This is
-# used as a default in what follows, _via_ a keyword argument
-# for a given function `fname`.
-# ```julia
-# fname(..., theme=default_theme)
-# ```
 

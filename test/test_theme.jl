@@ -36,8 +36,7 @@ theme = create_theme(data)
 
   for tag in ["boundary", "trail",
     "broad",
-    "realized", "dormant",
-    "region",
+    "realized", "dormant"
   ]
     @test string(default_theme[Symbol(tag)]) == string(theme[Symbol(tag)])
   end
@@ -47,8 +46,6 @@ theme = create_theme(data)
     InitialRemoved(0.0, 1),
     InitialSusceptible(0.0, 1),
   ]
-    #cue = string(tag) * ":" * (" "^(19-length(string(tag))))
-    #println(cue, default_theme.colour(tag) == theme.colour(tag))
     @test default_theme.colour(tag) == theme.colour(tag)
   end
 
