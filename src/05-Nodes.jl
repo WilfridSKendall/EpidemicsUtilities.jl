@@ -14,7 +14,7 @@ function draw_incident(xl::Vector{T}; realized=false, theme=default_theme) where
       xli = [x for x in xl if typeof(x) <: AbstractInfection]
       return (context(),
         (context(),
-          circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
+          circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius + theme.realized]),
           linewidth(theme.realized), fill(theme.colour(xl)), fillopacity(0.0), stroke(theme.colour(xl))),
         (context(),
           circle(map(x -> (x.t)cx, xli), map(x -> x.infectee, xli), [theme.smradius]),
