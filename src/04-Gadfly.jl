@@ -6,7 +6,7 @@
 # of trajectories as knots of piecewise constant functions, having used
 # `EpidemicsCFTP.evolution`
 # to deliver the \(\SIR\) trajectory `trajectory`
-# and a sorted list of realized incidents in `realized`.
+# and a sorted list of activated incidents in `activated`.
 function table_trajectories(duration, initial, trajectory)
   states = [initial]
   t = [state.t for state in trajectory]

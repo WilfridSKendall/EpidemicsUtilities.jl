@@ -89,7 +89,7 @@ export table_trajectories, plot_trajectories
 #
 # ### Drawing nodes
 # Sub-script `05-Nodes.jl` defines three functions to draw sets of incidents.
-export draw_incident, draw_elements, draw_realized_elements
+export draw_incident, draw_elements, draw_elements
 #
 # ### Drawing trajectories
 # Sub-script `06-Trajectories.jl` currently defines no exported functions.

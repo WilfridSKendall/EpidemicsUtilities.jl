@@ -38,25 +38,25 @@ end
 
 # A total trajectory is computed by `compute_total_trajectory`;^[The function `compute_total_trajectory` is **exported**.]
 # delineating the trajectory by markers (not incidents).
-function compute_total_trajectory(duration, population, initial_state, realized)
+function compute_total_trajectory(duration, population, initial_state, activated)
   initial_markers = Iterators.flatten([
     [IR(0, k) for k in 1:initial_state.r],
     [II(0, k) for k in (initial_state.r+1):(initial_state.r+initial_state.i)],
     [IS(0, k) for k in (initial_state.r+initial_state.i+1):population]
   ])
 
-  infect1 = [x for x in realized if isa(x, Infection) || isa(x, PInfection)]
+  infect1 = [x for x in activated if isa(x, Infection) || isa(x, PInfection)]
   infect2 = [(MIA(x.t, x.infectee - 1), MIB(x.t, x.infectee)) for x in infect1]
-  remove1 = [x for x in realized if isa(x, CRemoval) || isa(x, Removal)]
+  remove1 = [x for x in activated if isa(x, CRemoval) || isa(x, Removal)]
   remove2 = [(MRA(x.t, k - 1), MRB(x.t, k)) for (k, x) in enumerate(remove1)]
-  realized2 = sort(vcat(infect2, remove2), lt=(x, y) -> isearlier(x[1], y[1]))
-  realized_trajectory = collect(Iterators.flatten(realized2))
+  activated2 = sort(vcat(infect2, remove2), lt=(x, y) -> isearlier(x[1], y[1]))
+  trajectory = collect(Iterators.flatten(activated2))
 
-  rend = maximum(x.target for x in realized_trajectory if isa(x, MRB))
-  iend = maximum(x.target for x in realized_trajectory if isa(x, MIB))
+  rend = maximum(x.target for x in trajectory if isa(x, MRB))
+  iend = maximum(x.target for x in trajectory if isa(x, MIB))
 
   collect(Iterators.flatten(
-    [initial_markers, realized_trajectory,
+    [initial_markers, trajectory,
     [CR(duration, k) for k in 1:rend],
     [CI(duration, k) for k in (rend+1):iend],
     [CS(duration, k) for k in (iend+1):population]

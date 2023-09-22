@@ -36,7 +36,7 @@ theme = create_theme(data)
 
   for tag in ["boundary", "trail",
     "broad",
-    "realized", "dormant"
+    "activated", "dormant"
   ]
     @test string(default_theme[Symbol(tag)]) == string(theme[Symbol(tag)])
   end

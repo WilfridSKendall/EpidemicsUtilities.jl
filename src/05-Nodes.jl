@@ -1,6 +1,6 @@
 # Node-drawing Functions (`05-Nodes.jl`)
 # ======================================
-# Here are functions to draw nodes (optionally as realized or not) for 
+# Here are functions to draw nodes (optionally as activated or not) for 
 # vectors of incidents.
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
 # draws plain undecorated incidents.
@@ -8,17 +8,17 @@
 # ::: {.callout-warning}
 # Seek better code!
 # :::
-function draw_incident(xl::Vector{T}; realized=false, theme=default_theme) where {T<:AbstractIncident}
+function draw_incident(xl::Vector{T}; activated=false, theme=default_theme) where {T<:AbstractIncident}
   if length(xl) > 0
-    if realized
+    if activated
       xli = [x for x in xl if typeof(x) <: AbstractInfection]
       return (context(),
         (context(),
-          circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius + theme.realized]),
-          linewidth(theme.realized), fill(theme.colour(xl)), fillopacity(0.0), stroke(theme.colour(xl))),
+          circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius + theme.activated]),
+          linewidth(theme.activated), fill(theme.colour(xl)), fillopacity(0.0), stroke(theme.colour(xl))),
         (context(),
           circle(map(x -> (x.t)cx, xli), map(x -> x.infectee, xli), [theme.smradius]),
-          linewidth(theme.realized), fill(theme.colour(xli)), fillopacity(0.0), stroke(theme.colour(xli))),
+          linewidth(theme.activated), fill(theme.colour(xli)), fillopacity(0.0), stroke(theme.colour(xli))),
       )
     else
       return (context(),
@@ -36,14 +36,14 @@ end
 # Incidents themerated with connections are drawn using
 # `draw_connect`.^[The function `draw_connect` is used 
 # in the exported function `draw_elements` defined in this section.]
-function draw_connect(xl::Vector{T}; realized=false, theme=default_theme) where {T<:AbstractIncident}
+function draw_connect(xl::Vector{T}; activated=false, theme=default_theme) where {T<:AbstractIncident}
   xli = [x for x in xl if typeof(x) <: AbstractInfection]
   return (context(),
     line(map(x -> [((x.t)cx, (x.target)cy + theme.radius), ((x.t)cx, (x.infectee)cy)], xli)),
     line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
         ((x.t)cx, (x.infectee)cy),
         ((x.t)cx + 0.3theme.bit, (x.infectee)cy - theme.bit)], xli)),
-    stroke(theme.colour(xli)), linewidth(realized ? theme.realized : theme.dormant))
+    stroke(theme.colour(xli)), linewidth(activated ? theme.activated : theme.dormant))
 end
 
 # The next function 
@@ -58,20 +58,20 @@ function draw_elements(innov; theme=default_theme)
   )
 end
 
-# The function `draw_realized_elements`^[The function `draw_realized_elements` is **exported**.]
-# draws the realized elements together with connectors.
-function draw_realized_elements(initial, realized; theme=default_theme)
-  realized_removals = [inc for inc in realized if (isa(inc, Removal) || isa(inc, CRemoval))]
-  enumerated_removals = collect(enumerate(realized_removals))
+# The function `draw_elements`^[The function `draw_elements` is **exported**.]
+# draws the activated elements together with connectors.
+function draw_elements(initial, activated; theme=default_theme)
+  removals = [inc for inc in activated if (isa(inc, Removal) || isa(inc, CRemoval))]
+  enumerated_removals = collect(enumerate(removals))
   return (context(),
-    draw_incident(realized, realized=true, theme=theme),
-    draw_connect(realized, realized=true, theme=theme),
+    draw_incident(activated, activated=true, theme=theme),
+    draw_connect(activated, activated=true, theme=theme),
     (context(), # Could this be cleaned up?
       (context(),          # Connecting removal nodes
         circle([(inc.t)cx for (k, inc) in enumerated_removals],
           [(k + initial.r)cy for (k, inc) in enumerated_removals],
           [theme.smradius]), stroke(theme.colour(CRemoval(0.0, 1))),
-        linewidth(theme.realized), fill(theme.colour(CRemoval(0.0, 1))), fillopacity(0.5)
+        linewidth(theme.activated), fill(theme.colour(CRemoval(0.0, 1))), fillopacity(0.5)
       ),
       # (and connect removal lines when they are not of negative length)
       (context(),

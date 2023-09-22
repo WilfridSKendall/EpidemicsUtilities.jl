@@ -11,13 +11,13 @@ function create_nodes_view(duration, innov; theme=default_theme)
 end
 # The function 
 # `create_epidemic_view`^[The function `create_epidemic_view` is **exported**.]
-# presents incidents, realized incidents,
+# presents incidents, activated incidents,
 # connectors and regions on a single figure.
-function create_epidemic_view(duration, innov, flow, initial, realized; theme=default_theme)
-  total_trajectory = compute_total_trajectory(duration, innov.population, initial, realized)
+function create_epidemic_view(duration, innov, flow, initial, activated; theme=default_theme)
+  total_trajectory = compute_total_trajectory(duration, innov.population, initial, activated)
 
   (context(),
-    draw_realized_elements(initial, realized, theme=theme),
+    draw_elements(initial, activated, theme=theme),
     draw_elements(innov, theme=theme),
     region_plot(duration, innov.population, total_trajectory, theme=theme),
     scaffolding(duration, innov.population, theme=theme))

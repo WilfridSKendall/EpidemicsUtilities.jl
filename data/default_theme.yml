@@ -51,7 +51,7 @@ thickness_mm:
     trail:                 0.75
     dormant:               0.25
     broad:                 2.00
-    realized:              0.75
+    activated:             0.75
 
 # background opacity
 opacity:
