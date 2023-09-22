@@ -58,9 +58,9 @@ function draw_elements(innov; theme=default_theme)
   )
 end
 
-# The function `draw_elements`^[The function `draw_elements` is **exported**.]
+# The function `draw_activated_elements`^[The function `draw_activated_elements` is **exported**.]
 # draws the activated elements together with connectors.
-function draw_elements(initial, activated; theme=default_theme)
+function draw_activated_elements(initial, activated; theme=default_theme)
   removals = [inc for inc in activated if (isa(inc, Removal) || isa(inc, CRemoval))]
   enumerated_removals = collect(enumerate(removals))
   return (context(),
