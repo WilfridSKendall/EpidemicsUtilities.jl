@@ -63,7 +63,7 @@ end
 # `infectives`, `removals`, and `empty` and `population`, given a `DataFrame` produced 
 # by `table_trajectories1`. The augmented `DataFrame` allows us to compute and plot the 
 # regions determined by the epidemic trajectory using `Gadfly` `ribbon` plotting.
-function table_trajectories2(df)
+function table_trajectories2(df; theme=default_theme)
     df_lag = deepcopy(df)
     df_lag.t = circshift(df.t, (-1)) .- theme.ϵ
     df_lag.t[end] = df_lag.t[end-1]
