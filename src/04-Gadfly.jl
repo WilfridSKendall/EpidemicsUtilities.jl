@@ -38,7 +38,7 @@ end
 # derives and returns a DataFrame (column headings time `t`, `susceptibles`, `infectives`,
 # `removals`, and `empty` and `population`, given duration, initial state and trajectory
 # of an S-I-R epidemic.
-function table_trajectories1(duration, initial, trajectory)
+function table_trajectories1(duration, population, initial, trajectory)
     t = [state.t for state in trajectory]
     s = [state.s for state in trajectory]
     i = [state.i for state in trajectory]
