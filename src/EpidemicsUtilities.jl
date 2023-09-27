@@ -82,7 +82,8 @@ export scaffolding
 # ### `Gadfly` drawing Functions
 # Sub-script `04-Gadfly.jl` defines specific drawing functions using the `Gadfly` plot package.
 # These functions do _not_ use the template produced by `scaffolding` from `03-Template.jl`.
-export table_trajectories, plot_trajectories
+# The functions `table_trajectories` and `plot_trajectories` are **DEPRECATED**.
+export table_trajectories, table_trajectories1, table_trajectories2, plot_trajectories
 # ::: {.callout-tip}
 # See previous tip concerning possibility of using `Gadfly` for axes and coordinates.
 # :::
