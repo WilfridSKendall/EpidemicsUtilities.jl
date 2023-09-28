@@ -79,11 +79,10 @@ export scaffolding
 # Note that much of this might be better provided by `Gadfly` functions.
 # :::
 #
-# ### `Gadfly` drawing Functions
-# Sub-script `04-Gadfly.jl` defines specific drawing functions using the `Gadfly` plot package.
-# These functions do _not_ use the template produced by `scaffolding` from `03-Template.jl`.
-# The functions `table_trajectories` and `plot_trajectories` are **DEPRECATED**.
-export table_trajectories, table_trajectories1, table_trajectories2, plot_trajectories
+# ### `DataFrames` Functions
+# Sub-script `04-DataFrames.jl` defines functions producing data frames for use by the `Gadfly` plot package.
+# This evades use of the template produced by `scaffolding` from `03-Template.jl`.
+export table_trajectories1, table_trajectories2
 # ::: {.callout-tip}
 # See previous tip concerning possibility of using `Gadfly` for axes and coordinates.
 # :::
@@ -128,7 +127,7 @@ using EpidemicsCFTP
 # ------------------------
 include("02-Theme.jl")
 include("03-Template.jl")
-include("04-Gadfly.jl")
+include("04-DataFrames.jl")
 include("05-Nodes.jl")
 include("06-Trajectories.jl")
 include("07-Zones.jl")
