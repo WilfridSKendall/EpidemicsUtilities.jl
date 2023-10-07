@@ -24,7 +24,9 @@ function draw_incident(xl::Vector{T}; activated=false, theme=default_theme) wher
       return (context(),
         (context(),
           text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
-            map(x -> string(x), xl), [hcenter], [vcenter]),
+            map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
+          # #  map(x -> string(x), xl), [hcenter], [vcenter]),
+          # # replacing `string(x)` by `sprint(show, MIME("text/plain"), x)`
           fontsize(5pt), font("Helvetica")),
         (context(),
           circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
