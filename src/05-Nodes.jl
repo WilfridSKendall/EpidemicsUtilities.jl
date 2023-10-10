@@ -103,6 +103,10 @@ function draw_feasible_incident(xl::Vector{T}, feasible::Integer; theme=default_
      line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
         ((x.t)cx, (x.infectee)cy),
         ((x.t)cx + 0.3theme.bit, (x.infectee)cy - theme.bit)], xl)),
-     stroke(col), linewidth(lw))
+     stroke(col), linewidth(lw)),
+#    (context(),
+#       text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
+#            map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
+#       fontsize(5pt), font("Helvetica"), fill(theme.legend)),
     )
 end
