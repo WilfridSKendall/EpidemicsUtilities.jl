@@ -85,7 +85,7 @@ function draw_activated_elements(initial, activated; theme=default_theme)
   )
 end
 
-# The function `draw_feasible_incident`^[The function `draw_feasible_icident` is **exported**.]
+# The function `draw_feasible_incident`^[The function `draw_feasible_incident` is **exported**.]
 # draws feasible incidents with connectors (which must be of type `Infection`) 
 # at a specified level of feasibility (`1`, `2`, or `3`).
 function draw_feasible_incident(xl::Vector{Infection}, feasible; theme=default_theme)
