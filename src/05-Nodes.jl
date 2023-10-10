@@ -62,7 +62,7 @@ end
 # The function `draw_activated_elements`^[The function `draw_activated_elements` is **exported**.]
 # draws the activated elements together with connectors.
 function draw_activated_elements(initial, activated; theme=default_theme)
-  removals = [inc for inc in activated if (isa(inc, Removal) || isa(inc, CRemoval))]
+  removals = [inc for inc in activated if isa(inc, AbstractRemoval)]
   enumerated_removals = collect(enumerate(removals))
   return (context(),
     draw_incident(activated, activated=true, theme=theme),
@@ -71,15 +71,15 @@ function draw_activated_elements(initial, activated; theme=default_theme)
       (context(),          # Connecting removal nodes
         circle([(inc.t)cx for (k, inc) in enumerated_removals],
           [(k + initial.r)cy for (k, inc) in enumerated_removals],
-          [theme.smradius]), stroke(theme.colour(CRemoval(0.0, 1))),
-        linewidth(theme.activated), fill(theme.colour(CRemoval(0.0, 1))), fillopacity(0.5)
+          [theme.smradius]), stroke(theme.colour(CRemoval)),
+        linewidth(theme.activated), fill(theme.colour(CRemoval)), fillopacity(0.5)
       ),
       # (and connect removal lines when they are not of negative length)
       (context(),
         line([[((inc.t)cx, (inc.target)cy - theme.radius),
           ((inc.t)cx, (k + initial.r)cy + theme.radius)]
               for (k, inc) in enumerated_removals if inc.target > k + initial.r]),
-        stroke(theme.colour(Removal(0.0, 1))), linewidth(theme.trail), strokedash([1mm, 1mm])
+        stroke(theme.colour(Removal)), linewidth(theme.trail), strokedash([1mm, 1mm])
       ),
     )
   )
