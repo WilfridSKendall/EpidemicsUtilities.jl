@@ -52,7 +52,7 @@ loc = dirname(dirname(pathof(EpidemicsUtilities)))
 version = "$(read(Cmd(`git describe --tags`, dir=loc), String)[1:end-1])"
 branch = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
 #
-# The functions defined in this module are aimed at
+# The functions defined in this module are intended for
 # construction of illustration of simulations for
 # $\SIR$ epidemics when conditioned on removals being observed.
 
@@ -89,7 +89,7 @@ export table_trajectories1, table_trajectories2
 #
 # ### Drawing nodes
 # Sub-script `05-Nodes.jl` defines three functions to draw sets of incidents.
-export draw_incident, draw_elements, draw_activated_elements
+export draw_incident, draw_elements, draw_activated_elements, draw_feasible_incident
 #
 # ### Drawing trajectories
 # Sub-script `06-Trajectories.jl` currently defines no exported functions.

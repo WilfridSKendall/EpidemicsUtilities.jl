@@ -8,7 +8,8 @@
 # ::: {.callout-warning}
 # Seek better code!
 # :::
-function draw_incident(xl::Vector{T}; activated=false, theme=default_theme) where {T<:AbstractIncident}
+function draw_incident(xl::Vector{T}; 
+                      activated=false, theme=default_theme) where {T<:AbstractIncident}
   if length(xl) > 0
     if activated
       xli = [x for x in xl if typeof(x) <: AbstractInfection]
@@ -25,8 +26,6 @@ function draw_incident(xl::Vector{T}; activated=false, theme=default_theme) wher
         (context(),
           text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
             map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
-          # #  map(x -> string(x), xl), [hcenter], [vcenter]),
-          # # replacing `string(x)` by `sprint(show, MIME("text/plain"), x)`
           fontsize(5pt), font("Helvetica")),
         (context(),
           circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
@@ -84,4 +83,26 @@ function draw_activated_elements(initial, activated; theme=default_theme)
       ),
     )
   )
+end
+
+# The function `draw_feasible_incident`^[The function `draw_feasible_icident` is **exported**.]
+# draws feasible incidents with connectors (which must be of type `Infection`) 
+# at a specified level of feasibility (`1`, `2`, or `3`).
+function draw_feasible_incident(xl::Vector{Infection}, feasible; theme=default_theme)
+  lw = [theme.dormant, theme.trail, theme.boundary][feasible]
+  col = [theme.lastfeasible1, theme.lastfeasible2, theme.lastfeasible3][feasible]
+  return (context(),
+    (context(),
+     circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
+       linewidth(lw), fill(col)), fillopacity(0.0), stroke(col),
+    (context(),
+       circle(map(x -> (x.t)cx, xl), map(x -> x.infectee, xl), [theme.smradius]),
+       linewidth(lw), fill(col), fillopacity(0.0), stroke(col)),
+    (context(),
+     line(map(x -> [((x.t)cx, (x.target)cy + theme.radius), ((x.t)cx, (x.infectee)cy)], xl)),
+     line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
+        ((x.t)cx, (x.infectee)cy),
+        ((x.t)cx + 0.3theme.bit, (x.infectee)cy - theme.bit)], xl)),
+     stroke(col), linewidth(lw))
+    )
 end
