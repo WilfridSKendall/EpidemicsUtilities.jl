@@ -88,7 +88,7 @@ end
 # The function `draw_feasible_incident`^[The function `draw_feasible_incident` is **exported**.]
 # draws feasible incidents with connectors (which must be of type `Infection`) 
 # at a specified level of feasibility (`1`, `2`, or `3`).
-function draw_feasible_incident(xl::Vector{Infection}, feasible; theme=default_theme)
+function draw_feasible_incident(xl::Vector{T}, feasible::Integer; theme=default_theme) where T<:AbstractInfection
   lw = [theme.dormant, theme.trail, theme.boundary][feasible]
   col = [theme.lastfeasible1, theme.lastfeasible2, theme.lastfeasible3][feasible]
   return (context(),
