@@ -1,10 +1,10 @@
-# Graphics outputs (`08-Outputs.jl`)
+# Graphics outputs (`06-Outputs.jl`)
 # ==================================
 # The function 
 # `create_nodes_view`^[The function `create_nodes_view` is **exported**.]
 # combines depiction of the incidents with the axes supplied
 # by `scaffolding` as defined in a previous section.
-function create_nodes_view(duration, innov; theme=default_theme)
+function create_nodes_view(duration, innov; theme=default_theme) # DEPRECATED
   (context(),
     draw_elements(innov, theme=theme),
     scaffolding(duration, innov.population))
@@ -13,7 +13,7 @@ end
 # `create_epidemic_view`^[The function `create_epidemic_view` is **exported**.]
 # presents incidents, activated incidents,
 # connectors and regions on a single figure.
-function create_epidemic_view(duration, innov, flow, initial, activated; theme=default_theme)
+function create_epidemic_view(duration, innov, flow, initial, activated; theme=default_theme) # DEPRECATED
   total_trajectory = compute_total_trajectory(duration, innov.population, initial, activated)
   (context(),
     draw_activated_elements(initial, activated, theme=theme),

@@ -74,7 +74,7 @@ export load_theme, create_theme
 # Sub-script `03-Template.jl` defines a function `scaffolding`
 # to draw the time axis and time-lines.
 # thus providing a basic template for most of the simulation plots. 
-export scaffolding
+export scaffolding # DEPRECATED
 # ::: {.callout-tip}
 # Note that much of this might be better provided by `Gadfly` functions.
 # :::
@@ -91,21 +91,14 @@ export table_trajectories1, table_trajectories2
 # Sub-script `05-Nodes.jl` defines three functions to draw sets of incidents.
 export draw_incident, draw_elements, draw_activated_elements, draw_feasible_incident
 #
-# ### Drawing trajectories
-# Sub-script `06-Trajectories.jl` currently defines no exported functions.
-#
-# ### Drawing zones
-# Sub-script `07-Zones.jl` defines functions which (for now) are used only in `experiment.qmd`.
-export compute_total_trajectory, region_plot
-
 # ### Graphics outputs
-# Sub-script `08-Outputs.jl` defines  
+# Sub-script `06-Outputs.jl` defines  
 # a function `create_nodes_view` to draw nodes and connectors 
 # relating to a simulation, using functions defined in `05-Nodes.jl`,
 # and a function `create_epidemic_view`, additionally using functions defined in 
 # `06-Trajectories.jl` and `07-Zones.jl`
 # to draw an entire epidemic.
-export create_nodes_view, create_epidemic_view
+export create_nodes_view, create_epidemic_view # DEPRECATED
 # It also defines
 # a convenient drawing function  `depict`, creating `PNG` and `PDF` variants of a figure.
 export depict
@@ -129,9 +122,7 @@ include("02-Theme.jl")
 include("03-Template.jl")
 include("04-DataFrames.jl")
 include("05-Nodes.jl")
-include("06-Trajectories.jl")
-include("07-Zones.jl")
-include("08-Outputs.jl")
+include("06-Outputs.jl")
 
 # This concludes the module.
 end

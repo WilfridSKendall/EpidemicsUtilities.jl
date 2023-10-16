@@ -7,7 +7,7 @@
 # `time_axis`^[The function `time_axis` is used in the exported function `scaffolding` defined in this section.]
 # which draws the process time axis, furnished with tick marks at integer times.
 # Note, both here and following, the careful use made of graphics area units (`cx`, `cy`).
-function time_axis(duration; theme=default_theme)
+function time_axis(duration; theme=default_theme) # DEPRECATED
   labellocs = [(x)cx for x in 0:duration]
   step = 10^floor(Int, log10(duration))
   tic1 = [(((x)cx, theme.height), ((x)cx, theme.height + theme.tic)) for x in 0:1.0step:duration]
@@ -27,7 +27,7 @@ end
 # A function 
 # `time_threads`^[The function `time_threads` is used in the exported function `scaffolding` defined in this section.]
 # draws time-lines as threads labelled by circled integers.
-function time_threads(duration, population; theme=default_theme)
+function time_threads(duration, population; theme=default_theme) # DEPRECATED
   circlabels = [string(Char(0x00002460 + i - 1)) for i in 1:population]
 
   (context(), # Returned value of function!
@@ -49,7 +49,7 @@ end
 # These two functions are put together in a third function
 # `scaffolding`^[The function `scaffolding` is **exported**.],
 # which constructs the fundamental scaffolding for graphs of epidemics (axes, time lines _etc_).
-function scaffolding(duration, population; theme=default_theme)
+function scaffolding(duration, population; theme=default_theme) # DEPRECATED
   region = (context(), rectangle(), fill(theme.background), fillopacity(theme.opacity))
   return (context(), region, time_axis(duration, theme=theme),
     time_threads(duration, population, theme=theme))
