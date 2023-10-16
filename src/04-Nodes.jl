@@ -1,5 +1,5 @@
-# Node-drawing Functions (`05-Nodes.jl`)
-# ======================================
+# Included script: Node-drawing Functions (`04-Nodes.jl`)
+# =======================================================
 # Here are functions to draw nodes (optionally as activated or not) for 
 # vectors of incidents.
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
@@ -88,7 +88,8 @@ end
 # The function `draw_feasible_incident`^[The function `draw_feasible_incident` is **exported**.]
 # draws feasible incidents with connectors (which must be of type `Infection`) 
 # at a specified level of feasibility (`1`, `2`, or `3`).
-function draw_feasible_incident(xl::Vector{T}, feasible::Integer; inscribe=true, theme=default_theme) where T<:AbstractInfection
+function draw_feasible_incident(xl::Vector{T}, feasible::Integer; 
+                                inscribe=true, theme=default_theme) where T<:AbstractInfection
   lw = [theme.dormant, theme.activated, theme.boundary][feasible]
   col = [theme.lastfeasible1, theme.lastfeasible2, theme.lastfeasible3][feasible]
   return (context(),

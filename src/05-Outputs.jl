@@ -1,5 +1,5 @@
-# Graphics outputs (`06-Outputs.jl`)
-# ==================================
+# Included script: Graphics outputs (`05-Outputs.jl`)
+# ===================================================
 # The following short utility function
 # `depict`^[The function `depict` is **exported**.]
 # is helpful.

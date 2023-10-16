@@ -67,30 +67,19 @@ branch = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
 # ### Themes and colours
 # Sub-script `02-Theme.jl` defines the function `load_theme`, 
 # loading `YAML` data to specify a `theme` structure,
-# and the function `create_theme`, using these data to create (and return) a `theme`[ration].
+# and the function `create_theme`, using these data to create (and return) a `theme`.
 export load_theme, create_theme
 #
 # ### `DataFrames` Functions
-# Sub-script `03-DataFrames.jl` defines functions producing data frames for use by the `Gadfly` plot package.
-# This evades use of the template produced by `scaffolding` from `03-Template.jl`.
+# Sub-script `02-DataFrames.jl` defines functions producing data frames to be used in `Gadfly` plot package.
 export table_trajectories1, table_trajectories2
-# # ::: {.callout-tip}
-# # See previous tip concerning possibility of using `Gadfly` for axes and coordinates.
-# # :::
 #
 # ### Drawing nodes
 # Sub-script `04-Nodes.jl` defines three functions to draw sets of incidents.
 export draw_incident, draw_elements, draw_activated_elements, draw_feasible_incident
 #
-# ### Graphics outputs
+# ### Graphics output
 # Sub-script `05-Outputs.jl` defines  
-# a function `create_nodes_view` to draw nodes and connectors 
-# relating to a simulation, using functions defined in `05-Nodes.jl`,
-# and a function `create_epidemic_view`, additionally using functions defined in 
-# `06-Trajectories.jl` and `07-Zones.jl`
-# to draw an entire epidemic.
-# export create_nodes_view, create_epidemic_view # DEPRECATED
-# It also defines
 # a convenient drawing function  `depict`, creating `PNG` and `PDF` variants of a figure.
 export depict
 

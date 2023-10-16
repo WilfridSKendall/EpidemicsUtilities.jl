@@ -1,5 +1,5 @@
-# Tabulation functions using `DataFrames` (`04-DataFrames.jl`)
-# ============================================================
+# Included script: Tabulation functions using `DataFrames` (`03-DataFrames.jl`)
+# =============================================================================
 # The function `table_trajectories1`^[The function `table_trajectories1` is **exported**.]
 # derives and returns a DataFrame (column headings time `t`, `susceptibles`, `infectives`,
 # `removals`, and `empty` and `population`, given duration, initial state and trajectory

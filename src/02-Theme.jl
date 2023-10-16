@@ -1,5 +1,5 @@
-# Themes for plotting (`02-Theme.jl`)
-# ===================================
+# Included script: Themes for plotting (`02-Theme.jl`)
+# ====================================================
 
 # Reading in information to define default plotting `theme`
 # --------------------------------------------------------
