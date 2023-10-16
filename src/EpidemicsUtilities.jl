@@ -70,35 +70,26 @@ branch = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
 # and the function `create_theme`, using these data to create (and return) a `theme`[ration].
 export load_theme, create_theme
 #
-# ### Template for plots
-# Sub-script `03-Template.jl` defines a function `scaffolding`
-# to draw the time axis and time-lines.
-# thus providing a basic template for most of the simulation plots. 
-export scaffolding # DEPRECATED
-# ::: {.callout-tip}
-# Note that much of this might be better provided by `Gadfly` functions.
-# :::
-#
 # ### `DataFrames` Functions
-# Sub-script `04-DataFrames.jl` defines functions producing data frames for use by the `Gadfly` plot package.
+# Sub-script `03-DataFrames.jl` defines functions producing data frames for use by the `Gadfly` plot package.
 # This evades use of the template produced by `scaffolding` from `03-Template.jl`.
 export table_trajectories1, table_trajectories2
-# ::: {.callout-tip}
-# See previous tip concerning possibility of using `Gadfly` for axes and coordinates.
-# :::
+# # ::: {.callout-tip}
+# # See previous tip concerning possibility of using `Gadfly` for axes and coordinates.
+# # :::
 #
 # ### Drawing nodes
-# Sub-script `05-Nodes.jl` defines three functions to draw sets of incidents.
+# Sub-script `04-Nodes.jl` defines three functions to draw sets of incidents.
 export draw_incident, draw_elements, draw_activated_elements, draw_feasible_incident
 #
 # ### Graphics outputs
-# Sub-script `06-Outputs.jl` defines  
+# Sub-script `05-Outputs.jl` defines  
 # a function `create_nodes_view` to draw nodes and connectors 
 # relating to a simulation, using functions defined in `05-Nodes.jl`,
 # and a function `create_epidemic_view`, additionally using functions defined in 
 # `06-Trajectories.jl` and `07-Zones.jl`
 # to draw an entire epidemic.
-export create_nodes_view, create_epidemic_view # DEPRECATED
+# export create_nodes_view, create_epidemic_view # DEPRECATED
 # It also defines
 # a convenient drawing function  `depict`, creating `PNG` and `PDF` variants of a figure.
 export depict
@@ -124,10 +115,9 @@ using EpidemicsCFTP
 # List of included scripts
 # ------------------------
 include("02-Theme.jl")
-include("03-Template.jl")
-include("04-DataFrames.jl")
-include("05-Nodes.jl")
-include("06-Outputs.jl")
+include("03-DataFrames.jl")
+include("04-Nodes.jl")
+include("05-Outputs.jl")
 
 # This concludes the module.
 end
