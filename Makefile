@@ -50,5 +50,6 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 # Clean-up
 clean:
 	-rm -f $(wildcard *.ipynb)
+	$(HOME)/.local/bin/julia -e 'import EpidemicsUtilities'
 	$(HOME)/.local/bin/julia -e 'Base.compilecache(Base.identify_package("EpidemicsUtilities"))'
 

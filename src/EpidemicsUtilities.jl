@@ -105,14 +105,19 @@ export depict
 
 # Imports
 # -------
-# The module also imports the following `julia` modules. 
-using Colors, Compose, DataFrames, Measures
+# The module also imports the following `julia` modules:
+#
+# (a) Availability of `Gadfly` and related modules.
+using Colors, Compose, Measures
 import Cairo, Fontconfig, Gadfly
-
-# The ability to read `YAML` files facilitates configuration of theme[rations] (see `02-Theme.jl`).
+#
+# (b) The ability to use `DataFrame` constructions
+using DataFrames
+#
+# (c) The ability to read `YAML` files facilitates configuration of theme[rations] (see `02-Theme.jl`).
 import YAML
-
-# The associated module `EpidemicsCFTP` is currently under development
+#
+# The resulting module `EpidemicsCFTP` is currently under development
 # (therefore should be added using `dev EpidemicsCFTP`).
 using EpidemicsCFTP
 
