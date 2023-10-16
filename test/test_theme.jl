@@ -9,16 +9,6 @@ R = Removal;
 C = CRemoval;
 I = Infection;
 P = PInfection;
-IR = InitialRemoved;
-II = InitialInfected;
-IS = InitialSusceptible;
-CR = ContinuingRemoved;
-CI = ContinuingInfected;
-CS = ContinuingSusceptible;
-MIA = MarkerInfectionA;
-MRA = MarkerRemovalA;
-MIB = MarkerInfectionB;
-MRB = MarkerRemovalB;
 
 data = load_theme(pkgdir(EpidemicsUtilities, "data", "default_theme.yml"))
 theme = create_theme(data)
@@ -42,9 +32,6 @@ theme = create_theme(data)
   end
   for tag in [Removal(0.0, 1), CRemoval(0.0, 1),
     Infection(0.0, 1, 2), PInfection(0.0, 1, 2),
-    InitialInfected(0.0, 1),
-    InitialRemoved(0.0, 1),
-    InitialSusceptible(0.0, 1),
   ]
     @test default_theme.colour(tag) == theme.colour(tag)
   end

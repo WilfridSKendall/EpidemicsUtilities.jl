@@ -33,10 +33,6 @@ function default_colour(x::Removal) colorant"tan"       end
 function default_colour(x::CRemoval) colorant"purple"    end 
 function default_colour(x::Infection) colorant"orange"    end 
 function default_colour(x::PInfection) colorant"darkgreen" end 
-function default_colour(x::T) where T<:AbstractInfectionMarker   colorant"orange" end
-function default_colour(x::T) where T<:AbstractRemovalMarker     colorant"tan"    end
-function default_colour(x::T) where T<:AbstractSusceptibleMarker colorant"blue"   end
-function default_colour(x::T) where T<:AbstractIncident          colorant"white"  end
 default_theme = (
  radius        =  0.2cy,               smradius      =  0.9 * 0.2cy,
  bit           = -0.02h,               tic           = -0.2cy,
@@ -79,16 +75,6 @@ function create_theme(data)
 
   function theme_colour(x::T) where {T<:Union{Removal, CRemoval, Infection, PInfection}}
     return parse(Colorant, d_c[string(T)])
-  end
-
-  function theme_colour(x::T) where {T<:AbstractInfectionMarker}
-    parse(Colorant, d_c["AbstractInfectionMarker"])
-  end
-  function theme_colour(x::T) where {T<:AbstractRemovalMarker}
-    parse(Colorant, d_c["AbstractRemovalMarker"])
-  end
-  function theme_colour(x::T) where {T<:AbstractSusceptibleMarker}
-    parse(Colorant, d_c["AbstractSusceptibleMarker"])
   end
 
   function theme_colour(x::T) where {T<:AbstractIncident}
