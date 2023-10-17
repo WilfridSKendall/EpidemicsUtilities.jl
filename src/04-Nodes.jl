@@ -88,6 +88,8 @@ end
 # The function `draw_feasible_incident`^[The function `draw_feasible_incident` is **exported**.]
 # draws feasible incidents with connectors (which must be of type `Infection`) 
 # at a specified level of feasibility (`1`, `2`, or `3`).
+# A **temporary** variant of this works with `feasible` being a general argument
+# (treated as a list of `Compose` directives, typically specifying `stroke` colour and `linewidth`.
 function draw_feasible_incident(xl::Vector{T}, feasible::Integer; 
                                 inscribe=true, theme=default_theme) where T<:AbstractInfection
   lw = [theme.dormant, theme.activated, theme.boundary][feasible]
@@ -102,6 +104,29 @@ function draw_feasible_incident(xl::Vector{T}, feasible::Integer;
     (context(),
       circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
       fill(theme.blank), stroke(col), linewidth(lw), fillopacity(theme.opacity)),
+    (context(),
+     line(map(x -> [((x.t)cx, (x.target)cy + theme.radius), ((x.t)cx, (x.infectee)cy)], xl)),
+     line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
+        ((x.t)cx, (x.infectee)cy),
+        ((x.t)cx + 0.3theme.bit, (x.infectee)cy - theme.bit)], xl)),
+     stroke(col), linewidth(lw)),
+    )
+end
+# Here is the general variant: the argument `feasible` is expected to be of the form
+# `(stroke(col), linewidth(lw))`).
+function draw_feasible_incident(xl::Vector{T}, feasible; 
+                                inscribe=true, theme=default_theme) where T<:AbstractInfection
+  return (context(),
+  return (context(),
+    if inscribe
+      (context(),
+        text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
+          map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
+        fontsize(5pt), font("Helvetica"))
+    end,
+    (context(),
+      circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
+      fill(theme.blank), fillopacity(theme.opacity), feasible...),
     (context(),
      line(map(x -> [((x.t)cx, (x.target)cy + theme.radius), ((x.t)cx, (x.infectee)cy)], xl)),
      line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
