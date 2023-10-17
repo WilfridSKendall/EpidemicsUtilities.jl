@@ -132,6 +132,6 @@ function draw_feasible_incident(xl::Vector{T}, feasible;
      line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
         ((x.t)cx, (x.infectee)cy),
         ((x.t)cx + 0.3theme.bit, (x.infectee)cy - theme.bit)], xl)),
-     stroke(col), linewidth(lw)),
+     feasible...),
     )
 end
