@@ -114,6 +114,7 @@ function draw_feasible_incident(xl::Vector{T}, feasible::Integer;
 end
 # Here is the general variant: the argument `feasible` is expected to be of the form
 # `(stroke(col), linewidth(lw))`).
+# This is fragile and should eventually be replaced by use of `theme`.
 function draw_feasible_incident(xl::Vector{T}, feasible; 
                                 inscribe=true, theme=default_theme) where T<:AbstractInfection
   return (context(),
