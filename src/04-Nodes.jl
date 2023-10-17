@@ -118,7 +118,6 @@ end
 function draw_feasible_incident(xl::Vector{T}, feasible; 
                                 inscribe=true, theme=default_theme) where T<:AbstractInfection
   return (context(),
-  return (context(),
     if inscribe
       (context(),
         text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
