@@ -76,7 +76,7 @@ export table_trajectories1, table_trajectories2
 #
 # ### Drawing nodes
 # Sub-script `04-Nodes.jl` defines three functions to draw sets of incidents.
-export draw_incident, draw_elements, draw_activated_elements, draw_feasible_incident
+export draw_incident, draw_elements, draw_activated_elements, draw_connect, draw_feasible_incident
 #
 # ### Graphics output
 # Sub-script `05-Outputs.jl` defines  

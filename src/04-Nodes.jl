@@ -35,7 +35,7 @@ function draw_incident(xl::Vector{T};
 end
 
 # Incidents decorated with connections are drawn using
-# `draw_connect`.^[The function `draw_connect` is used 
+# `draw_connect`.^[The function `draw_connect` is **exported** and is used 
 # in the exported function `draw_elements` defined in this section.]
 function draw_connect(xl::Vector{T}; activated=false, theme=default_theme) where {T<:AbstractIncident}
   xli = [x for x in xl if typeof(x) <: AbstractInfection]
