@@ -52,11 +52,15 @@ end
 # draws the various incidents.^[Replacing the `draw_incident` lines by a single 
 # `draw_incident(innov.chronology, theme=theme)`
 # works, but there is an issue with order of over-writing.]
-function draw_elements(innov; theme=default_theme)
+function draw_elements(inclist::Vector{T}; theme=default_theme) where {T<:AbstractIncident}
   (context(),
-    draw_incident(innov.chronology, theme=theme),
-    draw_connect(innov.chronology, theme=theme),
+    draw_incident(inclist, theme=theme),
+    draw_connect(inclist, theme=theme),
   )
+end
+
+function draw_elements(innov::Innovation; theme=default_theme)
+  draw_elements(innov.chronology, theme=theme)
 end
 
 # The function `draw_activated_elements`^[The function `draw_activated_elements` is **exported**.]
