@@ -9,7 +9,7 @@
 # Seek better code!
 # :::
 function draw_incident(xl::Vector{T}; 
-                      activated=false, theme=default_theme) where {T<:AbstractIncident}
+                      inscribe=true, activated=false, theme=default_theme) where {T<:AbstractIncident}
   if length(xl) > 0
     if activated
       xli = [x for x in xl if typeof(x) <: AbstractInfection]
@@ -23,10 +23,12 @@ function draw_incident(xl::Vector{T};
       )
     else
       return (context(),
+        if inscribe
         (context(),
           text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
             map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
-          fontsize(5pt), font("Helvetica")),
+          fontsize(5pt), font("Helvetica"))
+        end,
         (context(),
           circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
           fill(theme.blank), stroke(theme.colour(xl))),)
@@ -52,15 +54,16 @@ end
 # draws the various incidents.^[Replacing the `draw_incident` lines by a single 
 # `draw_incident(innov.chronology, theme=theme)`
 # works, but there is an issue with order of over-writing.]
-function draw_elements(inclist::Vector{T}; theme=default_theme) where {T<:AbstractIncident}
+function draw_elements(inclist::Vector{T}; 
+                       inscribe=true, theme=default_theme) where {T<:AbstractIncident}
   (context(),
-    draw_incident(inclist, theme=theme),
+    draw_incident(inclist, inscribe=inscribe, theme=theme),
     draw_connect(inclist, theme=theme),
   )
 end
 
-function draw_elements(innov::Innovation; theme=default_theme)
-  draw_elements(innov.chronology, theme=theme)
+function draw_elements(innov::Innovation; inscribe=true, theme=default_theme)
+  draw_elements(innov.chronology, inscribe=inscribe, theme=theme)
 end
 
 # The function `draw_activated_elements`^[The function `draw_activated_elements` is **exported**.]
