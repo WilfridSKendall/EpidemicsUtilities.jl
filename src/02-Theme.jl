@@ -29,10 +29,14 @@ load_theme(fpath) = YAML.load_file(fpath)
 # fname(..., theme=default_theme)
 # ```
 # Here is a realization of the `default_theme` together with a default colour definition.
-function default_colour(x::Removal) colorant"tan"       end 
-function default_colour(x::CRemoval) colorant"purple"    end 
-function default_colour(x::Infection) colorant"orange"    end 
-function default_colour(x::PInfection) colorant"darkgreen" end 
+function default_colour(x::Removal)            colorant"tan"         end 
+function default_colour(x::CRemoval)           colorant"purple"      end 
+function default_colour(x::Infection)          colorant"orange"      end 
+function default_colour(x::PInfection)         colorant"darkgreen"   end 
+function default_colour(x::KilledInfection)    colorant"gray80"      end 
+function default_colour(x::NoFlyInfection)     colorant"hotpink2"    end 
+function default_colour(x::CancelledInfection) colorant"violetred1"  end 
+function default_colour(x::KilledRemoval)      colorant"burlywood1"  end 
 default_theme = (
  radius        =  0.2cy,               smradius      =  0.9 * 0.2cy,
  bit           = -0.02h,               tic           = -0.2cy,
@@ -56,6 +60,9 @@ default_theme = (
 # The function `create_theme`^[The function `create_theme` is **exported**.]
 # generates a plotting theme using the chosen `theme` information.
 
+types_portmanteau = Union{Removal, CRemoval, Infection, PInfection, KilledRemoval,
+                          KilledInfection, NoFlyInfection, CancelledInfection, KilledRemoval}
+
 function create_theme(data)
   ## Building length dictionaries
   d_cy = Dict((a[1] => a[2]cy) for a in pairs(data["length_cy"]))
@@ -73,7 +80,9 @@ function create_theme(data)
   ## Building colour dictionary
   d_c = data["colour"]
 
-  function theme_colour(x::T) where {T<:Union{Removal, CRemoval, Infection, PInfection}}
+  ## Constructing the `theme_colour` function
+  
+  function theme_colour(x::T) where {T<:types_portmanteau}
     return parse(Colorant, d_c[string(T)])
   end
 

@@ -9,9 +9,11 @@ colour:
     CRemoval:                  "purple"
     Infection:                 "orange"
     PInfection:                "darkgreen"
-    AbstractInfectionMarker:   "orange"
-    AbstractRemovalMarker:     "tan"
-    AbstractSusceptibleMarker: "blue"
+    KilledInfection:           "gray80"           
+    NoFlyInfection:            "hotpink2"
+    CancelledInfection:        "violetred1"
+    KilledRemoval:             "burlywood1"
+
 
 # named colour for other purposes
 colour_x:
