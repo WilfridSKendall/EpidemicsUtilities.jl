@@ -9,7 +9,7 @@
 # Seek better code!
 # :::
 function draw_incident(xl::Vector{T}; 
-                      inscribe=true, activated=false, theme=default_theme) where {T<:AbstractIncident}
+                       inscribe=true, activated=false, theme=default_theme) where {T<:AbstractIncident}
   if length(xl) > 0
     if activated
       xli = [x for x in xl if typeof(x) <: AbstractInfection]
@@ -39,7 +39,8 @@ end
 # Incidents decorated with connections are drawn using
 # `draw_connect`.^[The function `draw_connect` is **exported** and is used 
 # in the exported function `draw_elements` defined in this section.]
-function draw_connect(xl::Vector{T}; activated=false, theme=default_theme) where {T<:AbstractIncident}
+function draw_connect(xl::Vector{T}; 
+                      activated=false, theme=default_theme) where {T<:AbstractIncident}
   xli = [x for x in xl if typeof(x) <: AbstractInfection]
   return (context(),
     line(map(x -> [((x.t)cx, (x.target)cy + theme.radius), ((x.t)cx, (x.infectee)cy)], xli)),
@@ -55,10 +56,10 @@ end
 # `draw_incident(innov.chronology, theme=theme)`
 # works, but there is an issue with order of over-writing.]
 function draw_elements(inclist::Vector{T}; 
-                       inscribe=true, theme=default_theme) where {T<:AbstractIncident}
+                       activated=false, inscribe=true, theme=default_theme) where {T<:AbstractIncident}
   (context(),
-    draw_incident(inclist, inscribe=inscribe, theme=theme),
-    draw_connect(inclist, theme=theme),
+    draw_incident(inclist, activated=activated, inscribe=inscribe, theme=theme),
+    draw_connect(inclist, activated=activated, theme=theme),
   )
 end
 
