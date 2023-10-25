@@ -126,4 +126,36 @@ function create_theme(data)
   )
 end
 
+# Defining axis labels
+# --------------------
+# Three kinds of labels! Note that
+# if population size exceeds `MAXPOP` then `circlabels2` runs out of characters!
 
+MAXPOP = 20
+
+# 1: Label is positive integer within circle:
+function timelinelabels_circled(i; n=MAXPOP) 
+  if round(i) > 0 && i ≤ n
+    string(Char(codepoint('①') + round(Int, i) - 1))
+  else
+      "" 
+  end
+end 
+
+# 2: Label is positive integer within square brackets:
+function timelinelabels_bracketed(i; n=MAXPOP) 
+  if round(i) > 0 && i ≤ n
+    "[$(round(Int, i))]"
+  else
+    "" 
+  end
+end 
+
+# 3: Label is positive integer unadorned:
+function timelinelabel_raw2(i::Integer; n=MAXPOP) 
+  if 0 < i ≤ n
+      string(trunc(Int, i)) 
+  else
+      "" 
+  end 
+end
