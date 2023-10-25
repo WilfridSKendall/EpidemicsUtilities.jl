@@ -151,8 +151,8 @@ function timelinelabels_bracketed(i; n=MAXPOP)
   end
 end 
 
-# 3: Label is positive integer unadorned:
-function timelinelabel_raw2(i::Integer; n=MAXPOP) 
+# 3: Label is positive number unadorned:
+function timelinelabel_raw(i; n=MAXPOP) 
   if 0 < i ≤ n
       string(trunc(Int, i)) 
   else

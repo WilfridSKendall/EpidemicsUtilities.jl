@@ -69,6 +69,8 @@ branch = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
 # loading `YAML` data to specify a `theme` structure,
 # and the function `create_theme`, using these data to create (and return) a `theme`.
 export load_theme, create_theme
+# Also exporting some functions for use in axis labelling.
+export timelinelabels_circled, timelinelabels_bracketed, timelinelabel_raw
 #
 # ### `DataFrames` Functions
 # Sub-script `02-DataFrames.jl` defines functions producing data frames to be used in `Gadfly` plot package.
