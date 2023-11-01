@@ -5,6 +5,8 @@ QUARTO         := /usr/local/bin/quarto
 CSL            := /home/wilfrid/lib/pandoc/CSL/ima-journal-of-applied-mathematics.csl
 QUARTO_OPTIONS :=  --from=markdown+tex_math_single_backslash --csl=$(CSL)
 
+JULIA          := $(HOME)/.local/bin/julia
+
 #BUILD          := docs/build
 DOCUMENT       := docs/build/$(MODULE)
 SOURCE         := src/$(MODULE).jl
@@ -37,6 +39,13 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 .test.stamp: $(wildcard src/*.jl) $(wildcard test/*.jl)
 	julia test/runtests.jl
 	@touch .test.stamp
+
+# ====================
+# Installation
+install:
+	$(JULIA) -e 'import EpidemicsCFTP: version      ; println(version)'
+	touch src/EpidemicsUtilities.jl
+	$(JULIA) -e 'import EpidemicsUtilities: version ; println(version)'
 
 # ====================
 # Automatic conversion of qmd to pdf
