@@ -135,27 +135,15 @@ MAXPOP = 20
 
 # 1: Label is positive integer within circle:
 function timelinelabels_circled(i; n=MAXPOP) 
-  if round(i) > 0 && i ≤ n
-    string(Char(codepoint('①') + round(Int, i) - 1))
-  else
-      "" 
-  end
+  (round(i) > 0 && i ≤ n) ? string(Char(codepoint('①') + round(Int, i) - 1)) : ""
 end 
 
 # 2: Label is positive integer within square brackets:
 function timelinelabels_bracketed(i; n=MAXPOP) 
-  if round(i) > 0 && i ≤ n
-    "[$(round(Int, i))]"
-  else
-    "" 
-  end
+  (round(i) > 0 && i ≤ n) ? "[$(round(Int, i))]" : "" 
 end 
-
+  
 # 3: Label is positive number unadorned:
 function timelinelabel_raw(i; n=MAXPOP) 
-  if 0 < i ≤ n
-      string(trunc(Int, i)) 
-  else
-      "" 
-  end 
+  (0 < i ≤ n) ? string(trunc(Int, i)) : "" 
 end
