@@ -83,16 +83,13 @@ function create_theme(data)
   ## Constructing the `theme_colour` function
   
   function theme_colour(x::T) where {T<:types_portmanteau}
-    return parse(Colorant, d_c[string(T)])
-  end
+    return parse(Colorant, d_c[string(T)]) end
 
   function theme_colour(x::T) where {T<:AbstractIncident}
-    parse(Colorant, d_cx["default"])
-  end
+    parse(Colorant, d_cx["default"]) end
 
   function theme_colour(xl::Vector{T}) where {T<:AbstractIncident}
-    return [theme_colour(x) for x in xl]
-  end
+    return [theme_colour(x) for x in xl] end
     
   function theme_colour(T::DataType)
     if T <: Union{Removal, CRemoval, Infection, PInfection}
@@ -135,15 +132,12 @@ MAXPOP = 20
 
 # 1: Label is positive integer within circle:
 function timelinelabels_circled(i; n=MAXPOP) 
-  (round(i) > 0 && i ≤ n) ? string(Char(codepoint('①') + round(Int, i) - 1)) : ""
-end 
+  (round(i) > 0 && i ≤ n) ? string(Char(codepoint('①') + round(Int, i) - 1)) : "" end 
 
 # 2: Label is positive integer within square brackets:
 function timelinelabels_bracketed(i; n=MAXPOP) 
-  (round(i) > 0 && i ≤ n) ? "[$(round(Int, i))]" : "" 
-end 
+  (round(i) > 0 && i ≤ n) ? "[$(round(Int, i))]" : "" end 
   
 # 3: Label is positive number unadorned:
 function timelinelabel_raw(i; n=MAXPOP) 
-  (0 < i ≤ n) ? string(trunc(Int, i)) : "" 
-end
+  (0 < i ≤ n) ? string(trunc(Int, i)) : "" end
