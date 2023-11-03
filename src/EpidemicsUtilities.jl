@@ -73,7 +73,7 @@ export load_theme, create_theme
 export timelinelabels_circled, timelinelabels_bracketed, timelinelabel_raw
 #
 # ### `DataFrames` Functions
-# Sub-script `02-DataFrames.jl` defines functions producing data frames to be used in `Gadfly` plot package.
+# Sub-script `03-DataFrames.jl` defines functions producing data frames to be used in `Gadfly` plot package.
 export table_trajectories1, table_trajectories2
 #
 # ### Drawing nodes
