@@ -38,7 +38,7 @@ function default_colour(x::NoFlyInfection)     colorant"hotpink2"    end
 function default_colour(x::ExpungedInfection)  colorant"gray50"      end 
 function default_colour(x::KilledRemoval)      colorant"burlywood1"  end 
 default_theme = (
- radius        =  0.2cy,               smradius      =  0.9 * 0.2cy,
+ radius        =  0.26cy,              smradius      =  0.9 * 0.26cy,
  bit           = -0.02h,               tic           = -0.2cy,
  xlab          =  0cx-0.4inch,         yloc          = 0.25inch,
  figwidth      =  6inch,               figheight     = 3.25inch,
@@ -69,11 +69,8 @@ function allconcretesubtypes(T)
     end
 end
 
-types_portmanteau = allconcretesubtypes(AbstractIncident)
+const types_portmanteau = Union{allconcretesubtypes(AbstractIncident)...}
     
-#types_portmanteau = Union{Removal, CRemoval, Infection, PInfection, KilledRemoval,
-#                          KilledInfection, NoFlyInfection, ExpungedInfection, KilledRemoval}
-
 function create_theme(data)
   ## Building length dictionaries
   d_cy = Dict((a[1] => a[2]cy) for a in pairs(data["length_cy"]))

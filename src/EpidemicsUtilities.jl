@@ -92,6 +92,8 @@ export depict
 # (a) Availability of `Gadfly` and related modules.
 using Colors, Compose, Measures
 import Cairo, Fontconfig, Gadfly
+import InteractiveUtils: subtypes
+
 #
 # (b) The ability to use `DataFrame` constructions
 using DataFrames
