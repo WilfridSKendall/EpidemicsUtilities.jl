@@ -9,7 +9,8 @@ function table_trajectories1(duration, initial, trajectory)
     s = [state.s for state in trajectory]
     i = [state.i for state in trajectory]
     r = [state.r for state in trajectory]
-    # Slight inefficiency in next step, but allows for time-varying population later.
+    # Slight inefficiency in next step (as opposed to something like
+    # `n .= state.n`), but allows for time-varying population later.
     n = [state.n for state in trajectory]
     
     push!(t, duration)
@@ -27,14 +28,19 @@ end
     
 
 # The function `table_trajectories2`^[The function `table_trajectories2` is **exported**.]
-# derives and returns an augmented `DataFrame` (column headings time `t`, `susceptibles`, 
+# derives and returns a lag-augmented `DataFrame` (column headings time `t`, `susceptibles`, 
 # `infectives`, `removals`, and `empty` and `population`, given a `DataFrame` produced 
 # by `table_trajectories1`. The augmented `DataFrame` allows us to compute and plot the 
 # regions determined by the epidemic trajectory using `Gadfly` `ribbon` plotting.
-function table_trajectories2(df; theme=default_theme)
-    df_lag = deepcopy(df)
-    df_lag.t = circshift(df.t, (-1)) .- theme.ϵ
-    df_lag.t[end] = df_lag.t[end-1]
-    return sort!(append!(df, df_lag))
+function table_trajectories2(df; theme=default_theme, forward=true)
+    df1, df2 = deepcopy(df), deepcopy(df)
+    if forward
+        df2.t = circshift(df2.t, (-1)) .- theme.ϵ
+        df2.t[end] = df2.t[end-1]
+    else
+        df2.t = circshift(df2.t, (+1)) .+ theme.ϵ
+        df2.t[1] = df2.t[2]
+    end
+    return sort!(append!(df1, df2))
 end ;
 
