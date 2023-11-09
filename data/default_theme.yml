@@ -11,7 +11,7 @@ colour:
     PInfection:                "darkgreen"
     KilledInfection:           "gray90"           
     NoFlyInfection:            "hotpink2"
-    CancelledInfection:        "gray50"
+    ExpungedInfection:         "gray50"
     KilledRemoval:             "burlywood1"
 
 # named colour for other purposes
