@@ -1,6 +1,6 @@
 # Primitive usage:
 # import YAML
-# data = YAML.load_file("default_theme.yml")
+# data = YAML.load_file("default_style.yml")
 # println(data)
 
 # named colours for incidents and markers
@@ -9,11 +9,10 @@ colour:
     CRemoval:                  "purple"
     Infection:                 "orange"
     PInfection:                "darkgreen"
-    KilledInfection:           "gray80"           
+    KilledInfection:           "gray90"           
     NoFlyInfection:            "hotpink2"
-    CancelledInfection:        "violetred1"
+    CancelledInfection:        "gray50"
     KilledRemoval:             "burlywood1"
-
 
 # named colour for other purposes
 colour_x:
@@ -30,7 +29,7 @@ colour_x:
 
 length_cy:
     # node radius in `cy` units
-    radius:                0.20
+    radius:                0.26
     # vertical offset in `cy` units
     height:                0.00
     # tic size in `cy` units
@@ -38,14 +37,14 @@ length_cy:
     
 length_h:
     bit:                  -0.02
-
+    
 # label offsets in inches
 length_inch:
     xlab:                 -0.40
     yloc:                  0.25
     figwidth:              6
     figheight:             3.25
-
+    
 # shrinkage factor for small radius
 length_factor:
     smradius:              0.90

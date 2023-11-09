@@ -33,9 +33,9 @@ function default_colour(x::Removal)            colorant"tan"         end
 function default_colour(x::CRemoval)           colorant"purple"      end 
 function default_colour(x::Infection)          colorant"orange"      end 
 function default_colour(x::PInfection)         colorant"darkgreen"   end 
-function default_colour(x::KilledInfection)    colorant"gray80"      end 
+function default_colour(x::KilledInfection)    colorant"gray90"      end 
 function default_colour(x::NoFlyInfection)     colorant"hotpink2"    end 
-function default_colour(x::CancelledInfection) colorant"violetred1"  end 
+function default_colour(x::ExpungedInfection)  colorant"gray50"      end 
 function default_colour(x::KilledRemoval)      colorant"burlywood1"  end 
 default_theme = (
  radius        =  0.2cy,               smradius      =  0.9 * 0.2cy,
@@ -59,9 +59,20 @@ default_theme = (
 # ---------------
 # The function `create_theme`^[The function `create_theme` is **exported**.]
 # generates a plotting theme using the chosen `theme` information.
+# Useful function for returning all concrete subtypes
+function allconcretesubtypes(T)
+    Tl = subtypes(T)
+    if isempty(Tl)
+        return [T]
+    else
+        return ∪([allconcretesubtypes(S) for S ∈ Tl]...)
+    end
+end
 
-types_portmanteau = Union{Removal, CRemoval, Infection, PInfection, KilledRemoval,
-                          KilledInfection, NoFlyInfection, CancelledInfection, KilledRemoval}
+types_portmanteau = allconcretesubtypes(AbstractIncident)
+    
+#types_portmanteau = Union{Removal, CRemoval, Infection, PInfection, KilledRemoval,
+#                          KilledInfection, NoFlyInfection, ExpungedInfection, KilledRemoval}
 
 function create_theme(data)
   ## Building length dictionaries
@@ -80,7 +91,7 @@ function create_theme(data)
   ## Building colour dictionary
   d_c = data["colour"]
 
-  ## Constructing the `theme_colour` function
+  ## Constructing the `theme_colour` function -- but should this be done offline?!
   
   function theme_colour(x::T) where {T<:types_portmanteau}
     return parse(Colorant, d_c[string(T)]) end
