@@ -10,7 +10,7 @@
 # :::
 function draw_incident(xl::Vector{T}; 
                        inscribe=true, activated=false, theme=default_theme) where {T<:AbstractIncident}
-  if length(xl) > 0
+  if ! isempty(xl)
     if activated
       xli = [x for x in xl if typeof(x) <: AbstractInfection]
       return (context(),
@@ -42,12 +42,14 @@ end
 function draw_connect(xl::Vector{T}; 
                       activated=false, theme=default_theme) where {T<:AbstractIncident}
   xli = [x for x in xl if typeof(x) <: AbstractInfection]
-  return (context(),
-    line(map(x -> [((x.t)cx, (x.target)cy + theme.radius), ((x.t)cx, (x.infectee)cy)], xli)),
-    line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
-        ((x.t)cx, (x.infectee)cy),
-        ((x.t)cx + 0.3theme.bit, (x.infectee)cy - theme.bit)], xli)),
-    stroke(theme.colour(xli)), linewidth(activated ? theme.activated : theme.dormant))
+  if ! isempty(xli)
+    return (context(),
+      line(map(x -> [((x.t)cx, (x.target)cy + theme.radius), ((x.t)cx, (x.infectee)cy)], xli)),
+      line(map(x -> [((x.t)cx - 0.3theme.bit, (x.infectee)cy - theme.bit),
+          ((x.t)cx, (x.infectee)cy),
+          ((x.t)cx + 0.3theme.bit, (x.infectee)cy - theme.bit)], xli)),
+      stroke(theme.colour(xli)), linewidth(activated ? theme.activated : theme.dormant))
+  end
 end
 
 # The next function 
