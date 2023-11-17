@@ -35,7 +35,7 @@
 # #| cache: false
 # import Markdown, EpidemicsCFTP, EpidemicsUtilities
 # Markdown.parse("""
-# | Module                | Version                         | Branch                         |
+# | _Module_              | _Version_                       | _Branch_                       |
 # |:----------------------|:--------------------------------|-------------------------------:|
 # | `julia`               | `$VERSION`                      |                                |
 # | `EpidemicsUtilities`  | `$(EpidemicsUtilities.version)` | `$(EpidemicsUtilities.branch)` |
@@ -78,7 +78,8 @@ export table_trajectories1, table_trajectories2
 #
 # ### Drawing nodes
 # Sub-script `04-Nodes.jl` defines three functions to draw sets of incidents.
-export draw_incident, draw_elements, draw_activated_elements, draw_connect, draw_feasible_incident
+export draw_incident, draw_connect, draw_feasible_incident
+export draw_elements, draw_activated_elements
 #
 # ### Graphics output
 # Sub-script `05-Outputs.jl` defines  
@@ -89,10 +90,11 @@ export depict
 # -------
 # The module also imports the following `julia` modules:
 #
-# (a) Availability of `Gadfly` and related modules.
+# (a) Availability of related modules.
 using Colors, Compose, Measures
-import Cairo, Fontconfig, Gadfly
+import Cairo, Fontconfig
 import InteractiveUtils: subtypes
+import Gadfly: Guide
 
 #
 # (b) The ability to use `DataFrame` constructions

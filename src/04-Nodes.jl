@@ -71,6 +71,8 @@ end
 
 # The function `draw_activated_elements`^[The function `draw_activated_elements` is **exported**.]
 # draws the activated elements together with connectors.
+# Note that the first argument `initial` is required in order to access the initial
+# number `initial.r` of removals.
 function draw_activated_elements(initial, activated; theme=default_theme)
   removals = [inc for inc in activated if isa(inc, AbstractRemoval)]
   enumerated_removals = collect(enumerate(removals))
@@ -145,3 +147,5 @@ function draw_feasible_incident(xl::Vector{T}, feasible;
      feasible...),
     )
 end
+
+
