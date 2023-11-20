@@ -83,8 +83,11 @@ export draw_elements, draw_activated_elements
 #
 # ### Graphics output
 # Sub-script `05-Outputs.jl` defines  
-# a convenient drawing function  `depict`, creating `PNG` and `PDF` variants of a figure.
-export depict
+# convenient drawing functions
+#
+# (a) `depict`, creating `PNG` and `PDF` variants of a figure,
+# (b) also `new_figure`, allowing assembly of a list of `Gadfly` constructs into a single figure.
+export depict, new_figure
 
 # Imports
 # -------

@@ -10,3 +10,17 @@ function depict(title, image)
   draw(PDF("image/$title.pdf"), image)
   image
 end
+#
+# The further utility function
+# `new_figure`^[The function `new_figure` is **exported**.]
+# allows assembly of a figure based on a `deepcopy` of a template (`old_figure`)
+# followed by insertion of a variable number of `Gadfly` constructs (which
+# could include `Guide.annotation`s of `Compose` constructs!).
+#
+# Here a `deepcopy` is made to avoid over-writing the template with further objects.
+function new_figure(old_figure, gadfly_list...)
+    figure = deepcopy(old_figure)
+    push!(figure, gadfly_list...)
+    return figure
+end
+
