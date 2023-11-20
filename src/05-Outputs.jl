@@ -23,6 +23,7 @@ function new_figure(old_figure, gadfly_list...; title="")
     push!(figure, gadfly_list...)
     if title !== ""
       push!(figure, Guide.title(title))
+    end
     return figure
 end
 
