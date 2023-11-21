@@ -35,11 +35,11 @@
 # #| cache: false
 # import Markdown, EpidemicsCFTP, EpidemicsUtilities
 # Markdown.parse("""
-# | _Module_              | _Version_                       | _Branch_                       |
-# |:----------------------|:--------------------------------|-------------------------------:|
-# | `julia`               | `$VERSION`                      |                                |
-# | `EpidemicsUtilities`  | `$(EpidemicsUtilities.version)` | `$(EpidemicsUtilities.branch)` |
-# | `EpidemicsCFTP`       | `$(EpidemicsCFTP.version)`      | `$(EpidemicsCFTP.branch)`      |
+# | _Software_                  | _Version_                       | _Branch_                       | _Date of last commit_       |
+# |:----------------------------|:--------------------------------|:-------------------------------|:----------------------------|
+# | Running under `julia`       | `$VERSION`                      | ---                            |                             |
+# | Module `EpidemicsUtilities` | `$(EpidemicsUtilities.version)` | `$(EpidemicsUtilities.branch)` | $(EpidemicsUtilities.date)  |
+# | Module `EpidemicsCFTP`      | `$(EpidemicsCFTP.version)`      | `$(EpidemicsCFTP.branch)`      | $(EpidemicsCFTP.date)       |
 # """)
 # ```
 # :::
@@ -51,6 +51,7 @@ module EpidemicsUtilities
 loc = dirname(dirname(pathof(EpidemicsUtilities)))
 version = "$(read(Cmd(`git describe --tags`, dir=loc), String)[1:end-1])"
 branch = "$(read(Cmd(`git branch --show-current`, dir=loc), String)[1:end-1])"
+date    = replace(replace(split(read(Cmd(`git log -1`), String), "\n")[3], "Date:   " => ""), " +0000" => "")
 #
 # The functions defined in this module are intended for
 # construction of illustration of simulations for

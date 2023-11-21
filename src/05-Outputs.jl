@@ -18,8 +18,8 @@ end
 # could include `Guide.annotation`s of `Compose` constructs!).
 #
 # Here a `deepcopy` is made to avoid over-writing the template with further objects.
-function new_figure(old_figure, gadfly_list...; title="")
-    figure = deepcopy(old_figure)
+function new_figure(template, gadfly_list...; title="")
+    figure = deepcopy(template)
     push!(figure, gadfly_list...)
     if title !== ""
       push!(figure, Guide.title(title))
