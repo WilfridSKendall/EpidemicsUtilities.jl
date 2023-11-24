@@ -20,7 +20,9 @@ end
 # Here a `deepcopy` is made to avoid over-writing the template with further objects.
 function new_figure(template, gadfly_list...; title="")
     figure = deepcopy(template)
-    push!(figure, gadfly_list...)
+    if ! isempty(gadfly_list)
+      push!(figure, gadfly_list...)
+    end
     if title !== ""
       push!(figure, Guide.title(title))
     end
