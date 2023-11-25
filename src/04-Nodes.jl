@@ -158,7 +158,7 @@ ELEMENTS   = INFECTIONS | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
 ALL        = TOP | BOUNDARIES | REGIONS | BASIC
 
 # Draw regions relating to epidemic.
-function draw_regions!(template::Plot, ev::Evolution;
+function draw_regions!(template::Plot, duration::Real, ev::Evolution;
                 theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
     SIR_flow = table_trajectories1(duration, ev.trajectory)
     xy_SIR_flow = table_trajectories2(flow, theme=theme)
@@ -210,17 +210,12 @@ end ;
 # Draw aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
-    if (select & (BOUNDARIES | REGIONS | TOP)) > 0
-        figure = draw_regions!(template, ev, theme=theme, select=select)
-    else
-        figure = template
-    end
     if (select & ELEMENTS) > 0   
-        figure = draw_innovation!(figure, ev, theme=theme, select=select & ELEMENTS)
+        template = draw_innovation!(figure, ev, theme=theme, select=select & ELEMENTS)
     end
     if (select & ACTIVATED) > 0      
-        push!(figure, Guide.annotation(compose(context(), 
+        push!(template, Guide.annotation(compose(context(), 
             draw_activated_elements(ev.initial, ev.history, theme=theme))))
     end
-    return figure
+    return template
 end ;
