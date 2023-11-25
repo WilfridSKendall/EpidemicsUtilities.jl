@@ -100,7 +100,7 @@ export depict, new_figure
 using Colors, Compose, Measures
 import Cairo, Fontconfig
 import InteractiveUtils: subtypes
-import Gadfly: Guide, Plot
+import Gadfly: Geom, Guide, Plot, layer, style
 
 #
 # (b) The ability to use `DataFrame` constructions

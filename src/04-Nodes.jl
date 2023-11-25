@@ -170,16 +170,16 @@ function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evol
     if (select & BOUNDARIES) > 0     
         push!(template, 
             layer(SIR_flow, x=:t, y=:removals, Geom.step,
-                style(line_width=theme.boundary, default_color=theme.colour(R))),
+                style(line_width=theme.boundary, default_color=theme.colour(Removal))),
             layer(SIR_flow, x=:t, y=:epidemic, Geom.step,
-                style(line_width=theme.boundary, default_color=theme.colour(I))))
+                style(line_width=theme.boundary, default_color=theme.colour(Infection))))
     end
     if (select & REGIONS) > 0        
         push!(template, 
             layer(xy_SIR_flow, x=:t, ymin=:empty, ymax=:removals, Geom.ribbon,
-                alpha=[2theme.opacity], style(default_color=theme.colour(R))),
+                alpha=[2theme.opacity], style(default_color=theme.colour(Removal))),
             layer(xy_SIR_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
-                alpha=[theme.opacity], style(default_color=theme.colour(I))))
+                alpha=[theme.opacity], style(default_color=theme.colour(Infection))))
     end
     return template
 end ;
@@ -211,7 +211,7 @@ end ;
 function draw_evolution!(template::Plot, ev::AbstractEvolution;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
     if (select & ELEMENTS) > 0   
-        template = draw_innovation!(figure, ev, theme=theme, select=select & ELEMENTS)
+        draw_innovation!(template, ev, theme=theme, select=select & ELEMENTS)
     end
     if (select & ACTIVATED) > 0      
         push!(template, Guide.annotation(compose(context(), 
