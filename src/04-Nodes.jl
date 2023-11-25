@@ -148,4 +148,79 @@ function draw_feasible_incident(xl::Vector{T}, feasible;
     )
 end
 
+# The following convenience functions return various Gadfly figures for an evolution. 
+# Flow calculations occur within the functions! 
+# The keyword argument `select` chooses different aspects.
+TOP        = 0b000000001 ; BOUNDARIES = 0b000000010 ; REGIONS    = 0b000000100 ;  
+INFECTIONS = 0b000001000 ; REMOVALS   = 0b000010000 ; CREMOVALS  = 0b000100000 ;
+ACTIVATED  = 0b001000000 ;
+ELEMENTS   = INFECTIONS | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
+ALL        = TOP | BOUNDARIES | REGIONS | BASIC
 
+# Draw regions relating to epidemic.
+function draw_regions!(template::Plot, ev::Evolution;
+                theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
+    SIR_flow = table_trajectories1(duration, ev.trajectory)
+    xy_SIR_flow = table_trajectories2(flow, theme=theme)
+    if (select & TOP) > 0            
+        push!(template, 
+            layer(flow, x=:t, y=:population, Geom.line,
+                    style(line_width=theme.trail, default_color=theme.scaffold)))
+    end
+    if (select & BOUNDARIES) > 0     
+        push!(template, 
+            layer(SIR_flow, x=:t, y=:removals, Geom.step,
+                style(line_width=theme.boundary, default_color=theme.colour(R))),
+            layer(SIR_flow, x=:t, y=:epidemic, Geom.step,
+                style(line_width=theme.boundary, default_color=theme.colour(I))))
+    end
+    if (select & REGIONS) > 0        
+        push!(template, 
+            layer(xy_SIR_flow, x=:t, ymin=:empty, ymax=:removals, Geom.ribbon,
+                alpha=[2theme.opacity], style(default_color=theme.colour(R))),
+            layer(xy_SIR_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
+                alpha=[theme.opacity], style(default_color=theme.colour(I))))
+    end
+    return template
+end ;
+
+# Draw aspects of a given `Innovation`.
+function draw_innovation!(template::Plot, iv::AbstractEnvironment;
+                theme::NamedTuple=theme, select=ELEMENTS)
+    if (select & ELEMENTS == ELEMENTS)
+        push!(template, Guide.annotation(compose(context(), 
+            draw_elements(iv.chronology, theme=theme))))
+    else
+        if (select & INFECTIONS) > 0        
+            push!(template, Guide.annotation(compose(context(), 
+                draw_elements(iv.infections, theme=theme))))
+        end
+        if (select & REMOVALS) > 0        
+            push!(template, Guide.annotation(compose(context(), 
+                draw_elements(iv.removals, theme=theme))))
+        end
+        if (select & CREMOVALS) > 0        
+            push!(template, Guide.annotation(compose(context(), 
+                draw_elements(iv.cremovals, theme=theme))))
+        end
+    end
+    return template
+end ;
+
+# Draw aspects of a given `AbstractEvolution`.
+function draw_evolution!(template::Plot, ev::AbstractEvolution;
+                theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
+    if (select & (BOUNDARIES | REGIONS | TOP)) > 0
+        figure = draw_regions!(template, ev, theme=theme, select=select)
+    else
+        figure = template
+    end
+    if (select & ELEMENTS) > 0   
+        figure = draw_innovation!(figure, ev, theme=theme, select=select & ELEMENTS)
+    end
+    if (select & ACTIVATED) > 0      
+        push!(figure, Guide.annotation(compose(context(), 
+            draw_activated_elements(ev.initial, ev.history, theme=theme))))
+    end
+    return figure
+end ;

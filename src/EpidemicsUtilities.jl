@@ -81,6 +81,8 @@ export table_trajectories1, table_trajectories2
 # Sub-script `04-Nodes.jl` defines three functions to draw sets of incidents.
 export draw_incident, draw_connect, draw_feasible_incident
 export draw_elements, draw_activated_elements
+# and also three functions to plot higher-level quantities on `template`s.
+export draw_regions!, draw_innovation!, draw_evolution!
 #
 # ### Graphics output
 # Sub-script `05-Outputs.jl` defines  
@@ -98,7 +100,7 @@ export depict, new_figure
 using Colors, Compose, Measures
 import Cairo, Fontconfig
 import InteractiveUtils: subtypes
-import Gadfly: Guide
+import Gadfly: Guide, Plot
 
 #
 # (b) The ability to use `DataFrame` constructions
