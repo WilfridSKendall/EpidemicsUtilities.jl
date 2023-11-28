@@ -12,7 +12,7 @@ function draw_incident(xl::Vector{T};
                        inscribe=true, activated=false, theme=default_theme) where {T<:AbstractIncident}
   if ! isempty(xl)
     if activated
-      xli = [x for x in xl if typeof(x) <: AbstractInfection]
+      xli = [x for x ∈ xl if typeof(x) <: AbstractInfection]
       return (context(),
         (context(),
           circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
@@ -41,7 +41,7 @@ end
 # in the exported function `draw_elements` defined in this section.]
 function draw_connect(xl::Vector{T}; 
                       activated=false, theme=default_theme) where {T<:AbstractIncident}
-  xli = [x for x in xl if typeof(x) <: AbstractInfection]
+  xli = [x for x ∈ xl if typeof(x) <: AbstractInfection]
   if ! isempty(xli)
     return (context(),
       line(map(x -> [((x.t)cx, (x.target)cy + theme.radius), ((x.t)cx, (x.infectee)cy)], xli)),
@@ -74,15 +74,15 @@ end
 # Note that the first argument `initial` is required in order to access the initial
 # number `initial.r` of removals.
 function draw_activated_elements(initial, activated; theme=default_theme)
-  removals = [inc for inc in activated if isa(inc, AbstractRemoval)]
+  removals = [inc for inc ∈ activated if inc isa AbstractRemoval]
   enumerated_removals = collect(enumerate(removals))
   return (context(),
     draw_incident(activated, activated=true, theme=theme),
     draw_connect(activated, activated=true, theme=theme),
     (context(), # Could this be cleaned up?
       (context(),          # Connecting removal nodes
-        circle([(inc.t)cx for (k, inc) in enumerated_removals],
-          [(k + initial.r)cy for (k, inc) in enumerated_removals],
+        circle([(inc.t)cx for (k, inc) ∈ enumerated_removals],
+          [(k + initial.r)cy for (k, inc) ∈ enumerated_removals],
           [theme.smradius]), stroke(theme.colour(CRemoval)),
         linewidth(theme.activated), fill(theme.colour(CRemoval)), fillopacity(0.5)
       ),
@@ -90,7 +90,7 @@ function draw_activated_elements(initial, activated; theme=default_theme)
       (context(),
         line([[((inc.t)cx, (inc.target)cy - theme.radius),
           ((inc.t)cx, (k + initial.r)cy + theme.radius)]
-              for (k, inc) in enumerated_removals if inc.target > k + initial.r]),
+              for (k, inc) ∈ enumerated_removals if inc.target > k + initial.r]),
         stroke(theme.colour(Removal)), linewidth(theme.trail), strokedash([1mm, 1mm])
       ),
     )

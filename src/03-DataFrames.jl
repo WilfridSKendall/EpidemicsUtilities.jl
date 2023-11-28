@@ -5,13 +5,13 @@
 # `removals`, and `empty` and `population`, given duration and trajectory
 # of an S-I-R epidemic.
 function table_trajectories1(duration, trajectory)
-    t = [state.t for state in trajectory]
-    s = [state.s for state in trajectory]
-    i = [state.i for state in trajectory]
-    r = [state.r for state in trajectory]
+    t = [state.t for state ∈ trajectory]
+    s = [state.s for state ∈ trajectory]
+    i = [state.i for state ∈ trajectory]
+    r = [state.r for state ∈ trajectory]
     # Slight inefficiency in next step (as opposed to something like
     # `n .= state.n`), but allows for time-varying population later.
-    n = [state.n for state in trajectory]
+    n = [state.n for state ∈ trajectory]
     
     push!(t, duration)
     push!(s, s[end])

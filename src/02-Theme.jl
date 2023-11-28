@@ -73,17 +73,17 @@ const types_portmanteau = Union{allconcretesubtypes(AbstractIncident)...}
     
 function create_theme(data)
   ## Building length dictionaries
-  d_cy = Dict((a[1] => a[2]cy) for a in pairs(data["length_cy"]))
-  d_h  = Dict((a[1] => a[2]h) for a in pairs(data["length_h"]))
-  d_in = Dict((a[1] => a[2]inch) for a in pairs(data["length_inch"]))
-  d_mm = Dict((a[1] => a[2]mm) for a in pairs(data["thickness_mm"]))
+  d_cy = Dict((a[1] => a[2]cy)   for a ∈ pairs(data["length_cy"]))
+  d_h  = Dict((a[1] => a[2]h)    for a ∈ pairs(data["length_h"]))
+  d_in = Dict((a[1] => a[2]inch) for a ∈ pairs(data["length_inch"]))
+  d_mm = Dict((a[1] => a[2]mm)   for a ∈ pairs(data["thickness_mm"]))
 
   ## Building sundry other data dictionaries 
   d_lf = data["length_factor"]
   d_op = data["opacity"]
 
   ## Building colour dictionary
-  d_cx = Dict((a[1] => parse(Colorant, a[2])) for a in pairs(data["colour_x"]))
+  d_cx = Dict((a[1] => parse(Colorant, a[2])) for a ∈ pairs(data["colour_x"]))
 
   ## Building colour dictionary
   d_c = data["colour"]
@@ -97,7 +97,7 @@ function create_theme(data)
     parse(Colorant, d_cx["default"]) end
 
   function theme_colour(xl::Vector{T}) where {T<:AbstractIncident}
-    return [theme_colour(x) for x in xl] end
+    return [theme_colour(x) for x ∈ xl] end
     
   function theme_colour(T::DataType)
     if T <: Union{Removal, CRemoval, Infection, PInfection}
