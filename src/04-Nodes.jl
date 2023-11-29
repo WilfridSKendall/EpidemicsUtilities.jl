@@ -160,7 +160,7 @@ ALL        = TOP | BOUNDARIES | REGIONS | BASIC
 # Draw regions relating to epidemic.
 ##function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
 ##                theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
-function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
+function draw_regions!(template::Plot, duration::Real, ev::Evolution;
                 theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
     SIR_flow = table_trajectories1(duration, ev.trajectory)
     xy_SIR_flow = table_trajectories2(flow, theme=theme)
