@@ -153,22 +153,22 @@ end
 # The keyword argument `select` chooses different aspects.
 TOP        = 0b000000001 ; BOUNDARIES = 0b000000010 ; REGIONS    = 0b000000100 ;  
 INFECTIONS = 0b000001000 ; REMOVALS   = 0b000010000 ; CREMOVALS  = 0b000100000 ;
-ACTIVATED  = 0b001000000 ;
+ACTIVATED  = 0b001000000 ; LFE        = 0b010000000 ;
 ELEMENTS   = INFECTIONS | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
 ALL        = TOP | BOUNDARIES | REGIONS | BASIC
 
 # Draw regions relating to epidemic.
 ##function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
 ##                theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
-function draw_regions!(template::Plot, duration::Real, ev::Evolution;
+function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
                 theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
     SIR_flow = table_trajectories1(duration, ev.trajectory)
-    xy_SIR_flow = table_trajectories2(flow, theme=theme)
-    if (select & TOP) > 0            
+    xy_SIR_flow = table_trajectories2(SIR_flow, theme=theme)
+    if (select & TOP) > 0 
         push!(template, 
-##            layer(flow, x=:t, y=:population, Geom.line,
             layer(SIR_flow, x=:t, y=:population, Geom.line,
-                    style(line_width=theme.trail, default_color=theme.scaffold)))
+              style(line_width=theme.trail, default_color=theme.scaffold)),
+            )
     end
     if (select & BOUNDARIES) > 0     
         push!(template, 
@@ -213,6 +213,16 @@ end ;
 # Draw aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
+    if ((select & LFE) > 0) && (! isempty(ev.LFE))  
+        LFE_flow = table_trajectories1(duration, ev.LFE)
+        xy_LFE_flow = table_trajectories2(LFE_flow, theme=theme)
+        push!(template, 
+            layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
+                    style(line_width=theme.trail, default_color=theme.lastfeasible3)),
+            layer(xy_LFE_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
+              style(default_color=theme.lastfeasible2)),
+            )
+    end
     if (select & ELEMENTS) > 0   
         draw_innovation!(template, ev, theme=theme, select=select & ELEMENTS)
     end
