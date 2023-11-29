@@ -158,13 +158,16 @@ ELEMENTS   = INFECTIONS | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
 ALL        = TOP | BOUNDARIES | REGIONS | BASIC
 
 # Draw regions relating to epidemic.
+##function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
+##                theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
 function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
                 theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
     SIR_flow = table_trajectories1(duration, ev.trajectory)
     xy_SIR_flow = table_trajectories2(flow, theme=theme)
     if (select & TOP) > 0            
         push!(template, 
-            layer(flow, x=:t, y=:population, Geom.line,
+##            layer(flow, x=:t, y=:population, Geom.line,
+            layer(SIR_flow, x=:t, y=:population, Geom.line,
                     style(line_width=theme.trail, default_color=theme.scaffold)))
     end
     if (select & BOUNDARIES) > 0     
