@@ -218,7 +218,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
         xy_LFE_flow = table_trajectories2(LFE_flow, forward=false, theme=theme)
         push!(template, 
             layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
-                    style(line_width=theme.trail, default_color=theme.lastfeasible3)),
+                    style(line_width=theme.broad, default_color=theme.lastfeasible1)),
             layer(xy_LFE_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
               style(default_color=theme.lastfeasible2)),
             )
