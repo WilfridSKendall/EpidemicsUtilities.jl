@@ -211,7 +211,7 @@ function draw_innovation!(template::Plot, iv::AbstractEnvironment;
 end ;
 
 # Draw aspects of a given `AbstractEvolution`.
-function draw_evolution!(template::Plot, ev::AbstractEvolution;
+function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
     if ((select & LFE) > 0) && (! isempty(ev.LFE))  
         LFE_flow = table_trajectories1(duration, ev.LFE)
