@@ -215,7 +215,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
     if ((select & LFE) > 0) && (! isempty(ev.LFE))  
         LFE_flow = table_trajectories1(duration, ev.LFE)
-        xy_LFE_flow = table_trajectories2(LFE_flow, theme=theme)
+        xy_LFE_flow = table_trajectories2(LFE_flow, forward=false, theme=theme)
         push!(template, 
             layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
                     style(line_width=theme.trail, default_color=theme.lastfeasible3)),
