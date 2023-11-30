@@ -153,7 +153,7 @@ end
 # The keyword argument `select` chooses different aspects.
 TOP        = 0b000000001 ; BOUNDARIES = 0b000000010 ; REGIONS    = 0b000000100 ;  
 INFECTIONS = 0b000001000 ; REMOVALS   = 0b000010000 ; CREMOVALS  = 0b000100000 ;
-ACTIVATED  = 0b001000000 ; LFE        = 0b010000000 ;
+ACTIVATED  = 0b001000000 ; LFET       = 0b010000000 ; LFER       = 0b100000000 
 ELEMENTS   = INFECTIONS | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
 ALL        = TOP | BOUNDARIES | REGIONS | BASIC
 
@@ -213,12 +213,16 @@ end ;
 # Draw aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
-    if ((select & LFE) > 0) && (! isempty(ev.LFE))  
+    if ((select & LFET) > 0) && (! isempty(ev.LFE))  
         LFE_flow = table_trajectories1(duration, ev.LFE)
-        xy_LFE_flow = table_trajectories2(LFE_flow, forward=false, theme=theme)
         push!(template, 
             layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
                     style(line_width=theme.broad, default_color=theme.lastfeasible1)),
+            )
+    end
+    if ((select & LFER) > 0) && (! isempty(ev.LFE))  
+        xy_LFE_flow = table_trajectories2(LFE_flow, forward=false, theme=theme)
+        push!(template, 
             layer(xy_LFE_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
               style(default_color=theme.lastfeasible2)),
             )
