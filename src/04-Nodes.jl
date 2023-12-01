@@ -214,19 +214,21 @@ end ;
 # Draw aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
-    if ((select & LFER) > 0) && (! isempty(ev.LFE))  
-        xy_LFE_flow = table_trajectories2(LFE_flow, forward=false, theme=theme)
-        push!(template, 
-            layer(xy_LFE_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
-              style(default_color=theme.lastfeasible2)),
-            )
-    end
-    if ((select & LFET) > 0) && (! isempty(ev.LFE))  
+    if ((select & LFE) > 0) && (! isempty(ev.LFE))
         LFE_flow = table_trajectories1(duration, ev.LFE)
-        push!(template, 
-            layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
-                    style(line_width=theme.broad, default_color=theme.lastfeasible1)),
-            )
+        if (select & LFER) > 0)  
+            xy_LFE_flow = table_trajectories2(LFE_flow, forward=false, theme=theme)
+            push!(template, 
+              layer(xy_LFE_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
+                style(default_color=theme.lastfeasible2)),
+              )
+        end
+        if ((select & LFET) > 0) 
+            push!(template, 
+              layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
+                style(line_width=theme.broad, default_color=theme.lastfeasible3)),
+              )
+        end
     end
     if (select & ELEMENTS) > 0   
         draw_innovation!(template, ev, theme=theme, select=select & ELEMENTS)
