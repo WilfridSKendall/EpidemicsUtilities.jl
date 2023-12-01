@@ -155,7 +155,8 @@ TOP        = 0b000000001 ; BOUNDARIES = 0b000000010 ; REGIONS    = 0b000000100 ;
 INFECTIONS = 0b000001000 ; REMOVALS   = 0b000010000 ; CREMOVALS  = 0b000100000 ;
 ACTIVATED  = 0b001000000 ; LFET       = 0b010000000 ; LFER       = 0b100000000 
 ELEMENTS   = INFECTIONS | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
-ALL        = TOP | BOUNDARIES | REGIONS | BASIC
+LFE        = LFET | LFER ;
+ALL        = TOP  | BOUNDARIES | REGIONS | BASIC
 
 # Draw regions relating to epidemic.
 ##function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
