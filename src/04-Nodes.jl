@@ -217,15 +217,17 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
     if ((select & LFE) > 0) && (! isempty(ev.LFE))
         initial = ev.trajectory[1]
-        LFE_trajectory = evolution(initial, ev.LFE, conditioned=true)
+        LFE_trajectory = evolution(initial, ev.LFE, conditioned=true)[1]
         LFE_flow = table_trajectories1(duration, LFE_trajectory)
+        
         if ((select & LFER) > 0)  
-            xy_LFE_flow = table_trajectories2(LFE_flow, forward=false, theme=theme)
+            xy_LFE_flow = table_trajectories2(LFE_flow, theme=theme)
             push!(template, 
               layer(xy_LFE_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
                 style(default_color=theme.lastfeasible2)),
               )
         end
+        
         if ((select & LFET) > 0) 
             push!(template, 
               layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
@@ -233,9 +235,10 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
               )
             # I'd also like to draw activated infections of the LFE history!
         end
+        
         if ((select & LFEN) > 0) 
         push!(template, Guide.annotation(compose(context(), 
-            draw_activated_elements(ev.initial, LFE.history, theme=theme))))
+            draw_feasible_incident(Infection[z for z in ev.LFE if z isa Infection], 2, theme=theme))))
         end
     end
     if (select & ELEMENTS) > 0   
