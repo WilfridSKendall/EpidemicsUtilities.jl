@@ -230,7 +230,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
         
         if ((select & LFET) > 0) 
             push!(template, 
-              layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
+              layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:hv), #Geom.step(direction=:vh), 
                 style(line_width=theme.broad, default_color=theme.lastfeasible3)),
               )
             # I'd also like to draw activated infections of the LFE history!
