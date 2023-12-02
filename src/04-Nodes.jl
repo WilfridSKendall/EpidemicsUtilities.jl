@@ -151,11 +151,12 @@ end
 # The following convenience functions return various Gadfly figures for an evolution. 
 # Flow calculations occur within the functions! 
 # The keyword argument `select` chooses different aspects.
-TOP        = 0b000000001 ; BOUNDARIES = 0b000000010 ; REGIONS    = 0b000000100 ;  
-INFECTIONS = 0b000001000 ; REMOVALS   = 0b000010000 ; CREMOVALS  = 0b000100000 ;
-ACTIVATED  = 0b001000000 ; LFET       = 0b010000000 ; LFER       = 0b100000000 
-ELEMENTS   = INFECTIONS | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
-LFE        = LFET | LFER ;
+TOP        = 0b0000000001 ; BOUNDARIES = 0b0000000010 ; REGIONS    = 0b0000000100 ;  
+INFECTIONS = 0b0000001000 ; REMOVALS   = 0b0000010000 ; CREMOVALS  = 0b0000100000 ;
+ACTIVATED  = 0b0001000000 ; LFET       = 0b0010000000 ; LFER       = 0b0100000000 ;
+LFEN       = 0b1000000000 ;
+ELEMENTS   = INFECTIONS  | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
+LFE        = LFET | LFER | LFEN ;
 ALL        = TOP  | BOUNDARIES | REGIONS | BASIC
 
 # Draw regions relating to epidemic.
@@ -211,11 +212,13 @@ function draw_innovation!(template::Plot, iv::AbstractEnvironment;
     return template
 end ;
 
-# Draw aspects of a given `AbstractEvolution`.
+# Draw `select`ed aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
     if ((select & LFE) > 0) && (! isempty(ev.LFE))
-        LFE_flow = table_trajectories1(duration, ev.LFE)
+        initial = ev.trajectory[1]
+        LFE_trajectory = evolution(initial, ev.LFE, conditioned=true)
+        LFE_flow = table_trajectories1(duration, LFE_trajectory)
         if ((select & LFER) > 0)  
             xy_LFE_flow = table_trajectories2(LFE_flow, forward=false, theme=theme)
             push!(template, 
@@ -228,6 +231,11 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
               layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:vh), 
                 style(line_width=theme.broad, default_color=theme.lastfeasible3)),
               )
+            # I'd also like to draw activated infections of the LFE history!
+        end
+        if ((select & LFEN) > 0) 
+        push!(template, Guide.annotation(compose(context(), 
+            draw_activated_elements(ev.initial, LFE.history, theme=theme))))
         end
     end
     if (select & ELEMENTS) > 0   
