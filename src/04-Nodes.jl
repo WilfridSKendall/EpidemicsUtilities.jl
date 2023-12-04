@@ -215,7 +215,8 @@ end ;
 # Draw `select`ed aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
-    if ((select & LFE) > 0) && (! isempty(ev.LFE))
+
+    if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))
         initial = ev.trajectory[1]
         LFE_trajectory = evolution(initial, ev.LFE, conditioned=true)[1]
         LFE_flow = table_trajectories1(duration, LFE_trajectory)
@@ -227,18 +228,12 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 style(default_color=theme.lastfeasible2)),
               )
         end
-        
         if ((select & LFET) > 0) 
             push!(template, 
               layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:hv), #Geom.step(direction=:vh), 
                 style(line_width=theme.broad, default_color=theme.lastfeasible3)),
               )
-            # I'd also like to draw activated infections of the LFE history!
-        end
-        
-        if ((select & LFEN) > 0) 
-        push!(template, Guide.annotation(compose(context(), 
-            draw_feasible_incident(Infection[z for z in ev.LFE if z isa Infection], 2, theme=theme))))
+            # Activated infections of the LFE history are drawn at end of function!
         end
     end
     if (select & ELEMENTS) > 0   
@@ -248,5 +243,10 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
         push!(template, Guide.annotation(compose(context(), 
             draw_activated_elements(ev.initial, ev.history, theme=theme))))
     end
+    if ((select & LFEN) > 0) && (! isempty(ev.LFE)) 
+        push!(template, Guide.annotation(compose(context(), 
+            draw_feasible_incident(Infection[z for z in ev.LFE if z isa Infection], 2, theme=theme))))
+    end
+
     return template
 end ;
