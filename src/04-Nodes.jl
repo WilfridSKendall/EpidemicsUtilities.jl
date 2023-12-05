@@ -217,6 +217,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
 
     if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))
+        # Preliminary computations.
         initial = ev.trajectory[1]
         LFE_trajectory = evolution(initial, ev.LFE, conditioned=true)[1]
         LFE_flow = table_trajectories1(duration, LFE_trajectory)
@@ -230,7 +231,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
         end
         if ((select & LFET) > 0) 
             push!(template, 
-              layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:hv), #Geom.step(direction=:vh), 
+              layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:hv), 
                 style(line_width=theme.broad, default_color=theme.lastfeasible3)),
               )
             # Activated infections of the LFE history are drawn at end of function!
