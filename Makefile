@@ -5,11 +5,11 @@ QUARTO         := /usr/local/bin/quarto
 CSL            := /home/wilfrid/lib/pandoc/CSL/ima-journal-of-applied-mathematics.csl
 QUARTO_OPTIONS :=  --from=markdown+tex_math_single_backslash --csl=$(CSL)
 
-package    := $(notdir $(shell pwd))
+location       := $(shell pwd)
+package        := $(notdir $(location))
 
 JULIA          := $(HOME)/.local/bin/julia
 
-#BUILD          := docs/build
 DOCUMENT       := docs/build/$(MODULE)
 SOURCE         := src/$(MODULE).jl
 SECTIONS       := $(wildcard src/0*.jl)
@@ -54,7 +54,7 @@ install:
 # ====================
 # List Makefile
 Makefile.pdf: Makefile
-	@echo "# Listing of \`Makefile\` for \`PerfectEpidemics/julia/$(package)\`" \
+	@echo "# Listing of \`Makefile\` for \`$(location)\`" \
 				> Makefile.qmd
 	@echo "\`\`\`makefile" >> Makefile.qmd
 	@cat Makefile          >> Makefile.qmd
