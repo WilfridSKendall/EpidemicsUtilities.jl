@@ -5,6 +5,8 @@ QUARTO         := /usr/local/bin/quarto
 CSL            := /home/wilfrid/lib/pandoc/CSL/ima-journal-of-applied-mathematics.csl
 QUARTO_OPTIONS :=  --from=markdown+tex_math_single_backslash --csl=$(CSL)
 
+package    := $(notdir $(shell pwd))
+
 JULIA          := $(HOME)/.local/bin/julia
 
 #BUILD          := docs/build
@@ -24,7 +26,9 @@ docs: $(DOCUMENT).pdf
 # The following translations is not yet perfect!
 # It doesn't include directives "#|" in codeblocks.
 $(DOCUMENT).qmd: docs/build/INTERMEDIATE.jl	
-	$(HOME)/.local/bin/julia -e 'using Literate; Literate.markdown("$<", name="$@", documenter=false, flavor = Literate.DocumenterFlavor(), codefence="```{julia}" => "```")'
+	$(HOME)/.local/bin/julia -e 'using Literate;         \
+	Literate.markdown("$<", name="$@", documenter=false, \
+		flavor = Literate.DocumenterFlavor(), codefence="```{julia}" => "```")'
 	mv $@.md $@
 
 # Concatenate ordered source files into temporary intermediate file for documentation.
@@ -48,6 +52,17 @@ install:
 	$(JULIA) -e 'import EpidemicsUtilities: version ; println(version)'
 
 # ====================
+# List Makefile
+Makefile.pdf: Makefile
+	@echo "# Listing of \`Makefile\` for \`PerfectEpidemics/julia/$(package)\`" \
+				> Makefile.qmd
+	@echo "\`\`\`makefile" >> Makefile.qmd
+	@cat Makefile          >> Makefile.qmd
+	@echo "\`\`\`"         >> Makefile.qmd
+	$(QUARTO) render Makefile.qmd --to pdf
+	@rm Makefile.qmd 
+
+# ====================
 # Automatic conversion of qmd to pdf
 %.pdf: %.qmd $(UTILITIES) ; $(QUARTO) render $< --to pdf $(QUARTO_OPTIONS) --no-cache
 
@@ -59,6 +74,6 @@ install:
 # Clean-up
 clean:
 	-rm -f $(wildcard *.ipynb)
-	$(HOME)/.local/bin/julia -e 'import EpidemicsUtilities'
-	$(HOME)/.local/bin/julia -e 'Base.compilecache(Base.identify_package("EpidemicsUtilities"))'
+	$(HOME)/.local/bin/julia -e 'import $(package)'
+	$(HOME)/.local/bin/julia -e 'Base.compilecache(Base.identify_package("$(package)"))'
 
