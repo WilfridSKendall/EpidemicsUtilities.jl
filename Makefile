@@ -1,12 +1,10 @@
 SHELL          := /usr/bin/bash
-MODULE         := EpidemicsUtilities
+LOCATION       := $(shell pwd)
+MODULE         := $(notdir $(LOCATION))
 
 QUARTO         := /usr/local/bin/quarto
 CSL            := /home/wilfrid/lib/pandoc/CSL/ima-journal-of-applied-mathematics.csl
 QUARTO_OPTIONS :=  --from=markdown+tex_math_single_backslash --csl=$(CSL)
-
-location       := $(shell pwd)
-package        := $(notdir $(location))
 
 JULIA          := $(HOME)/.local/bin/julia
 
@@ -49,12 +47,12 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 install:
 	$(JULIA) -e 'import EpidemicsCFTP: version      ; println(version)'
 	touch src/EpidemicsUtilities.jl
-	$(JULIA) -e 'import EpidemicsUtilities: version ; println(version)'
+	$(JULIA) -e 'import $(MODULE): version ; println(version)'
 
 # ====================
 # List Makefile
 Makefile.pdf: Makefile
-	@echo "# Listing of \`Makefile\` for \`$(location)\`" \
+	@echo "# Listing of \`Makefile\` for \`$(LOCATION)\`" \
 				> Makefile.qmd
 	@echo "\`\`\`makefile" >> Makefile.qmd
 	@cat Makefile          >> Makefile.qmd
@@ -74,6 +72,6 @@ Makefile.pdf: Makefile
 # Clean-up
 clean:
 	-rm -f $(wildcard *.ipynb)
-	$(HOME)/.local/bin/julia -e 'import $(package)'
-	$(HOME)/.local/bin/julia -e 'Base.compilecache(Base.identify_package("$(package)"))'
+	$(HOME)/.local/bin/julia -e 'import $(MODULE)'
+	$(HOME)/.local/bin/julia -e 'Base.compilecache(Base.identify_package("$(MODULE)"))'
 
