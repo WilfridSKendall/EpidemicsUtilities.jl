@@ -2,8 +2,9 @@ default_theme = EpidemicsUtilities.default_theme
 
 # Useful abbreviations for incidents and markers
 # ----------------------------------------------
-# Various incidents and markers will be used sufficiently often to justify abbreviations.
-# The following abbreviations (or an appropriate subset) are a helpful space-saving measure!
+# Various incidents and markers will be used sufficiently often to justify
+# abbreviations. The following abbreviations (or an appropriate subset) are 
+# a helpful space-saving measure!
 A = AbstractInfection
 R = Removal;
 C = CRemoval;

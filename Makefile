@@ -12,6 +12,8 @@ DOCUMENT       := docs/build/$(MODULE)
 SOURCE         := src/$(MODULE).jl
 SECTIONS       := $(wildcard src/0*.jl)
 
+test_files :=$(wildcard test/*.jl)
+
 # ====================
 # Principal targets
 main: docs
@@ -39,7 +41,7 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 # ====================
 # Running tests
 .test.stamp: $(wildcard src/*.jl) $(wildcard test/*.jl)
-	julia test/runtests.jl
+	julia test/00-runtests.jl
 	@touch .test.stamp
 
 # ====================
@@ -51,7 +53,27 @@ install:
 
 
 # ====================
-# List Makefile
+# List test source: target is `test.pdf`
+$(MODULE)-test.pdf: $(MODULE)-test.qmd
+	$(QUARTO) render $< --to pdf
+	rm $<
+$(MODULE)-test.qmd: $(test_files)
+	@echo $(test_files)
+	@echo "# Unit tests for module \`$(MODULE)\`"                            > $(MODULE)-test.qmd
+	@echo "\`\`\`{julia}"							>> $(MODULE)-test.qmd
+	@echo "#| echo: false"							>> $(MODULE)-test.qmd
+	@echo "import $(MODULE): date, version" 				>> $(MODULE)-test.qmd
+	@echo "println(\"$(MODULE) version \$$version, compiled on \$$date\")"	>> $(MODULE)-test.qmd
+	@echo "\`\`\`"      							>> $(MODULE)-test.qmd
+	@for f in $(test_files) ; do                           \
+		echo "## File \`$$f\`" >> $(MODULE)-test.qmd ; \
+		echo "\`\`\`julia"     >> $(MODULE)-test.qmd ; \
+		cat $$f                >> $(MODULE)-test.qmd ; \
+		echo "\`\`\`"          >> $(MODULE)-test.qmd ; \
+	done
+
+# ====================
+# List Makefile: target is `Makefile.pdf`
 include $(HOME)/lib/makefiles/listing-makefile.mak
 
 # ====================
