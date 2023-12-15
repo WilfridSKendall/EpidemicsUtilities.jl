@@ -49,16 +49,10 @@ install:
 	touch src/EpidemicsUtilities.jl
 	$(JULIA) -e 'import $(MODULE): version ; println(version)'
 
+
 # ====================
 # List Makefile
-Makefile.pdf: Makefile
-	@echo "# Listing of \`Makefile\` for \`$(LOCATION)\`" \
-				> Makefile.qmd
-	@echo "\`\`\`makefile" >> Makefile.qmd
-	@cat Makefile          >> Makefile.qmd
-	@echo "\`\`\`"         >> Makefile.qmd
-	$(QUARTO) render Makefile.qmd --to pdf
-	@rm Makefile.qmd 
+include $(HOME)/lib/makefiles/listing-makefile.mak
 
 # ====================
 # Automatic conversion of qmd to pdf
