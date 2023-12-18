@@ -59,12 +59,12 @@ $(MODULE)-test.pdf: $(MODULE)-test.qmd
 	rm $<
 $(MODULE)-test.qmd: $(test_files)
 	@echo $(test_files)
-	@echo "# Unit tests for module \`$(MODULE)\`"                            > $(MODULE)-test.qmd
-	@echo "\`\`\`{julia}"							>> $(MODULE)-test.qmd
-	@echo "#| echo: false"							>> $(MODULE)-test.qmd
-	@echo "import $(MODULE): date, version" 				>> $(MODULE)-test.qmd
-	@echo "println(\"$(MODULE) version \$$version, compiled on \$$date\")"	>> $(MODULE)-test.qmd
-	@echo "\`\`\`"      							>> $(MODULE)-test.qmd
+	@echo "# Unit tests for module \`$(MODULE)\`"                 > $(MODULE)-test.qmd
+	@echo "\`\`\`{julia}"                                        >> $(MODULE)-test.qmd
+	@echo "#| echo: false"                                       >> $(MODULE)-test.qmd
+	@echo "import $(MODULE): date, version"                      >> $(MODULE)-test.qmd
+	@echo "println(\"$(MODULE) version \$$version, n \$$date\")" >> $(MODULE)-test.qmd
+	@echo "\`\`\`"                                               >> $(MODULE)-test.qmd
 	@for f in $(test_files) ; do                           \
 		echo "## File \`$$f\`" >> $(MODULE)-test.qmd ; \
 		echo "\`\`\`julia"     >> $(MODULE)-test.qmd ; \
