@@ -27,8 +27,7 @@ docs: $(DOCUMENT).pdf
 # It doesn't include directives "#|" in codeblocks.
 $(DOCUMENT).qmd: docs/build/INTERMEDIATE.jl	
 	$(HOME)/.local/bin/julia -e 'using Literate;         \
-	Literate.markdown("$<", name="$@", documenter=false, \
-		flavor = Literate.DocumenterFlavor(), codefence="```{julia}" => "```")'
+	Literate.markdown("$<", name="$@", documenter=false, flavor = Literate.DocumenterFlavor(), codefence="```{julia}" => "```")'
 	mv $@.md $@
 
 # Concatenate ordered source files into temporary intermediate file for documentation.
@@ -54,6 +53,8 @@ install:
 
 # ====================
 # List test source: target is `test.pdf`
+include $(HOME)/lib/makefiles/listing-makefile.mak
+listings: README.pdf Makefile.pdf $(MODULE)-test.pdf default_theme.pdf
 $(MODULE)-test.pdf: $(MODULE)-test.qmd
 	$(QUARTO) render $< --to pdf
 	rm $<
@@ -72,9 +73,23 @@ $(MODULE)-test.qmd: $(test_files)
 		echo "\`\`\`"          >> $(MODULE)-test.qmd ; \
 	done
 
+# --------------------
+# README.pdf
+README.pdf: README.md ; $(QUARTO) render $< --to pdf $(QUARTO_OPTIONS)
+
 # ====================
-# List Makefile: target is `Makefile.pdf`
-include $(HOME)/lib/makefiles/listing-makefile.mak
+# Various listings.
+#
+# List data/default_theme.yml: target is `default_theme.pdf`
+default_theme.pdf: data/default_theme.yml
+	@echo Constructing $@ from $<
+	@echo "# Listing of \`$<\` for \`$(LOCATION)\`" >  $(subst .pdf,.qmd,$@)
+	@echo "\`\`\`yaml"                              >> $(subst .pdf,.qmd,$@)
+	@cat $<                                         >> $(subst .pdf,.qmd,$@)
+	@echo "\`\`\`"                                  >> $(subst .pdf,.qmd,$@)
+	$(QUARTO) render $(subst .pdf,.qmd,$@) --to pdf
+	@rm $(subst .pdf,.qmd,$@)
+	
 
 # ====================
 # Automatic conversion of qmd to pdf
