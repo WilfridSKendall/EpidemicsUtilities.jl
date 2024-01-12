@@ -46,9 +46,11 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 # ====================
 # Installation
 install:
-	$(JULIA) -e 'import EpidemicsCFTP: version      ; println(version)'
-	touch src/EpidemicsUtilities.jl
-	$(JULIA) -e 'import $(MODULE): version ; println(version)'
+	@make -C ../EpidemicsCFTP install
+	@echo ----------
+	@touch src/$(MODULE).jl
+	@$(JULIA) -e 'Base.compilecache(Base.identify_package("$(MODULE)")) ; \
+		import $(MODULE); println($(MODULE).summary)'
 
 
 # ====================
