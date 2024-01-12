@@ -2,11 +2,13 @@ SHELL          := /usr/bin/bash
 LOCATION       := $(shell pwd)
 MODULE         := $(notdir $(LOCATION))
 
+GIT            := /usr/bin/git
+JULIA          := $(HOME)/.local/bin/julia
+
 QUARTO         := /usr/local/bin/quarto
 CSL            := /home/wilfrid/lib/pandoc/CSL/ima-journal-of-applied-mathematics.csl
 QUARTO_OPTIONS :=  --from=markdown+tex_math_single_backslash --csl=$(CSL)
 
-JULIA          := $(HOME)/.local/bin/julia
 
 DOCUMENT       := docs/build/$(MODULE)
 SOURCE         := src/$(MODULE).jl
@@ -21,7 +23,7 @@ test: .test.stamp
 
 # ====================
 # Creation of documentation
-docs: $(DOCUMENT).pdf
+pdf-documentation: $(DOCUMENT).pdf
 
 # The following translations is not yet perfect!
 # It doesn't include directives "#|" in codeblocks.
@@ -51,6 +53,10 @@ install:
 	@touch src/$(MODULE).jl
 	@$(JULIA) -e 'Base.compilecache(Base.identify_package("$(MODULE)")) ; \
 		import $(MODULE); println($(MODULE).summary)'
+
+commit:
+	$(GIT) commit -a
+	$(GIT) push
 
 
 # ====================
