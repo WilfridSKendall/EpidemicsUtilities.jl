@@ -18,7 +18,7 @@ test_files :=$(wildcard test/*.jl)
 
 # ====================
 # Principal targets
-main: docs
+main: pdf-documentation
 test: .test.stamp
 
 # ====================
