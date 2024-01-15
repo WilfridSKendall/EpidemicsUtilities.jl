@@ -151,13 +151,13 @@ end
 # The following convenience functions return various Gadfly figures for an evolution. 
 # Flow calculations occur within the functions! 
 # The keyword argument `select` chooses different aspects.
-TOP        = 0b0000000001 ; BOUNDARIES = 0b0000000010 ; REGIONS    = 0b0000000100 ;  
-INFECTIONS = 0b0000001000 ; REMOVALS   = 0b0000010000 ; CREMOVALS  = 0b0000100000 ;
-ACTIVATED  = 0b0001000000 ; LFET       = 0b0010000000 ; LFER       = 0b0100000000 ;
-LFEN       = 0b1000000000 ;
+TOP        = 0b00000000001 ; BOUNDARIES = 0b00000000010 ; REGIONS    = 0b00000000100 ;  
+INFECTIONS = 0b00000001000 ; REMOVALS   = 0b00000010000 ; CREMOVALS  = 0b00000100000 ;
+ACTIVATED  = 0b00001000000 ; LFET       = 0b00010000000 ; LFER       = 0b00100000000 ;
+LFEN       = 0b01000000000 ; NFZ        = 0b10000000000 ;
 ELEMENTS   = INFECTIONS  | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
+ALL        = TOP  | BOUNDARIES | REGIONS | BASIC ;
 LFE        = LFET | LFER | LFEN ;
-ALL        = TOP  | BOUNDARIES | REGIONS | BASIC
 
 # Draw regions relating to epidemic.
 ##function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
