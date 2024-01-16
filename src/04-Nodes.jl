@@ -215,6 +215,8 @@ end ;
 # Draw `select`ed aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
+    draw_regions!(template, duration, ev, theme=theme,
+                  select=select)
 
     if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))
         # Preliminary computations.
