@@ -150,16 +150,20 @@ end
 
 # The following convenience functions return various Gadfly figures for an evolution. 
 # Flow calculations occur within the functions! 
-# The keyword argument `select` chooses different aspects.
-TOP        = 0b00000000001 ; BOUNDARIES = 0b00000000010 ; REGIONS    = 0b00000000100 ;  
-INFECTIONS = 0b00000001000 ; REMOVALS   = 0b00000010000 ; CREMOVALS  = 0b00000100000 ;
-ACTIVATED  = 0b00001000000 ;
-LFET       = 0b00010000000 ; LFER       = 0b00100000000 ; LFEN       = 0b01000000000 ;
-NFZ        = 0b10000000000 ;
-ELEMENTS   = INFECTIONS  | REMOVALS | CREMOVALS ; BASIC = ACTIVATED | ELEMENTS ;
-ALL        = TOP  | BOUNDARIES | REGIONS | BASIC ;
-MOST       = BOUNDARIES | REGIONS | BASIC ;
-LFE        = LFET | LFER | LFEN ;
+# The keyword argument `select` chooses different aspects, coded by `const`.
+const TOP        = 0b00000000001 ;
+const BOUNDARIES = 0b00000000010 ; const REGIONS    = 0b00000000100 ;
+const INFECTIONS = 0b00000001000 ; const REMOVALS   = 0b00000010000 ;
+const CREMOVALS  = 0b00000100000 ;
+const ACTIVATED  = 0b00001000000 ;
+const LFET       = 0b00010000000 ;
+const LFER       = 0b00100000000 ; const LFEN       = 0b01000000000 ;
+const NFZ        = 0b10000000000 ;
+const ELEMENTS   = INFECTIONS  | REMOVALS | CREMOVALS ;
+const BASIC = ACTIVATED | ELEMENTS ;
+const ALL        = TOP  | BOUNDARIES | REGIONS | BASIC ;
+const MOST       = BOUNDARIES | REGIONS | BASIC ;
+const LFE        = LFET | LFER | LFEN ;
 
 # Draw regions relating to epidemic.
 ##function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
