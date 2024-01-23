@@ -54,9 +54,10 @@ function table_trajectories3(cev::CEvolution)
     population = cev.initial.n
     nfz_df = DataFrame(
         time_line=1:population, 
-        NFZ1= [max(beginning, t) for t in cev.NFZ1], 
-        NFZ2= [max(beginning, t) for t in cev.NFZ2],
-        NFZ3= [max(beginning, t) for t in cev.NFZ3])
+        # NFZ1= [max(beginning, t) for t in cev.NFZ1], 
+        # NFZ2= [max(beginning, t) for t in cev.NFZ2],
+        # NFZ3= [max(beginning, t) for t in cev.NFZ3])
+        NFZ1= cev.NFZ1, NFZ2= cev.NFZ2, NFZ3= cev.NFZ3)
     nfz_df[:, :start] .= beginning
     nfz_df[:, :high_line] = nfz_df[:, :time_line]
     nfz_df[1:(end-1), :high_line] = (nfz_df[1:(end-1), :time_line] .+1)
