@@ -221,9 +221,24 @@ end ;
 # Draw `select`ed aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
-    # UNCOMMENT AND TRY WHEN DECENT INTERNET!
     draw_regions!(template, duration, ev, theme=theme, select=select)
 
+    if (select & NFZ)
+      nfz_df = table_trajectories3(ev)
+      push!(template,
+        layer(nfz_df, x=:start, y=:time_line, xend=:NFZ1, yend=:time_line, Geom.segment,
+            style(line_width=theme.broad, default_color=theme.NFZ1)),
+        layer(nfz_df, x=:NFZ1, y=:time_line, xend=:NFZ2, yend=:time_line, Geom.segment,
+            style(line_width=theme.broad, default_color=theme.NFZ2)),
+        layer(nfz_df, x=:NFZ2, y=:time_line, xend=:NFZ3, yend=:time_line, Geom.segment,
+            style(line_width=theme.trail, default_color=theme.NFZ1)),
+        layer(nfz_df, x=:NFZ3, y=:time_line, xend=:NFZ3, yend=:high_line, Geom.segment,
+            style(line_width=theme.trail, default_color=theme.NFZ1)),
+        layer(nfz_df, xmin=:start, ymin=:time_line, xmax=:NFZ3, ymax=:high_line, Geom.rect,
+            style(line_width=theme.trail, default_color=theme.NFZ3)),
+        )
+    end
+    
     if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))
         # Preliminary computations.
         initial = ev.trajectory[1]
