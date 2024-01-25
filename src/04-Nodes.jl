@@ -160,7 +160,7 @@ const LFET       = 0b00010000000 ;
 const LFER       = 0b00100000000 ; const LFEN       = 0b01000000000 ;
 const NFZ        = 0b10000000000 ;
 const ELEMENTS   = INFECTIONS  | REMOVALS | CREMOVALS ;
-const BASIC = ACTIVATED | ELEMENTS ;
+const BASIC      = ACTIVATED | ELEMENTS ;
 const ALL        = TOP  | BOUNDARIES | REGIONS | BASIC ;
 const MOST       = BOUNDARIES | REGIONS | BASIC ;
 const LFE        = LFET | LFER | LFEN ;
@@ -233,6 +233,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
             style(line_width=theme.broad, default_color=theme.NFZ2)),
           )
       end
+      # Next bit misses some horizontals if `REGIONS` is not selected.
       push!(template,
         layer(nfz_df, x=:NFZ2, y=:time_line, xend=:NFZ3, yend=:time_line, Geom.segment,
           style(line_width=theme.trail, default_color=theme.NFZ1)),
