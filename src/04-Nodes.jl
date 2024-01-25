@@ -225,18 +225,26 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
 
     if ((select & NFZ) > 0)
       nfz_df = table_trajectories3(ev)
-      push!(template,
-        layer(nfz_df, x=:start, y=:time_line, xend=:NFZ1, yend=:time_line, Geom.segment,
+      if ((select & REGIONS) > 0)
+        push!(template,
+          layer(nfz_df, x=:start, y=:time_line, xend=:NFZ1, yend=:time_line, Geom.segment,
             style(line_width=theme.broad, default_color=theme.NFZ1)),
-        layer(nfz_df, x=:NFZ1, y=:time_line, xend=:NFZ2, yend=:time_line, Geom.segment,
+          layer(nfz_df, x=:NFZ1, y=:time_line, xend=:NFZ2, yend=:time_line, Geom.segment,
             style(line_width=theme.broad, default_color=theme.NFZ2)),
+          )
+      end
+      push!(template,
         layer(nfz_df, x=:NFZ2, y=:time_line, xend=:NFZ3, yend=:time_line, Geom.segment,
-            style(line_width=theme.trail, default_color=theme.NFZ1)),
+          style(line_width=theme.trail, default_color=theme.NFZ1)),
         layer(nfz_df, x=:NFZ3, y=:time_line, xend=:NFZ3, yend=:high_line, Geom.segment,
-            style(line_width=theme.trail, default_color=theme.NFZ1)),
-        layer(nfz_df, xmin=:start, ymin=:time_line, xmax=:NFZ3, ymax=:high_line, Geom.rect,
-            style(line_width=theme.trail, default_color=theme.NFZ3)),
+          style(line_width=theme.trail, default_color=theme.NFZ1)),
         )
+      if ((select & REGIONS) > 0)
+        push!(template,
+          layer(nfz_df, xmin=:start, ymin=:time_line, xmax=:NFZ3, ymax=:high_line, Geom.rect,
+            style(line_width=theme.trail, default_color=theme.NFZ3)),
+          )
+      end
     end
     
     if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))
