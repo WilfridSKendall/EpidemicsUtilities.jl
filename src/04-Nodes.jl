@@ -233,9 +233,8 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
             style(line_width=theme.broad, default_color=theme.NFZ2)),
           )
       end
-      # Next bit misses some horizontals if `REGIONS` is not selected.
       push!(template,
-        layer(nfz_df, x=:NFZ2, y=:time_line, xend=:NFZ3, yend=:time_line, Geom.segment,
+        layer(nfz_df, x=:low_NFZ3, y=:time_line, xend=:NFZ3, yend=:time_line, Geom.segment,
           style(line_width=theme.trail, default_color=theme.NFZ1)),
         layer(nfz_df, x=:NFZ3, y=:time_line, xend=:NFZ3, yend=:high_line, Geom.segment,
           style(line_width=theme.trail, default_color=theme.NFZ1)),
