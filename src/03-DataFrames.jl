@@ -61,6 +61,7 @@ function table_trajectories3(cev::CEvolution)
     nfz_df[1:(end-1), :high_line] = (nfz_df[1:(end-1), :time_line] .+1)
     nfz_df[:, :low_NFZ3] .= beginning
     nfz_df[2:end, :low_NFZ3] = (nfz_df[1:(end-1), :NFZ3])
+    # Surely the next bit can be done better?!
     nfz_df[2:end, :low_NFZ3] = [max(beginning, x) for x in nfz_df[2:end, :low_NFZ3]]
     return nfz_df
 end
