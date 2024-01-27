@@ -223,7 +223,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
     draw_regions!(template, duration, ev, theme=theme, select=select)
 
-    if ((select & NFZ) > 0)
+    if ((select & NFZ) > 0) && (! isempty(ev.NFZ3))
       nfz_df = table_trajectories3(ev)
       if ((select & REGIONS) > 0)
         push!(template,
