@@ -1,7 +1,7 @@
 import EpidemicsUtilities: date, version
 println("EpidemicsUtilities version $version, compiled on $date")
 
-using EpidemicsCFTP
+using EpidemicsCFTP, EpidemicsCFTP.abbreviations
 using EpidemicsUtilities
 using Test
 using Compose, Colors

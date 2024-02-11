@@ -1,16 +1,5 @@
 default_theme = EpidemicsUtilities.default_theme
 
-# Useful abbreviations for incidents and markers
-# ----------------------------------------------
-# Various incidents and markers will be used sufficiently often to justify
-# abbreviations. The following abbreviations (or an appropriate subset) are 
-# a helpful space-saving measure!
-A = AbstractInfection
-R = Removal;
-C = CRemoval;
-I = Infection;
-P = PInfection;
-
 data = load_theme(pkgdir(EpidemicsUtilities, "data", "default_theme.yml"))
 theme = create_theme(data)
 
