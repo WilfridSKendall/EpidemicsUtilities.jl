@@ -223,7 +223,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
     draw_regions!(template, duration, ev, theme=theme, select=select)
 
-    if ((select & NFZ) > 0) && (! isempty(ev.NFZ3))
+    if ((select & NFZ) > 0) && (! isempty(ev.NFZ))
       nfz_df = table_trajectories3(ev)
       if ((select & REGIONS) > 0)
         push!(template,
@@ -234,15 +234,15 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
           )
       end
       push!(template,
-        layer(nfz_df, x=:low_NFZ3, y=:time_line, xend=:NFZ3, yend=:time_line, Geom.segment,
+        layer(nfz_df, x=:low_NFZ, y=:time_line, xend=:NFZ, yend=:time_line, Geom.segment,
           style(line_width=theme.trail, default_color=theme.NFZ1)),
-        layer(nfz_df, x=:NFZ3, y=:time_line, xend=:NFZ3, yend=:high_line, Geom.segment,
+        layer(nfz_df, x=:NFZ, y=:time_line, xend=:NFZ, yend=:high_line, Geom.segment,
           style(line_width=theme.trail, default_color=theme.NFZ1)),
         )
       if ((select & REGIONS) > 0)
         push!(template,
-          layer(nfz_df, xmin=:start, ymin=:time_line, xmax=:NFZ3, ymax=:high_line, Geom.rect,
-            style(line_width=theme.trail, default_color=theme.NFZ3)),
+          layer(nfz_df, xmin=:start, ymin=:time_line, xmax=:NFZ, ymax=:high_line, Geom.rect,
+            style(line_width=theme.trail, default_color=theme.NFZ)),
           )
       end
     end

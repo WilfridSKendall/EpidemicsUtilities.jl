@@ -20,7 +20,7 @@ colour_x:
     scaffold:                  "grey"
     NFZ1:                      "steelblue" 
     NFZ2:                      "steelblue2"
-    NFZ3:                      "lightsteelblue"
+    NFZ:                       "lightsteelblue"
     lastfeasible1:             "pink"
     lastfeasible2:             "hotpink2"
     lastfeasible3:             "deeppink3"
