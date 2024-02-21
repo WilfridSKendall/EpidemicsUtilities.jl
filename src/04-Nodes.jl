@@ -196,14 +196,15 @@ function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
     if (select & BOUNDARIES) > 0                                          # <3> 
         push!(template, 
             layer(SIR_flow, x=:t, y=:removals, Geom.step, 
-                  style(line_width=theme.boundary, default_color=theme.colour(Removal)
-                      )),
-            layer(SIR_flow, x=:t, y=:epidemic, Geom.step, 
-                  style(line_width=theme.boundary, 
-                      default_color=(isnothing(specified_color) ? 
-                                            theme.colour(Infection) : specified_color)
-                      ))
-                )
+                  style(line_width=theme.boundary, default_color=theme.colour(Removal))),
+            if isnothing(specified_color)
+                layer(SIR_flow, x=:t, y=:epidemic, Geom.step, 
+                    style(line_width=theme.boundary, default_color=theme.colour(Infection)))
+            else
+                layer(SIR_flow, x=:t, y=:epidemic, Geom.step, alpha=[0.01],
+                    style(line_width=theme.boundary, default_color=specified_color))
+            end,
+            )
     end
     
     if (select & REGIONS) > 0                                             # <4>         
