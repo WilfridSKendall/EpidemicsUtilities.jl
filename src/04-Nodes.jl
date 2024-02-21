@@ -200,7 +200,8 @@ function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
                       )),
             layer(SIR_flow, x=:t, y=:epidemic, Geom.step, 
                   style(line_width=theme.boundary, 
-                      default_color=(isnothing(specified) ? theme.colour(Infection) : specified)
+                      default_color=(isnothing(specified_color) ? 
+                                            theme.colour(Infection) : specified_color)
                       ))
                 )
     end
@@ -262,7 +263,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED, 
                 specified_color=nothing)
     draw_regions!(template, duration, ev, theme=theme, 
-                  select=select, specified=specified)                   # <1>
+                  select=select, specified_color=specified_color)       # <1>
 
     if ((select & NFZ) > 0) && (! isempty(ev.NFZ))                      # <2>
       nfz_df = table_trajectories3(ev)

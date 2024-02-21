@@ -5,9 +5,13 @@ MODULE         := $(notdir $(LOCATION))
 GIT            := /usr/bin/git
 JULIA          := $(HOME)/.local/bin/julia
 
-QUARTO         := /usr/local/bin/quarto
 CSL            := /home/wilfrid/lib/pandoc/CSL/ima-journal-of-applied-mathematics.csl
-QUARTO_OPTIONS :=  --from=markdown+tex_math_single_backslash --csl=$(CSL)
+
+QUARTO         := /usr/local/bin/quarto
+QUARTO_CACHE    ?=  --no-cache
+#                   --cache-refresh
+#                   --cache
+QUARTO_OPTIONS :=  --from=markdown+tex_math_single_backslash --csl=$(CSL) $(QUARTO_CACHE)
 
 
 DOCUMENT       := docs/build/$(MODULE)
