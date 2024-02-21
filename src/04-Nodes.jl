@@ -201,7 +201,7 @@ function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
                 layer(SIR_flow, x=:t, y=:epidemic, Geom.step, 
                     style(line_width=theme.boundary, default_color=theme.colour(Infection)))
             else
-                layer(SIR_flow, x=:t, y=:epidemic, Geom.step, alpha=[0.01],
+                layer(SIR_flow, x=:t, y=:epidemic, Geom.step, alpha=[theme.opacity],
                     style(line_width=theme.boundary, default_color=specified_color))
             end,
             )
