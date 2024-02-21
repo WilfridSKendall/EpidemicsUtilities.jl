@@ -24,7 +24,7 @@ load_theme(fpath) = YAML.load_file(fpath)
 # ```
 # This is
 # used as a default in what follows, _via_ a keyword argument
-# for given `EpidemicsUtilities` functions `fname`.
+# for given `EpidemicsUtilities` functions `fname` as in
 # ```julia
 # fname(..., theme=default_theme)
 # ```
@@ -58,9 +58,7 @@ default_theme = (
 
 # Loading a theme
 # ---------------
-# The function `create_theme`^[The function `create_theme` is **exported**.]
-# generates a plotting theme using the chosen `theme` information.
-# Useful function for returning all concrete subtypes
+# Here is a useful function for returning all concrete subtypes.
 function allconcretesubtypes(T)
     Tl = subtypes(T)
     if isempty(Tl)
@@ -69,29 +67,23 @@ function allconcretesubtypes(T)
         return ∪([allconcretesubtypes(S) for S ∈ Tl]...)
     end
 end
-
 const types_portmanteau = Union{allconcretesubtypes(AbstractIncident)...}
-    
+
+# The function `create_theme`^[The function `create_theme` is **exported**.]
+# generates a plotting theme using the chosen `theme` information.
 function create_theme(data)
-  ## Building length dictionaries
-  d_cy = Dict((a[1] => a[2]cy)   for a ∈ pairs(data["length_cy"]))
+  d_cy = Dict((a[1] => a[2]cy)   for a ∈ pairs(data["length_cy"]))                # <1>
   d_h  = Dict((a[1] => a[2]h)    for a ∈ pairs(data["length_h"]))
   d_in = Dict((a[1] => a[2]inch) for a ∈ pairs(data["length_inch"]))
   d_mm = Dict((a[1] => a[2]mm)   for a ∈ pairs(data["thickness_mm"]))
 
-  ## Building sundry other data dictionaries 
-  d_lf = data["length_factor"]
+  d_lf = data["length_factor"]                                                    # <2>
   d_op = data["opacity"]
 
-  ## Building colour dictionary
-  d_cx = Dict((a[1] => parse(Colorant, a[2])) for a ∈ pairs(data["colour_x"]))
-
-  ## Building colour dictionary
+  d_cx = Dict((a[1] => parse(Colorant, a[2])) for a ∈ pairs(data["colour_x"]))    # <3>
   d_c = data["colour"]
-
-  ## Constructing the `theme_colour` function -- but should this be done offline?!
   
-  function theme_colour(x::T) where {T<:types_portmanteau}
+  function theme_colour(x::T) where {T<:types_portmanteau}                        # <4>
     return parse(Colorant, d_c[string(T)]) end
 
   function theme_colour(x::T) where {T<:AbstractIncident}
@@ -109,8 +101,7 @@ function create_theme(data)
   return col
   end
 
-  ## Returning resulting `theme` structure as a `NamedTuple`.
-  return (
+  return (                                                                        # <5>
     ϵ        = data["jitter"]["ϵ"],
     figwidth = d_in["figwidth"],   figheight=d_in["figheight"],
     radius   = d_cy["radius"],     tic=d_cy["tic"]cy,        
@@ -132,22 +123,30 @@ function create_theme(data)
     smradius = d_lf["smradius"] * d_cy["radius"], 
   )
 end
+# 1. Building length dictionaries;
+# 2. Building sundry other data dictionaries; 
+# 3. Building a colour dictionary;
+# 4. Constructing the `theme_colour` function -- but should this be done offline?!
+# 5. The resulting `theme` structure is returned as a `NamedTuple`.
+#
+#
+
 
 # Defining axis labels
 # --------------------
-# Three kinds of labels! Note that
-# if population size exceeds `MAXPOP` then `circlabels2` runs out of characters!
+# There are three variants.
+# Note `circlabels2` runs out of characters if population size exceeds `MAXPOP`!
 
 MAXPOP = 20
 
-# 1: Label is positive integer within circle:
-function timelinelabels_circled(i; n=MAXPOP) 
+function timelinelabels_circled(i; n=MAXPOP)          # <1>
   (round(i) > 0 && i ≤ n) ? string(Char(codepoint('①') + round(Int, i) - 1)) : "" end 
-
-# 2: Label is positive integer within square brackets:
-function timelinelabels_bracketed(i; n=MAXPOP) 
+function timelinelabels_bracketed(i; n=MAXPOP)        # <2>
   (round(i) > 0 && i ≤ n) ? "[$(round(Int, i))]" : "" end 
-  
-# 3: Label is positive number unadorned:
-function timelinelabel_raw(i; n=MAXPOP) 
+function timelinelabel_raw(i; n=MAXPOP)               # <3>
   (0 < i ≤ n) ? string(trunc(Int, i)) : "" end
+# 1. Label is positive integer within circle:
+# 2. Label is positive integer within square brackets:
+# 3. Label is positive number unadorned:
+#
+#

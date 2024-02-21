@@ -2,6 +2,10 @@
 # =======================================================
 # Here are functions to draw nodes (optionally as activated or not) for 
 # vectors of incidents.
+
+# Drawing incidents
+# -----------------
+# ### `draw_incident` {.unnumbered}
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
 # draws plain undecorated incidents.
 #
@@ -36,6 +40,7 @@ function draw_incident(xl::Vector{T};
   end
 end
 
+# ### `draw_connect` {.unnumbered}
 # Incidents decorated with connections are drawn using
 # `draw_connect`.^[The function `draw_connect` is **exported** and is used 
 # in the exported function `draw_elements` defined in this section.]
@@ -52,6 +57,7 @@ function draw_connect(xl::Vector{T};
   end
 end
 
+# ### `draw_elements` {.unnumbered}
 # The next function 
 # `draw_elements`^[The function `draw_elements` is **exported**.]
 # draws the various incidents.^[Replacing the `draw_incident` lines by a single 
@@ -69,6 +75,7 @@ function draw_elements(innov::Innovation; inscribe=true, theme=default_theme)
   draw_elements(innov.chronology, inscribe=inscribe, theme=theme)
 end
 
+# ### `draw_activated_elements` {.unnumbered}
 # The function `draw_activated_elements`^[The function `draw_activated_elements` is **exported**.]
 # draws the activated elements together with connectors.
 # Note that the first argument `initial` is required in order to access the initial
@@ -97,6 +104,7 @@ function draw_activated_elements(initial, activated; theme=default_theme)
   )
 end
 
+# ### `draw_feasible_incident` {.unnumbered}
 # The function `draw_feasible_incident`^[The function `draw_feasible_incident` is **exported**.]
 # draws feasible incidents with connectors (which must be of type `Infection`) 
 # at a specified level of feasibility (`1`, `2`, or `3`).
@@ -148,6 +156,8 @@ function draw_feasible_incident(xl::Vector{T}, feasible;
     )
 end
 
+# Convenience functions
+# ---------------------
 # The following convenience functions return various Gadfly figures for an evolution. 
 # Flow calculations occur within the functions! 
 # The keyword argument `select` chooses different aspects, coded by `const`.
@@ -165,65 +175,96 @@ const ALL        = TOP  | BOUNDARIES | REGIONS | BASIC ;
 const MOST       = BOUNDARIES | REGIONS | BASIC ;
 const LFE        = LFET | LFER | LFEN ;
 
-# Draw regions relating to epidemic.
-##function draw_regions!(template::Plot, duration::Real, flow::DataFrame, ev::Evolution;
-##                theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
+# ### `AbstractEvolution` regions {.unnumbered}
+# The function `draw_regions!`^[The function `draw_regions!` is **exported**.]
+# draws regions relating to a given `AbstractEvolution`.
+# Note the keyword option `specified` allows us to specify a colour for the infection
+# trajectory, if `BOUNDARIES` is specified.
 function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
-                theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP)
-    SIR_flow = table_trajectories1(duration, ev.trajectory)
+                theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP, 
+                specified_color=nothing)
+    SIR_flow = table_trajectories1(duration, ev.trajectory)               # <1>
     xy_SIR_flow = table_trajectories2(SIR_flow, theme=theme)
-    if (select & TOP) > 0 
+    
+    if (select & TOP) > 0                                                 # <2>
         push!(template, 
             layer(SIR_flow, x=:t, y=:population, Geom.line,
               style(line_width=theme.trail, default_color=theme.scaffold)),
             )
     end
-    if (select & BOUNDARIES) > 0     
+    
+    if (select & BOUNDARIES) > 0                                          # <3> 
         push!(template, 
-            layer(SIR_flow, x=:t, y=:removals, Geom.step,
-                style(line_width=theme.boundary, default_color=theme.colour(Removal))),
-            layer(SIR_flow, x=:t, y=:epidemic, Geom.step,
-                style(line_width=theme.boundary, default_color=theme.colour(Infection))))
+            layer(SIR_flow, x=:t, y=:removals, Geom.step, 
+                  style(line_width=theme.boundary, default_color=theme.colour(Removal)
+                      )),
+            layer(SIR_flow, x=:t, y=:epidemic, Geom.step, 
+                  style(line_width=theme.boundary, 
+                      default_color=(isnothing(specified) ? theme.colour(Infection) : specified)
+                      ))
+                )
     end
-    if (select & REGIONS) > 0        
+    
+    if (select & REGIONS) > 0                                             # <4>         
         push!(template, 
             layer(xy_SIR_flow, x=:t, ymin=:empty, ymax=:removals, Geom.ribbon,
                 alpha=[2theme.opacity], style(default_color=theme.colour(Removal))),
             layer(xy_SIR_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
                 alpha=[theme.opacity], style(default_color=theme.colour(Infection))))
     end
+    
     return template
 end ;
+# 1. Construct relevant `DataFrame`s using `table_trajectories1` and `table_trajectories2`
+# 2. Draw a thick horizontal line to delineate population for `ev`;
+# 3. Draw removal and infection trajectories for `ev` as region boundaries;
+# 4. Draw removal and infection regions for `ev`.
+#
+#
 
-# Draw aspects of a given `Innovation`.
+# ### `AbstractEnvironment` aspects {.unnumbered}
+# The function `draw_innovation!` ^[The function `draw_innovation!` is **exported**.]
+# draws aspects of a given `Innovation` or other `AbstractEnvironment`.
 function draw_innovation!(template::Plot, iv::AbstractEnvironment;
                 theme::NamedTuple=theme, select=ELEMENTS)
     if (select & ELEMENTS == ELEMENTS)
         push!(template, Guide.annotation(compose(context(), 
-            draw_elements(iv.chronology, theme=theme))))
+            draw_elements(iv.chronology, theme=theme))))          # <1>
     else
-        if (select & INFECTIONS) > 0        
+        if (select & INFECTIONS) > 0                              # <2>        
             push!(template, Guide.annotation(compose(context(), 
                 draw_elements(iv.infections, theme=theme))))
         end
-        if (select & REMOVALS) > 0        
+        
+        if (select & REMOVALS) > 0                                # <3>         
             push!(template, Guide.annotation(compose(context(), 
                 draw_elements(iv.removals, theme=theme))))
         end
-        if (select & CREMOVALS) > 0        
+        
+        if (select & CREMOVALS) > 0                               # <4>         
             push!(template, Guide.annotation(compose(context(), 
                 draw_elements(iv.cremovals, theme=theme))))
         end
     end
     return template
 end ;
+# 1. Draw _all_ elements in the `chronology` field of `iv`;
+# 2. Only draw elements in the `infections` field of `iv`;
+# 3. Only draw elements in the `removals` field of `iv`;
+# 4. Only draw elements in the `cremovals` field of `iv`.
+#
+#
 
-# Draw `select`ed aspects of a given `AbstractEvolution`.
+# ### `AbstractEvolution` aspects {.unnumbered}
+# The function `draw_evolution!`^[The function `draw_evolution!` is **exported**.]
+# draws `select`ed aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
-                theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED)
-    draw_regions!(template, duration, ev, theme=theme, select=select)
+                theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED, 
+                specified_color=nothing)
+    draw_regions!(template, duration, ev, theme=theme, 
+                  select=select, specified=specified)                   # <1>
 
-    if ((select & NFZ) > 0) && (! isempty(ev.NFZ))
+    if ((select & NFZ) > 0) && (! isempty(ev.NFZ))                      # <2>
       nfz_df = table_trajectories3(ev)
       if ((select & REGIONS) > 0)
         push!(template,
@@ -247,8 +288,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
       end
     end
     
-    if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))
-        # Preliminary computations.
+    if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))            # <3>
         initial = ev.trajectory[1]
         LFE_trajectory = evolution(initial, ev.LFE, conditioned=true)[1]
         LFE_flow = table_trajectories1(duration, LFE_trajectory)
@@ -265,20 +305,33 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
               layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:hv), 
                 style(line_width=theme.broad, default_color=theme.lastfeasible3)),
               )
-            # Activated infections of the LFE history are drawn at end of function!
         end
     end
-    if (select & ELEMENTS) > 0   
+    
+    if (select & ELEMENTS) > 0                                          # <4>   
         draw_innovation!(template, ev, theme=theme, select=select & ELEMENTS)
     end
-    if (select & ACTIVATED) > 0      
+    
+    if (select & ACTIVATED) > 0                                         # <5>         
         push!(template, Guide.annotation(compose(context(), 
             draw_activated_elements(ev.initial, ev.history, theme=theme))))
     end
-    if ((select & LFEN) > 0) && (! isempty(ev.LFE)) 
+
+    if ((select & LFEN) > 0) && (! isempty(ev.LFE))                     # <6>     
         push!(template, Guide.annotation(compose(context(), 
-            draw_feasible_incident(Infection[z for z in ev.LFE if z isa Infection], 2, theme=theme))))
+            draw_feasible_incident(Infection[z for z ∈ ev.LFE if z isa Infection], 2, theme=theme))))
     end
 
     return template
 end ;
+# 1. Drawing epidemic and removal trajectories and regions is delegated to `draw_regions!` above.
+# Note the keyword option `specified` allows us to specify a colour for (eventually) the
+#  epidemic trajectory, if `BOUNDARIES` is specified.
+# 2. Draw aspects of the `NFZ`.
+# 3. Draw aspects of the `LFE`.
+# Note that activated infections of the LFE history are drawn at the _end_ of the function.
+# 4. Draw aspects of `Innovation`: various kinds of `AbstractIncident`s.
+# 5. Draw activated `AbstractIncident`s.
+# 6. As promised above, at the end of the function, draw activated `Infection`s from the `LFE`,
+#
+#

@@ -13,7 +13,7 @@
 # format:
 #   html:
 #     toc: true
-#     toc-depth: 2
+#     toc-depth: 1
 #     code-fold: true
 #     self-contained: true
 #   pdf:

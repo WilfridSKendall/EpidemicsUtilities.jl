@@ -1,17 +1,14 @@
-# Included script: Tabulation functions using `DataFrames` (`03-DataFrames.jl`)
-# =============================================================================
+# Included script: Tabulation with `DataFrames` (`03-DataFrames.jl`)
+# ==================================================================
 # The function `table_trajectories1`^[The function `table_trajectories1` is **exported**.]
-# derives and returns a DataFrame (column headings time `t`, `susceptibles`, `infectives`,
-# `removals`, and `empty` and `population`, given duration and trajectory
-# of an S-I-R epidemic.
+# derives and returns a DataFrame (columns time `t`, `susceptibles`, `infectives`,
+# `removals`, and `empty` and `population`, given $\SIR$ epidemic duration and trajectory.
 function table_trajectories1(duration, trajectory)
     t = [state.t for state ∈ trajectory]
     s = [state.s for state ∈ trajectory]
     i = [state.i for state ∈ trajectory]
     r = [state.r for state ∈ trajectory]
-    # Slight inefficiency in next step (as opposed to something like
-    # `n .= state.n`), but allows for time-varying population later.
-    n = [state.n for state ∈ trajectory]
+    n = [state.n for state ∈ trajectory]            # <1>
     
     push!(t, duration)
     push!(s, s[end])
@@ -25,7 +22,8 @@ function table_trajectories1(duration, trajectory)
    
     return df
 end
-    
+# 1. Slight inefficiency in next step (as opposed to using something like
+# `n .= state.n`), but allows for time-varying population later.
 
 # The function `table_trajectories2`^[The function `table_trajectories2` is **exported**.]
 # derives and returns a lag-augmented `DataFrame` (column headings time `t`, `susceptibles`, 
@@ -61,7 +59,9 @@ function table_trajectories3(cev::CEvolution)
     nfz_df[1:(end-1), :high_line] = (nfz_df[1:(end-1), :time_line] .+1)
     nfz_df[:, :low_NFZ] .= beginning
     nfz_df[2:end, :low_NFZ] = (nfz_df[1:(end-1), :NFZ])
-    # Surely the next bit can be done better?!
-    nfz_df[2:end, :low_NFZ] = [max(beginning, x) for x in nfz_df[2:end, :low_NFZ]]
+    nfz_df[2:end, :low_NFZ] = [max(beginning, x) for x ∈ nfz_df[2:end, :low_NFZ]] # <1>
     return nfz_df
 end
+# 1. Surely the next bit can be done better?!
+#
+#
