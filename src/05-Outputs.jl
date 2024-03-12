@@ -17,7 +17,7 @@ function depict(title::String, image::Any; animation::Bool=false)
   if (! isempty(title)) && ! animation
     draw(PNG("image/$title.png"), image)
     draw(PDF("image/$title.pdf"), image)
-  elseif (! isempty(title)) && ! animation
+  elseif (! isempty(title)) && animation
     draw(PNG("animation/$title.png"), image)
   end
   image
