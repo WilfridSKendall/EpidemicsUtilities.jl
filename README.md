@@ -36,5 +36,7 @@ const LFE        = LFET | LFER | LFEN ;
 ## TODO list
 
 - [ ] `24-02-2024` Check what functions are used, where they are used, and amend list in the section on principal functions.
+- [ ] `[13/03/24]` Add docstrings.
 - [ ] `24-02-2024` Determine possibilities for deprecation (use `@warn`) and set them up for possible removal.
 - [ ] `24-02-2024` Clean up `02-Theme.jl`, so that loaded themes need only to specify variations from a `default-theme.yml`. 
+- [ ] `[13/03/24]` Extend to generate a `GIF`.

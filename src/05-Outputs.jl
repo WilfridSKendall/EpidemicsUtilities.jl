@@ -7,16 +7,18 @@
 # and also creates corresponding `PNG` and `PDF` renderings in a sub-directory `image`
 # so long as `title` is not empty (NB the empty string _is_ empty!).
 """
-  depict(::String, ::Any)
+  depict(::String, ::Any; animation::Bool=false)
 
 This displays a figure produced using `Compose` or `Gadfly`,
 and also creates corresponding `PNG` and `PDF` renderings in a sub-directory `image`
 so long as the first argument is not empty (NB the empty string _is_ empty!).
 """
-function depict(title::String, image::Any)
-  if ! isempty(title)
+function depict(title::String, image::Any; animation::Bool=false)
+  if (! isempty(title)) && ! animation
     draw(PNG("image/$title.png"), image)
     draw(PDF("image/$title.pdf"), image)
+  elseif (! isempty(title)) && ! animation
+    draw(PNG("animation/$title.png"), image)
   end
   image
 end
