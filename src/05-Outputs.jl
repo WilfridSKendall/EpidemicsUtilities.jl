@@ -12,12 +12,12 @@
 This displays a figure produced using `Compose` or `Gadfly`,
 and also creates corresponding `PNG` and `PDF` renderings in a sub-directory `image`
 so long as the first argument is not empty (NB the empty string _is_ empty!).
+Here `image` is replaced by `animation` if `animation=true`.
 """
 function depict(title::String, image::Any; animation::Bool=false)
   if isempty(title)
     return image
-  elseif  animation
-    println("animation/$title.png")
+  elseif animation
     draw(PNG("animation/$title.png"), image)
     return image
   else
