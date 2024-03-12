@@ -14,13 +14,17 @@ and also creates corresponding `PNG` and `PDF` renderings in a sub-directory `im
 so long as the first argument is not empty (NB the empty string _is_ empty!).
 """
 function depict(title::String, image::Any; animation::Bool=false)
-  if (! isempty(title)) && ! animation
+  if isempty(title)
+    return image
+  elseif  animation
+    println("animation/$title.png")
+    draw(PNG("animation/$title.png"), image)
+    return image
+  else
     draw(PNG("image/$title.png"), image)
     draw(PDF("image/$title.pdf"), image)
-  elseif (! isempty(title)) && animation
-    draw(PNG("animation/$title.png"), image)
+    return image
   end
-  image
 end
 #
 # The further utility function
