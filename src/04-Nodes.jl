@@ -182,7 +182,7 @@ const LFE        = LFET | LFER | LFEN ;
 # trajectory, if `BOUNDARIES` is specified.
 function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
                 theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP, 
-                specified_color=nothing, specified_opacity=theme,opacity)
+                specified_color=nothing, specified_opacity=theme.opacity)
     SIR_flow = table_trajectories1(duration, ev.trajectory)               # <1>
     xy_SIR_flow = table_trajectories2(SIR_flow, theme=theme)
     
