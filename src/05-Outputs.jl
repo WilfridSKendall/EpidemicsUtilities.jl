@@ -41,17 +41,13 @@ This allows assembly of a figure based on a `deepcopy` of a template (`old_figur
 followed by insertion of a variable number of `Gadfly` constructs (which
 could include `Guide.annotation`s of `Compose` constructs!).
 """
-function new_figure(template, gadfly_list...; title="", coalesced=false)
+function new_figure(template, gadfly_list...; title="")
     figure = deepcopy(template)
     if ! isempty(gadfly_list)
       push!(figure, gadfly_list...)
     end
     if title !== ""
-      if coalesced
-        push!(figure, Guide.title(title, fill(colorant"red"))) # Need to use `theme`!
-      else
-        push!(figure, Guide.title(title))
-      end
+      push!(figure, Guide.title(title))
     end
     return figure
 end
