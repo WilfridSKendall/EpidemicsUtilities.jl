@@ -182,7 +182,7 @@ const LFE        = LFET | LFER | LFEN ;
 # trajectory, if `BOUNDARIES` is specified.
 function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
                 theme::NamedTuple=theme, select=BOUNDARIES | REGIONS | TOP, 
-                specified_color=nothing)
+                specified_color=nothing, specified_opacity=theme,opacity)
     SIR_flow = table_trajectories1(duration, ev.trajectory)               # <1>
     xy_SIR_flow = table_trajectories2(SIR_flow, theme=theme)
     
@@ -201,7 +201,7 @@ function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
                 layer(SIR_flow, x=:t, y=:epidemic, Geom.step, 
                     style(line_width=theme.boundary, default_color=theme.colour(Infection)))
             else
-                layer(SIR_flow, x=:t, y=:epidemic, Geom.step, alpha=[theme.opacity],
+                layer(SIR_flow, x=:t, y=:epidemic, Geom.step, alpha=[specified_opacity],
                     style(line_width=theme.boundary, default_color=specified_color))
             end,
             )
@@ -210,9 +210,9 @@ function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
     if (select & REGIONS) > 0                                             # <4>         
         push!(template, 
             layer(xy_SIR_flow, x=:t, ymin=:empty, ymax=:removals, Geom.ribbon,
-                alpha=[2theme.opacity], style(default_color=theme.colour(Removal))),
+                alpha=[2specified_opacity], style(default_color=theme.colour(Removal))),
             layer(xy_SIR_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
-                alpha=[theme.opacity], style(default_color=theme.colour(Infection))))
+                alpha=[specified_opacity], style(default_color=theme.colour(Infection))))
     end
     
     return template
