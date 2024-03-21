@@ -262,9 +262,10 @@ end ;
 # draws `select`ed aspects of a given `AbstractEvolution`.
 function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 theme::NamedTuple=theme, select=ELEMENTS | ACTIVATED, 
-                specified_color=nothing)
+                specified_color=nothing, specified_opacity=theme.opacity)
     draw_regions!(template, duration, ev, theme=theme, 
-                  select=select, specified_color=specified_color)       # <1>
+                  select=select, specified_color=specified_color,
+                  specified_opacity=specified_opacity)       # <1>
 
     if ((select & NFZ) > 0) && (! isempty(ev.NFZ))                      # <2>
       nfz_df = table_trajectories3(ev)
@@ -327,7 +328,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
     return template
 end ;
 # 1. Drawing epidemic and removal trajectories and regions is delegated to `draw_regions!` above.
-# Note the keyword option `specified` allows us to specify a colour for (eventually) the
+# Note the keyword option `specified` allows us to specify a colour and opacity for (eventually) the
 #  epidemic trajectory, if `BOUNDARIES` is specified.
 # 2. Draw aspects of the `NFZ`.
 # 3. Draw aspects of the `LFE`.
