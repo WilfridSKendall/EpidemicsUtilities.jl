@@ -26,6 +26,10 @@ colour_x:
     lastfeasible3:             "deeppink3"
     legend:                    "black"
     background:                "bisque"
+    min:                       "red"
+    max:                       "blue"
+    joined:                    "deeppink"
+    coalesce:                  "black"
     default:                   "white"
 
 length_cy:
