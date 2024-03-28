@@ -64,4 +64,42 @@ function table_trajectories3(cev::CEvolution)
 end
 # 1. Surely the next bit can be done better?!
 #
+
+# The function `prepare_screen` constructs a basic figure with labelled axes.
+# guidelines, and basic trajectory of removals.
+function prepare_screen(size, duration, evmin0;
+                         major_label_font="CMU Serif", minor_label_font="CMU Serif", # <1>
+                         theme=default_theme)
+    uflow = table_trajectories1(duration, evmin0.trajectory) 
+    axes_plot = plot(uflow, 
+        yintercept=0:5:size,
+        Geom.hline(style=:dash, size=0.1mm, color=theme.scaffold),
+        Coord.cartesian(xmin=0-0.1, xmax=duration, ymin=0, ymax=size + 0.25),
+        Guide.yticks(ticks=0:10:size),
+        Guide.xlabel("Process time", orientation=:horizontal),
+        style(default_color=theme.background),
+        Theme(
+            panel_fill=theme.blank,
+            default_color=theme.default,
+            background_color=theme.background,
+            major_label_font=major_label_font, minor_label_font=minor_label_font,
+            minor_label_color=theme.legend, major_label_color=theme.legend,
+            major_label_font_size=6pt,     minor_label_font_size=4pt,                # <2>
+            plot_padding = [4pt, 2pt, 4pt, 4pt],
+            grid_line_width=0mm,
+    )) 
+
+    push!(axes_plot, layer(uflow, x=:t, y=:empty, Geom.line,
+        style(line_width=theme.trail, default_color=theme.scaffold))) 
+
+    lines_plot = new_figure(axes_plot,
+        Scale.y_continuous(labels=(initial.n ≤ MAXPOP ?
+            i -> timelinelabels_circled(i; n=initial.n) :
+            i -> timelinelabels_bracketed(i; n=initial.n))),
+        Guide.ylabel("Time lines")) ;
+
+    return lines_plot
+end
+# 1. Push the font decisions to chosen `theme`?
+# 2. Determine `...font_size`, `plot_padding`, `grid_line_width` in chosen `theme`?
 #
