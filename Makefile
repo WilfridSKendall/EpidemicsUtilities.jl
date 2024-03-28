@@ -11,7 +11,7 @@ QUARTO         := /usr/local/bin/quarto
 QUARTO_CACHE    ?=  --no-cache
 #                   --cache-refresh
 #                   --cache
-QUARTO_OPTIONS :=  --from=markdown+tex_math_single_backslash --csl=$(CSL) $(QUARTO_CACHE)
+QUARTO_OPTIONS :=  --csl=$(CSL) $(QUARTO_CACHE)
 
 
 DOCUMENT       := docs/build/$(MODULE)

@@ -67,7 +67,7 @@ end
 
 # The function `prepare_screen` constructs a basic figure with labelled axes.
 # guidelines, and basic trajectory of removals.
-function prepare_screen(size, duration, evmin0;
+function prepare_screen(initial, evmin0, size, duration;
                          major_label_font="CMU Serif", minor_label_font="CMU Serif", # <1>
                          theme=default_theme)
     uflow = table_trajectories1(duration, evmin0.trajectory) 
@@ -80,8 +80,8 @@ function prepare_screen(size, duration, evmin0;
         style(default_color=theme.background),
         Theme(
             panel_fill=theme.blank,
-            default_color=theme.default,
             background_color=theme.background,
+            default_color=theme.default,
             major_label_font=major_label_font, minor_label_font=minor_label_font,
             minor_label_color=theme.legend, major_label_color=theme.legend,
             major_label_font_size=6pt,     minor_label_font_size=4pt,                # <2>
@@ -101,5 +101,4 @@ function prepare_screen(size, duration, evmin0;
     return lines_plot
 end
 # 1. Push the font decisions to chosen `theme`?
-# 2. Determine `...font_size`, `plot_padding`, `grid_line_width` in chosen `theme`?
-#
+# 2. Determine `*font_size`, `plot_padding`, `grid_line_width` in chosen `theme`?

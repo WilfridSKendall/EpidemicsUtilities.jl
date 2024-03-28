@@ -7,6 +7,8 @@
 # 
 # ---
 # papersize:  a4
+#
+# from: markdown+tex_math_single_backslash
 # 
 # execute:
 #   eval: false
@@ -77,7 +79,7 @@ export timelinelabels_circled, timelinelabels_bracketed, timelinelabel_raw
 #
 # ### `DataFrames` Functions
 # Sub-script `03-DataFrames.jl` defines functions producing data frames to be used in `Gadfly` plot package.
-export table_trajectories1, table_trajectories2
+export table_trajectories1, table_trajectories2, prepare_screen
 #
 # ### Drawing nodes
 # Sub-script `04-Nodes.jl` defines three functions to draw sets of incidents.
@@ -102,7 +104,7 @@ export depict, new_figure
 using Colors, Compose, Measures
 import Cairo, Fontconfig
 import InteractiveUtils: subtypes
-import Gadfly: Geom, Guide, Plot, layer, style
+import Gadfly: Coord, Geom, Guide, Plot, Scale, Theme, plot, layer, style
 
 #
 # (b) The ability to use `DataFrame` constructions
