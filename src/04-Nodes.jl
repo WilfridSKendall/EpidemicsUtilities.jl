@@ -214,7 +214,7 @@ function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
                       style(line_width=theme.boundary, default_color=specified_color))
             end,
             )
-        println("Order: $order")
+        print(" [$order] ")
     end
     
     return template
@@ -267,7 +267,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
                 specified_color=nothing, specified_opacity=theme.opacity, order=0)
     draw_regions!(template, duration, ev, theme=theme, 
                   select=select, specified_color=specified_color,
-                  specified_opacity=specified_opacity, order=0)         # <1>
+                  specified_opacity=specified_opacity, order=order)     # <1>
 
     if ((select & NFZ) > 0) && (! isempty(ev.NFZ))                      # <2>
       nfz_df = table_trajectories3(ev)
