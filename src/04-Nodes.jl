@@ -214,7 +214,6 @@ function draw_regions!(template::Plot, duration::Real, ev::AbstractEvolution;
                       style(line_width=theme.boundary, default_color=specified_color))
             end,
             )
-        print(" [$order] ")
     end
     
     return template
