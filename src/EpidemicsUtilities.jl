@@ -3,9 +3,7 @@
 # author: "Wilfrid Kendall"
 # date: today
 # date-format: D MMMM YYYY
-# ---
 # 
-# ---
 # papersize:  a4
 #
 # from: markdown+tex_math_single_backslash
@@ -25,7 +23,7 @@
 #     monofont: "JuliaMono"
 #     monofontoptions:
 #        - Scale=0.7
-# jupyter:    julia-1.9
+# jupyter:    julia-1.11
 # ---
 #
 # \newcommand{\SIR}{\operatorname{S-I-R}}

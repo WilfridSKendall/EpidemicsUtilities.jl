@@ -3,7 +3,7 @@ LOCATION       := $(shell pwd)
 MODULE         := $(notdir $(LOCATION))
 
 GIT            := /usr/bin/git
-JULIA          := $(HOME)/.local/bin/julia
+JULIA          := $(HOME)/.juliaup/bin/julia
 
 CSL            := /home/wilfrid/lib/pandoc/CSL/ima-journal-of-applied-mathematics.csl
 
@@ -32,7 +32,7 @@ pdf-documentation: $(DOCUMENT).pdf
 # The following translations is not yet perfect!
 # It doesn't include directives "#|" in codeblocks.
 $(DOCUMENT).qmd: docs/build/INTERMEDIATE.jl	
-	$(HOME)/.local/bin/julia -e 'using Literate;         \
+	$(JULIA) -e 'using Literate;         \
 	Literate.markdown("$<", name="$@", documenter=false, flavor = Literate.DocumenterFlavor(), codefence="```{julia}" => "```")'
 	mv $@.md $@
 
@@ -46,7 +46,7 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 # ====================
 # Running tests
 .test.stamp: $(wildcard src/*.jl) $(wildcard test/*.jl)
-	julia test/00-runtests.jl
+	$(JULIA) test/00-runtests.jl
 	@touch .test.stamp
 
 # ====================
@@ -71,6 +71,7 @@ $(MODULE)-test.pdf: $(MODULE)-test.qmd
 	$(QUARTO) render $< --to pdf
 	rm $<
 $(MODULE)-test.qmd: $(test_files)
+	@echo "************* ISSUES? ***************"
 	@echo $(test_files)
 	@echo "# Unit tests for module \`$(MODULE)\`"                 > $(MODULE)-test.qmd
 	@echo "\`\`\`{julia}"                                        >> $(MODULE)-test.qmd
@@ -115,6 +116,6 @@ default_theme.pdf: data/default_theme.yml
 # Clean-up
 clean:
 	-rm -f $(wildcard *.ipynb)
-	$(HOME)/.local/bin/julia -e 'import $(MODULE)'
-	$(HOME)/.local/bin/julia -e 'Base.compilecache(Base.identify_package("$(MODULE)"))'
+	$(JULIA) -e 'import $(MODULE)'
+	$(JULIA) -e 'Base.compilecache(Base.identify_package("$(MODULE)"))'
 

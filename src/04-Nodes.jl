@@ -323,7 +323,8 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
 
     if ((select & LFEN) > 0) && (! isempty(ev.LFE))                     # <6>     
         push!(template, Guide.annotation(compose(context(), 
-            draw_feasible_incident(Infection[z for z ∈ ev.LFE if z isa Infection], 2, theme=theme))))
+            draw_feasible_incident(AbstractInfection[z for z ∈ ev.LFE if z isa AbstractInfection], 
+                                     2, theme=theme))))
     end
 
     return template
