@@ -39,9 +39,12 @@ function table_trajectories2(df; theme=default_theme, forward=true)
         df2.t = circshift(df2.t, (+1)) .+ theme.ϵ
         df2.t[1] = df2.t[2]
     end
-    return sort!(append!(df1, df2))
+    return sort!(append!(df1, df2),             # <1>
+        [:t, :removals, :susceptibles],
+        rev=[false, false, true])
 end ;
-
+# 1. Take care to ensure `:removals` increase and `:susceptibles`
+# decrease with time `:t`!
 
 # The function `table_trajectories3`
 # derives and returns a `DataFrame` (column headings time `time_line`, `NFZ1`, 
