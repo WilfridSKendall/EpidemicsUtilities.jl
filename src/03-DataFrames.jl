@@ -39,10 +39,7 @@ function table_trajectories2(df; theme=default_theme, forward=true)
         df2.t = circshift(df2.t, (+1)) .+ theme.ϵ
         df2.t[1] = df2.t[2]
     end
-    return sort!(append!(df1, df2),             # <1>
-        [:t, :epidemic, :removals],)
-    #    [:t, :susceptibles, :removals],
-    #    rev=[false, true, false])
+    return sort!(append!(df1, df2), [:t, :epidemic, :removals]) # <1>
 end ;
 # 1. Sort `:epidemic` within `:removals` within `:t`!
 

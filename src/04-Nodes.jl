@@ -303,6 +303,8 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
               layer(xy_LFE_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
                 style(default_color=theme.lastfeasible2)),
               )
+            # NOTE: `ribbon` appears to work only with the first
+            # instance of a set of tuples with the same `:t` value!
         end
         if ((select & LFET) > 0) 
             push!(template, 
