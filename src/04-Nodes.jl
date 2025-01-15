@@ -291,8 +291,12 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
           )
       end
     end
+# 1. Drawing epidemic and removal trajectories and regions is delegated to `draw_regions!` above.
+# Note the keyword option `specified` allows us to specify a colour and opacity for (eventually) the
+#  epidemic trajectory, if `BOUNDARIES` is specified.
+# 2. Draw aspects of the `NFZ`.
     
-    if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))            # <3>
+    if ((select & (LFER | LFET)) > 0) && (! isempty(ev.LFE))            # <3>   
         initial = ev.trajectory[1]
         LFE_trajectory = evolution(initial, ev.LFE, conditioned=true)[1]
         LFE_flow = table_trajectories1(duration, LFE_trajectory)
@@ -313,6 +317,8 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
               )
         end
     end
+# 3. Draw aspects of the `LFE`.
+# Note that activated infections of the LFE history are drawn at the _end_ of the function.
     
     if (select & ELEMENTS) > 0                                          # <4>   
         draw_innovation!(template, ev, theme=theme, select=select & ELEMENTS)
@@ -331,12 +337,6 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
 
     return template
 end ;
-# 1. Drawing epidemic and removal trajectories and regions is delegated to `draw_regions!` above.
-# Note the keyword option `specified` allows us to specify a colour and opacity for (eventually) the
-#  epidemic trajectory, if `BOUNDARIES` is specified.
-# 2. Draw aspects of the `NFZ`.
-# 3. Draw aspects of the `LFE`.
-# Note that activated infections of the LFE history are drawn at the _end_ of the function.
 # 4. Draw aspects of `Innovation`: various kinds of `AbstractIncident`s.
 # 5. Draw activated `AbstractIncident`s.
 # 6. As promised above, at the end of the function, draw activated `Infection`s from the `LFE`,
