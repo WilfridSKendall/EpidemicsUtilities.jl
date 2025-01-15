@@ -40,12 +40,11 @@ function table_trajectories2(df; theme=default_theme, forward=true)
         df2.t[1] = df2.t[2]
     end
     return sort!(append!(df1, df2),             # <1>
-        [:t, :susceptibles, :removals],
-        rev=[false, true, false])
+        [:t, :epidemic, :removals],)
+    #    [:t, :susceptibles, :removals],
+    #    rev=[false, true, false])
 end ;
-# 1. Take care to ensure `:removals` increase and `:susceptibles`
-# decrease with time `:t`! It also may be important to sort
-# `:susceptibles` within `:removals`, rather than the other way round!
+# 1. Sort `:epidemic` within `:removals` within `:t`!
 
 # The function `table_trajectories3`
 # derives and returns a `DataFrame` (column headings time `time_line`, `NFZ1`, 
