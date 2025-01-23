@@ -13,14 +13,18 @@ EpidemicsCFTP = "e9e582aa-fa14-4cd8-84f3-d59ae741ce27"
 Fontconfig = "186bb1d3-e1f7-5a2c-a377-96d770f13627"
 Format = "1fa38f19-a742-5d3f-a2b9-30dd87b9d5f8"
 Gadfly = "c91e804a-d5a3-530f-b6f0-dfbca275c004"
+Impute = "f7bf1975-0170-51b9-8c5f-a992d46b9575"
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
 Measures = "442fdcdd-2543-5da2-b0f3-8c86c306513e"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+ShiftedArrays = "1277b4bf-5013-50f5-be3d-901d8477a67a"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 
 [compat]
+Impute = "0.6.12"
+ShiftedArrays = "2.0.0"
 julia = "1"
 
 [extras]

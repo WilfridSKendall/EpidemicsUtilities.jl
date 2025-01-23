@@ -102,3 +102,38 @@ function prepare_screen(initial, evmin0;
 end
 # 1. Push the font decisions to chosen `theme`?
 # 2. Determine `*font_size`, `plot_padding`, `grid_line_width` in chosen `theme`?
+
+# The function `table_trajectories4` c0mputes and returns
+# a dataframe of the collection of jumps.
+# See [Github documentation of `Impute.jl`](https://invenia.github.io/Impute.jl/latest/api/imputation/#Impute.locf)
+function table_trajectories4(evmin, evmax, duration)
+# Dataframe holding `evmin` infection points (not including start) as (roughly) `(:t, :xmin == i+r)`
+    start_min  = evmin.initial.i + evmin.initial.r
+    infect_min = [z for z in evmin.history if z isa AbstractInfection]
+    df_min  = DataFrame(t = [z.t for z in infect_min ], xmin = start_min .+ (1:length(infect_min)))
+    
+# Dataframe holding `evmax` infection points (not including start) as (roughly) `(:t, :xmax == i+r)`
+    start_max  = evmax.initial.i + evmax.initial.r
+    infect_max = [z for z in evmax.history if z isa AbstractInfection]
+    df_max  = DataFrame(t = [z.t for z in infect_max ], xmax = start_max .+ (1:length(infect_max)))
+    
+# Dataframe holding common vertical jumps from `(:t, :x0)` to `(:t, :x1)`
+    ysegment = filter(row -> row.xmin==row.xmax, innerjoin(df_min, df_max, on = :t))
+    select!(ysegment, :t => :t0, :xmin => (x -> x .- 1) => :x0, :t => :t1, :xmin => :x1)
+    
+# Now collect together `df_min` and `df_max` indexed per `t`, 
+# and vertically fill to deal with missing values.
+    xsegment = sort(outerjoin(df_min, df_max, on = :t), :t)
+    pushfirst!(xsegment, (0, start_min, start_max)) 
+    Impute.locf!(xsegment)
+    
+# Re-cast into form of possible _starts_ of horizontal jumps, 
+# adding the time from the row below and dropping the row(s) with missing values.
+    xsegment = dropmissing(select(xsegment, :t => :t0, :xmin => :x0, 
+                                            :t => ShiftedArrays.lead => :t1, :xmax => :x1))
+# Keep only those instances where `x0 == x1`.
+    filter!(row -> row.x0 == row.x1, xsegment)
+    
+# Return the vertical concatenation of these as the collection of jumps.
+    return vcat(xsegment, ysegment)
+end

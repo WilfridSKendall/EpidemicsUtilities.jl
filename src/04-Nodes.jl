@@ -12,6 +12,7 @@
 # ::: {.callout-warning}
 # Seek better code!
 # :::
+#
 function draw_incident(xl::Vector{T}; 
                        inscribe=true, activated=false, theme=default_theme) where {T<:AbstractIncident}
   if ! isempty(xl)

@@ -27,6 +27,7 @@
 # ---
 #
 # \newcommand{\SIR}{\operatorname{S-I-R}}
+#
 # ::: {.callout-note}
 # # This documentation was produced using the following versions:
 # ```{julia}
@@ -103,7 +104,8 @@ using Colors, Compose, Measures
 import Cairo, Fontconfig
 import InteractiveUtils: subtypes
 import Gadfly: Coord, Geom, Guide, Plot, Scale, Theme, plot, layer, style
-
+# The following two packages are used in `03-DataFrames.jl` by `table_trajectories4`.
+import Impute, ShiftedArrays
 #
 # (b) The ability to use `DataFrame` constructions
 using DataFrames
