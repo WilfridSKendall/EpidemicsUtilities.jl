@@ -101,9 +101,9 @@ function prepare_screen(initial, evmin0;
     return lines_plot
 end
 # 1. Push the font decisions to chosen `theme`?
-# 2. Determine `*font_size`, `plot_padding`, `grid_line_width` in chosen `theme`?
+# 2. Determine `font_size`, `plot_padding`, `grid_line_width` in chosen `theme`?
 
-# The function `table_trajectories4` c0mputes and returns
+# The function `table_trajectories4` computes and returns
 # a dataframe of the collection of jumps.
 # See [Github documentation of `Impute.jl`](https://invenia.github.io/Impute.jl/latest/api/imputation/#Impute.locf)
 function table_trajectories4(evmin, evmax, duration)
