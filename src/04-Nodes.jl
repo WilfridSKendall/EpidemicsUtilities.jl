@@ -85,13 +85,11 @@ function draw_activated_elements(initial, activated; theme=default_theme)
   removals = [inc for inc ∈ activated if inc isa AbstractRemoval]
   enumerated_removals = collect(enumerate(removals))
   return (context(),
-    draw_incident(activated, activated=true, theme=theme),
-    draw_connect(activated, activated=true, theme=theme),
-    (context(), # Could this be cleaned up?
+    (context(), # Could this be cleaned up? 
       (context(),          # Connecting removal nodes
         circle([(inc.t)cx for (k, inc) ∈ enumerated_removals],
           [(k + initial.r)cy for (k, inc) ∈ enumerated_removals],
-          [theme.smradius]), stroke(theme.colour(CRemoval)),
+          [theme.smradius]), #stroke(theme.colour(CRemoval)),
         linewidth(theme.activated), fill(theme.colour(CRemoval)), fillopacity(0.5)
       ),
       # (and connect removal lines when they are not of negative length)
@@ -101,7 +99,9 @@ function draw_activated_elements(initial, activated; theme=default_theme)
               for (k, inc) ∈ enumerated_removals if inc.target > k + initial.r]),
         stroke(theme.colour(Removal)), linewidth(theme.trail), strokedash([1mm, 1mm])
       ),
-    )
+      draw_incident(activated, activated=true, theme=theme), # Moved to end so background appears
+      draw_connect(activated, activated=true, theme=theme),
+    ),
   )
 end
 
@@ -321,15 +321,15 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
 # 3. Draw aspects of the `LFE`.
 # Note that activated infections of the LFE history are drawn at the _end_ of the function.
     
-    if (select & ELEMENTS) > 0                                          # <4>   
-        draw_innovation!(template, ev, theme=theme, select=select & ELEMENTS)
-    end
-    
-    if (select & ACTIVATED) > 0                                         # <5>         
+    if (select & ACTIVATED) > 0                                         # <4>         
         push!(template, Guide.annotation(compose(context(), 
             draw_activated_elements(ev.initial, ev.history, theme=theme))))
     end
 
+    if (select & ELEMENTS) > 0                                          # <5>   
+        draw_innovation!(template, ev, theme=theme, select=select & ELEMENTS)
+    end
+    
     if ((select & LFEN) > 0) && (! isempty(ev.LFE))                     # <6>     
         push!(template, Guide.annotation(compose(context(), 
             draw_feasible_incident(AbstractInfection[z for z ∈ ev.LFE if z isa AbstractInfection], 
@@ -338,8 +338,8 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
 
     return template
 end ;
-# 4. Draw aspects of `Innovation`: various kinds of `AbstractIncident`s.
-# 5. Draw activated `AbstractIncident`s.
+# 4. Draw activated `AbstractIncident`s. This happens first to ensure their backgrounds are visible in the final plot.
+# 5. Draw aspects of `Innovation`: various kinds of `AbstractIncident`s.
 # 6. As promised above, at the end of the function, draw activated `Infection`s from the `LFE`,
 #
 #
