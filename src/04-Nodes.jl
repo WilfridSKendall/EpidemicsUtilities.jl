@@ -114,7 +114,7 @@ end
 function draw_feasible_incident(xl::Vector{T}, feasible::Integer; 
                                 inscribe=true, theme=default_theme) where T<:AbstractInfection
   lw = [theme.dormant, theme.activated, theme.boundary][feasible]
-  col = [theme.lastfeasible1, theme.lastfeasible2, theme.lastfeasible3][feasible]
+  col = [theme.laziestfeasible1, theme.laziestfeasible2, theme.laziestfeasible3][feasible]
   return (context(),
     if inscribe
       (context(),
@@ -306,7 +306,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
             xy_LFE_flow = table_trajectories2(LFE_flow, theme=theme)
             push!(template, 
               layer(xy_LFE_flow, x=:t, ymin=:removals, ymax=:epidemic, Geom.ribbon,
-                style(default_color=theme.lastfeasible2)),
+                style(default_color=theme.laziestfeasible2)),
               )
             # NOTE: `ribbon` appears to work only with the first
             # instance of a set of tuples with the same `:t` value!
@@ -314,7 +314,7 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
         if ((select & LFET) > 0) 
             push!(template, 
               layer(LFE_flow, x=:t, y=:epidemic, Geom.step(direction=:hv), 
-                style(line_width=theme.broad, default_color=theme.lastfeasible3)),
+                style(line_width=theme.broad, default_color=theme.laziestfeasible3)),
               )
         end
     end

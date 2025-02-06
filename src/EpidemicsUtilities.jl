@@ -36,11 +36,11 @@
 # #| cache: false
 # import Markdown, EpidemicsCFTP, EpidemicsUtilities
 # Markdown.parse("""
-# | _Software_                  | _Version_                       | _Branch_                       | _Date of last commit_       |
-# |:----------------------------|:--------------------------------|:-------------------------------|:----------------------------|
-# | Running under `julia`       | `$VERSION`                      | ---                            |                             |
-# | Module `EpidemicsUtilities` | `$(EpidemicsUtilities.version)` | `$(EpidemicsUtilities.branch)` | $(EpidemicsUtilities.date)  |
-# | Module `EpidemicsCFTP`      | `$(EpidemicsCFTP.version)`      | `$(EpidemicsCFTP.branch)`      | $(EpidemicsCFTP.date)       |
+# |_Software_           |_Version_                       | _Branch_                    | _Last commit_       |
+# |:---------------------|:------------------------------|:-----------------------------|:---------------------------|
+# |`julia` version     |`$VERSION`                     | ---                          |                             |
+# |`EpidemicsUtilities`|`$(EpidemicsUtilities.version)`|`$(EpidemicsUtilities.branch)`| $(EpidemicsUtilities.date)|
+# |`EpidemicsCFTP`     |`$(EpidemicsCFTP.version)`     |`$(EpidemicsCFTP.branch)`     | $(EpidemicsCFTP.date)   |
 # """)
 # ```
 # :::
