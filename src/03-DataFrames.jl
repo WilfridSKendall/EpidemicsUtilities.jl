@@ -73,7 +73,7 @@ function prepare_screen(initial, evmin0;
                         theme=default_theme)
     uflow = table_trajectories1(evmin0.duration, evmin0.trajectory) 
     axes_plot = plot(uflow, 
-        yintercept=0:5:evmin0.size,
+        yintercept=0:ytic_gap:evmin0.size,
         Geom.hline(style=:dash, size=0.1mm, color=theme.scaffold),
         Coord.cartesian(xmin=0-0.1, xmax=evmin0.duration, ymin=0, ymax=evmin0.size + 0.25),
         Guide.yticks(ticks=0:ytic_gap:evmin0.size),
