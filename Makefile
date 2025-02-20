@@ -20,6 +20,8 @@ SECTIONS       := $(wildcard src/0*.jl)
 
 test_files :=$(wildcard test/*.jl)
 
+.PHONY: main test pdf-documentation install installEpidemicsCFTP commit listings clean
+
 # ====================
 # Principal targets
 main: pdf-documentation
@@ -50,14 +52,13 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 	@touch .test.stamp
 
 # ====================
-# Installation
-install:
-	@make -C ../EpidemicsCFTP install
-	@echo ----------
-	@touch src/$(MODULE).jl
+# Installation 
+install: installEpidemicsCFTP $(MODULE).compiled ; @touch $(MODULE).compiled
+$(MODULE).compiled: $(wildcard *.jl)
 	@$(JULIA) -e 'Base.compilecache(Base.identify_package("$(MODULE)")) ; \
 		import $(MODULE); println($(MODULE).summary)'
-
+installEpidemicsCFTP : ; @make -C ../EpidemicsCFTP install
+# --------------------
 commit:
 	$(GIT) commit -a
 	$(GIT) push
