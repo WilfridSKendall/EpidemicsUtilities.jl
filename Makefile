@@ -53,8 +53,8 @@ docs/build/INTERMEDIATE.jl: $(SOURCE) $(SECTIONS)
 
 # ====================
 # Installation 
-install: installEpidemicsCFTP $(MODULE).compiled ; @touch $(MODULE).compiled
-$(MODULE).compiled: $(wildcard *.jl)
+install: installEpidemicsCFTP .$(MODULE).compiled ; @touch .$(MODULE).compiled
+.$(MODULE).compiled: $(wildcard *.jl)
 	@$(JULIA) -e 'Base.compilecache(Base.identify_package("$(MODULE)")) ; \
 		import $(MODULE); println($(MODULE).summary)'
 installEpidemicsCFTP : ; @make -C ../EpidemicsCFTP install

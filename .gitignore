@@ -5,6 +5,7 @@ ARCHIVE/
 
 /VERSION.txt
 
-.*.stamp
+.*.compiled
 *.kate-swp
 *.pdf
+.*.stamp
