@@ -1,7 +1,7 @@
 # Using `github`
 Change the remote URL to use SSH:
 ```bash
-git remote set-url origin git@github.com:WilfridSKendall/EpidemicsUtilities.git
+git remote set-url origin git@github.com:WilfridSKendall/EpidemicsUtilities.jl.git
 ```
 and then try 
 ```bash
