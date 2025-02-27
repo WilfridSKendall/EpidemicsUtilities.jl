@@ -19,19 +19,22 @@ Outputs:
 * Figures are placed in the subdirectory with name `figdir` (defaulting to `image`).
 """
 function depict(title::String, image::Any; animation::Bool=false, 
-                animdir="animation", figdir="image", type="png")
-  if type == "png"
+                animdir="animation", figdir="image", imagetype="png")
+  if imagetype == "png"
     IMAGE = PNG
-  elseif type == "svg"
+  elseif imagetype == "svg"
     IMAGE = SVG
   end
   if isempty(title)
     return image
   elseif animation
-    draw(IMAGE("$animdir/$title.png"), image)
+    draw(IMAGE("$animdir/$title.$imagetype"), image)
+    return image
+  elseif imagetype=="pdfonly"
+    draw(PDF("$figdir/$title.pdf"), image)
     return image
   else
-    draw(IMAGE("$figdir/$title.png"), image)
+    draw(IMAGE("$figdir/$title.$imagetype"), image)
     draw(PDF("$figdir/$title.pdf"), image)
     return image
   end
