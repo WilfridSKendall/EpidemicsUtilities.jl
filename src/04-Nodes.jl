@@ -332,13 +332,12 @@ function draw_evolution!(template::Plot, ev::AbstractEvolution, duration::Real;
     
     if ((select & LFEN) > 0) && (! isempty(ev.LFE))                     # <6>    
         infection_list = AbstractInfection[z for z ∈ ev.LFE if z isa AbstractInfection]
-        # Do nothing if `infection+list` is empty.
-        if isempty(infection_list)
-          return nothing
-        end
-        # Otherwise draw nodes in `infection_list`.
-        push!(template, Guide.annotation(compose(context(), 
+        if !isempty(infection_list)
+          # Do nothing if `infection_list` is empty,
+          # otherwise draw nodes in `infection_list`.
+          push!(template, Guide.annotation(compose(context(), 
             draw_feasible_incident(infection_list, 2, theme=theme))))
+        end
     end
 
     return template
