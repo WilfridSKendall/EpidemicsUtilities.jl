@@ -9,10 +9,10 @@
 """
   depict(::String, ::Any; animation::Bool=false)
 
-This displays a figure produced using `Compose` or `Gadfly`,
-and also creates corresponding `PNG` and `PDF` renderings
+This displays a figure produced using `Compose` with `Gadfly`,
+and also creates corresponding `PNG` and `PDF` renderings as images
 so long as the first argument is not empty (NB the empty string _is_ empty!).
-The Boolean `animation` keyword, if set, causes animations to be produced instead.
+The Boolean `animation` keyword, if set, produces content in `animation` instead.
 
 Outputs:  
 * Animations are placed in the subdirectory with name `animdir` (defaulting to `animation`);
@@ -20,24 +20,23 @@ Outputs:
 """
 function depict(title::String, image::Any; animation::Bool=false, 
                 animdir="animation", figdir="image", imagetype="png")
+  destinationdir = (animation ? animdir : figdir)
+
   if imagetype == "png"
     IMAGE = PNG
   elseif imagetype == "svg"
     IMAGE = SVG
   end
-  if isempty(title)
-    return image
-  elseif animation
-    draw(IMAGE("$animdir/$title.$imagetype"), image)
-    return image
-  elseif imagetype=="pdfonly"
-    draw(PDF("$figdir/$title.pdf"), image)
-    return image
-  else
-    draw(IMAGE("$figdir/$title.$imagetype"), image)
-    draw(PDF("$figdir/$title.pdf"), image)
-    return image
+  
+  if !isempty(title)
+    draw(PDF("$destinationdir/$title.pdf"), image)
+    if !(imagetype=="pdfonly")
+      draw(IMAGE("$destinationdir/$title.$imagetype"), image)
+      draw(PDF("$destinationdir/$title.pdf"), image)
+    end
   end
+  
+  return image
 end
 #
 # The further utility function
