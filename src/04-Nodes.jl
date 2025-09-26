@@ -9,9 +9,9 @@
 # The function `inscription`^[The function `inscription` is not exported.]
 # produces a list of strings which are inscriptions for a list of incidents.
 # This is a convenience function!
-function inscription(xl::Vector{T}; terse=false) where {T<:AbstractIncident}
+function inscriptions(xl::Vector{T}; terse=true) where {T<:AbstractIncident}
   if terse
-    map(x -> "test", xl)
+    map(x -> string(sprint(show, MIME("text/plain"), x)[1]), xl)
   else
     map(x -> sprint(show, MIME("text/plain"), x), xl)
   end
@@ -43,7 +43,7 @@ function draw_incident(xl::Vector{T};
         if inscribe
         (context(),
           text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
-            map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
+            inscriptions(xl), [hcenter], [vcenter]),
           fontsize(5pt), font("Helvetica"))        end,
         (context(),
           circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
@@ -131,7 +131,7 @@ function draw_feasible_incident(xl::Vector{T}, feasible::Integer;
     if inscribe
       (context(),
         text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
-          map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
+          inscriptions(xl), [hcenter], [vcenter]),
         fontsize(5pt), font("Helvetica"))
     end,
     (context(),
@@ -155,7 +155,7 @@ function draw_feasible_incident(xl::Vector{T}, feasible;
     if inscribe
       (context(),
         text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
-          map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
+          inscriptions(xl), [hcenter], [vcenter]),
         fontsize(5pt), font("Helvetica"))
     end,
     (context(),
