@@ -1,7 +1,7 @@
 name = "EpidemicsUtilities"
 uuid = "d79373c3-2486-448b-9ea6-4dbd084dee00"
-authors = ["Wilfrid Stephen Kendall"]
 version = "0.1.2-DEV"
+authors = ["Wilfrid Stephen Kendall"]
 
 [deps]
 Cairo = "159f3aea-2a34-519c-b102-8c37f9878175"
@@ -13,6 +13,7 @@ EpidemicsCFTP = "e9e582aa-fa14-4cd8-84f3-d59ae741ce27"
 Fontconfig = "186bb1d3-e1f7-5a2c-a377-96d770f13627"
 Format = "1fa38f19-a742-5d3f-a2b9-30dd87b9d5f8"
 Gadfly = "c91e804a-d5a3-530f-b6f0-dfbca275c004"
+IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
 Impute = "f7bf1975-0170-51b9-8c5f-a992d46b9575"
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
@@ -23,6 +24,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 
 [compat]
+IJulia = "1.32.1"
 Impute = "0.6.12"
 ShiftedArrays = "2.0.0"
 julia = "1"

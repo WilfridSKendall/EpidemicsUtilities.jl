@@ -110,12 +110,11 @@ end
 # The function `table_trajectories4` computes and returns
 # a dataframe of the collection of jumps.
 # See [Github documentation of `Impute.jl`](https://invenia.github.io/Impute.jl/latest/api/imputation/#Impute.locf)
-
 # ```
 #     table_trajectories4(evmin, evmax, duration)
-# 
+# ```
+#
 # Computes `DataFrame` holding coincident segments of `evman` and `evmax` infection trajectories.
-
 # Here is an example.
 # ```
 # using DataFrames, Impute, ShiftedArrays
@@ -215,7 +214,7 @@ end
 #    3 │     5      4      6      4
 #    4 │     5      3      5      4
 #    5 │     6      4      6      5
-#
+# ```
 function table_trajectories4(evmin, evmax, duration)
 # Dataframe holding `evmin` infection points (not including start) as (roughly) `(:t, :xmin == i+r)`
     start_min  = evmin.initial.i + evmin.initial.r
