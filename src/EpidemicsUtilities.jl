@@ -17,12 +17,15 @@
 #     code-fold: true
 #     self-contained: true
 #   pdf:
-#     link-citations: true
 #     numbersections: true
 #     mainfont: "Times New Roman"
 #     monofont: "JuliaMono"
 #     monofontoptions:
 #        - Scale=0.7
+#     pdf-engine: xelatex
+#     pdf-engine-opts:
+#       - '--no-shell-escape'
+#       - '--halt-on-error'#     link-citations: true
 # jupyter:    julia-1.12
 # ---
 #
