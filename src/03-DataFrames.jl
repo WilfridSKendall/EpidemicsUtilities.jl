@@ -72,7 +72,7 @@ function prepare_screen(initial, ev;
                         major_label_font="CMU Serif", minor_label_font="CMU Serif", # <1>
                         theme=default_theme)
     if y_tic < 0
-        y_tic = maximum(1, ev.size ÷ 10)
+        y_tic = max(1, ev.size ÷ 10)
     end
     uflow = table_trajectories1(ev.duration, ev.trajectory) 
     axes_plot = plot(uflow, 
