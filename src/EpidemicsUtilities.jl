@@ -23,7 +23,8 @@
 #     monofont: "JuliaMono"
 #     monofontoptions:
 #        - Scale=0.7
-# jupyter:    julia-1.11
+#
+# engine:    julia
 # ---
 #
 # \newcommand{\SIR}{\operatorname{S-I-R}}
