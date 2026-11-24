@@ -5,6 +5,18 @@
 
 # Drawing incidents
 # -----------------
+# ### `inscription` {.unnumbered}
+# The function `inscription`^[The function `inscription` is not exported.]
+# produces a list of strings which are inscriptions for a list of incidents.
+# This is a convenience function!
+function inscriptions(xl::Vector{T}; terse=true) where {T<:AbstractIncident}
+  if terse
+    map(x -> string(sprint(show, MIME("text/plain"), x)[1]), xl)
+  else
+    map(x -> sprint(show, MIME("text/plain"), x), xl)
+  end
+end
+
 # ### `draw_incident` {.unnumbered}
 # The function `draw_incident`^[The function `draw_incident` is **exported**.]
 # draws plain undecorated incidents.
@@ -31,9 +43,8 @@ function draw_incident(xl::Vector{T};
         if inscribe
         (context(),
           text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
-            map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
-          fontsize(5pt), font("Helvetica"))
-        end,
+            inscriptions(xl), [hcenter], [vcenter]),
+          fontsize(5pt), font("Helvetica"))        end,
         (context(),
           circle(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl), [theme.radius]),
           fill(theme.blank), stroke(theme.colour(xl))),)
@@ -112,14 +123,15 @@ end
 # A **temporary** variant of this works with `feasible` being a general argument
 # (treated as a list of `Compose` directives, typically specifying `stroke` colour and `linewidth`.
 function draw_feasible_incident(xl::Vector{T}, feasible::Integer; 
-                                inscribe=true, theme=default_theme) where T<:AbstractInfection
+                                inscribe=true, 
+                                theme=default_theme) where T<:AbstractInfection
   lw = [theme.dormant, theme.activated, theme.boundary][feasible]
   col = [theme.laziestfeasible1, theme.laziestfeasible2, theme.laziestfeasible3][feasible]
   return (context(),
     if inscribe
       (context(),
         text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
-          map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
+          inscriptions(xl), [hcenter], [vcenter]),
         fontsize(5pt), font("Helvetica"))
     end,
     (context(),
@@ -137,12 +149,13 @@ end
 # `(stroke(col), linewidth(lw))`).
 # This is fragile and should eventually be replaced by use of `theme`.
 function draw_feasible_incident(xl::Vector{T}, feasible; 
-                                inscribe=true, theme=default_theme) where T<:AbstractInfection
+                                inscribe=true, 
+                                theme=default_theme) where T<:AbstractInfection
   return (context(),
     if inscribe
       (context(),
         text(map(x -> (x.t)cx, xl), map(x -> (x.target)cy, xl),
-          map(x -> sprint(show, MIME("text/plain"), x), xl), [hcenter], [vcenter]),
+          inscriptions(xl), [hcenter], [vcenter]),
         fontsize(5pt), font("Helvetica"))
     end,
     (context(),
