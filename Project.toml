@@ -24,9 +24,12 @@ ShiftedArrays = "1277b4bf-5013-50f5-be3d-901d8477a67a"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
 
+[sources]
+EpidemicsCFTP = {path = "../EpidemicsCFTP"}
+
 [compat]
 IJulia = "1.32.1"
-Impute = "0.6.12"
+Impute = "0.7.1"
 Revise = "3.12.2"
 ShiftedArrays = "2.0.0"
 julia = "1"

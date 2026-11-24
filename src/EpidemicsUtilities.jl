@@ -26,7 +26,8 @@
 #     pdf-engine-opts:
 #       - '--no-shell-escape'
 #       - '--halt-on-error'#     link-citations: true
-# jupyter:    julia-1.12
+# # jupyter:    julia-1.13
+# engine: julia
 # ---
 #
 # \newcommand{\SIR}{\operatorname{S-I-R}}
