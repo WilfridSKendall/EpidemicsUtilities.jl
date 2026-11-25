@@ -1,6 +1,26 @@
-# EpidemicsUtilities
+# EpidemicsUtilities.jl
 
 Utilities for drawing Epidemics.
+
+Requirements
+------------
+
+The package is implemented using `Julia` 1.13.3 (as of `23-11-2026`)
+
+Currently installed as developer package.
+
+## Caveats
+This is one of the first `julia` packages I have written.
+
+1. Its documentation system is unorthodox; 
+it combines all source files into a single `Quarto` file
+and then processes that.
+In a future version I will replace by the conventional
+`Documenter` process driven by docstrings.
+
+2. Graphics uses the `Compose` package.
+I hope eventually to re-write `EpidemicsUtilities.jl` based on a graphics
+package which is more actively maintained.
 
 ## Principal functions
 
