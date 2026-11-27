@@ -1,6 +1,6 @@
 name = "EpidemicsUtilities"
 uuid = "d79373c3-2486-448b-9ea6-4dbd084dee00"
-version = "0.1.2-DEV"
+version = "1.0.0-DEV"
 authors = ["Wilfrid Stephen Kendall"]
 
 [deps]
