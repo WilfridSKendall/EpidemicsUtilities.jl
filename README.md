@@ -13,14 +13,20 @@ Currently installed as developer package.
 This is one of the first `julia` packages I have written.
 
 1. Its documentation system is unorthodox; 
-it combines all source files into a single `Quarto` file
-and then processes that.
-In a future version I will replace by the conventional
-`Documenter` process driven by docstrings.
+  it combines all source files into a single `Quarto` file
+  and then processes that.
+  In a future version I will replace by the conventional
+  `Documenter` process driven by docstrings.
 
 2. Graphics uses the `Compose` package.
-I hope eventually to re-write `EpidemicsUtilities.jl` based on a graphics
-package which is more actively maintained.
+  I hope eventually to re-write `EpidemicsUtilities.jl` based on a graphics
+  package which is more actively maintained. 
+
+1. Further to the previous point, `Gadfly` and more specifically `Compose` require the package `JSON` to be at version `v1.13.4` or earlier. Presently this is dealt with by pinning `JSON` to version `v0.21.4` in the `docs` environment.
+
+
+
+----------
 
 ## Principal functions
 
