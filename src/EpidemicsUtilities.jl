@@ -28,7 +28,8 @@
 #       - '--no-shell-escape'
 #       - '--halt-on-error'#     link-citations: true
 #
-# engine: julia
+# jupyter: julia-1.13
+# # engine: julia
 # ---
 #
 # \newcommand{\SIR}{\operatorname{S-I-R}}
